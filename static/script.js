@@ -1,6 +1,6 @@
 async function registerUser() {
 
-```
+
 const email =
     document.getElementById(
         "email"
@@ -76,6 +76,6 @@ document.getElementById(
     "message"
 ).innerHTML =
     '<span class="message-success">✅ Successfully subscribed!</span>';
-```
+
 
 }
