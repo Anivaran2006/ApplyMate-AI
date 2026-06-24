@@ -69,3 +69,12 @@ templates = Jinja2Templates(
 @app.get("/dashboard")
 def dashboard():
     return FileResponse("templates/index.html")
+@app.get("/admin", response_class=HTMLResponse)
+def admin(request: Request):
+
+    return templates.TemplateResponse(
+        "admin.html",
+        {
+            "request": request
+        }
+    )

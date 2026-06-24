@@ -9,7 +9,7 @@ from app.services.user_service import (
     update_user_category
 )
 
-from app.notifier.resend_notifier import send_email
+from app.notifier.email_notifier import send_email
 
 router = APIRouter()
 
