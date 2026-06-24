@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ApplyMate AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <h1>🚀 ApplyMate AI Dashboard</h1>
+    <div class="container">
+
+        <h2>Register User</h2>
+   <input
+    type="text"
+    id="search"
+    placeholder="Search by email..."
+    onkeyup="loadUsers()"
+/>
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter Email"
+        >
+
+        <select id="category">
+
+            <option value="NEET">NEET</option>
+
+            <option value="JEE">JEE</option>
+
+            <option value="CUET">CUET</option>
+
+            <option value="GENERAL">GENERAL</option>
+
+        </select>
+
+        <button onclick="registerUser()">
+            Register
+        </button>
+        <p id="message"></p>
+        <hr>
+
+       <h2>Statistics</h2>
+
+<div id="stats"></div>
+
+<hr>
+
+        <div id="users"></div>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>

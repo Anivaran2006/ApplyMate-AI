@@ -1,0 +1,359 @@
+2026-06-21 23:41:50,326 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-21 23:41:50,328 - Added job "monitor" to job store "default"
+2026-06-21 23:41:50,328 - Scheduler started
+2026-06-21 23:42:20,337 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:42:20 IST)" (scheduled at 2026-06-21 23:42:20.325898+05:30)
+2026-06-21 23:42:20,340 - Checking NTA Website
+2026-06-21 23:42:22,207 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:42:50 IST)" executed successfully
+2026-06-21 23:42:50,332 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:43:20 IST)" (scheduled at 2026-06-21 23:42:50.325898+05:30)
+2026-06-21 23:42:50,333 - Checking NTA Website
+2026-06-21 23:42:52,196 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:43:20 IST)" executed successfully
+2026-06-21 23:43:20,329 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:43:50 IST)" (scheduled at 2026-06-21 23:43:20.325898+05:30)
+2026-06-21 23:43:20,329 - Checking NTA Website
+2026-06-21 23:43:22,434 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:43:50 IST)" executed successfully
+2026-06-21 23:43:50,333 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:44:20 IST)" (scheduled at 2026-06-21 23:43:50.325898+05:30)
+2026-06-21 23:43:50,333 - Checking NTA Website
+2026-06-21 23:43:52,232 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:44:20 IST)" executed successfully
+2026-06-21 23:44:20,335 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:44:50 IST)" (scheduled at 2026-06-21 23:44:20.325898+05:30)
+2026-06-21 23:44:20,336 - Checking NTA Website
+2026-06-21 23:44:22,111 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:44:50 IST)" executed successfully
+2026-06-21 23:44:50,330 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:45:20 IST)" (scheduled at 2026-06-21 23:44:50.325898+05:30)
+2026-06-21 23:44:50,330 - Checking NTA Website
+2026-06-21 23:44:52,427 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:45:20 IST)" executed successfully
+2026-06-21 23:45:14,847 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-21 23:45:14,850 - Added job "monitor" to job store "default"
+2026-06-21 23:45:14,850 - Scheduler started
+2026-06-21 23:45:44,854 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:45:44 IST)" (scheduled at 2026-06-21 23:45:44.846845+05:30)
+2026-06-21 23:45:44,855 - Checking NTA Website
+2026-06-21 23:45:46,940 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:46:14 IST)" executed successfully
+2026-06-21 23:46:14,854 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:46:44 IST)" (scheduled at 2026-06-21 23:46:14.846845+05:30)
+2026-06-21 23:46:14,855 - Checking NTA Website
+2026-06-21 23:46:16,906 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:46:44 IST)" executed successfully
+2026-06-21 23:46:26,153 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-21 23:46:26,155 - Added job "monitor" to job store "default"
+2026-06-21 23:46:26,155 - Scheduler started
+2026-06-21 23:46:56,167 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:46:56 IST)" (scheduled at 2026-06-21 23:46:56.152948+05:30)
+2026-06-21 23:46:56,168 - Checking NTA Website
+2026-06-21 23:46:58,187 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:47:26 IST)" executed successfully
+2026-06-21 23:47:26,163 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:47:56 IST)" (scheduled at 2026-06-21 23:47:26.152948+05:30)
+2026-06-21 23:47:26,163 - Checking NTA Website
+2026-06-21 23:47:27,754 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:47:56 IST)" executed successfully
+2026-06-21 23:47:56,154 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:48:26 IST)" (scheduled at 2026-06-21 23:47:56.152948+05:30)
+2026-06-21 23:47:56,155 - Checking NTA Website
+2026-06-21 23:47:57,799 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:48:26 IST)" executed successfully
+2026-06-21 23:48:26,154 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:48:56 IST)" (scheduled at 2026-06-21 23:48:26.152948+05:30)
+2026-06-21 23:48:26,155 - Checking NTA Website
+2026-06-21 23:48:27,923 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:48:56 IST)" executed successfully
+2026-06-21 23:48:32,887 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-21 23:48:32,890 - Added job "monitor" to job store "default"
+2026-06-21 23:48:32,890 - Scheduler started
+2026-06-21 23:49:02,893 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:49:02 IST)" (scheduled at 2026-06-21 23:49:02.887450+05:30)
+2026-06-21 23:49:02,894 - Checking NTA Website
+2026-06-21 23:49:04,861 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:49:32 IST)" executed successfully
+2026-06-21 23:49:32,891 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:50:02 IST)" (scheduled at 2026-06-21 23:49:32.887450+05:30)
+2026-06-21 23:49:32,892 - Checking NTA Website
+2026-06-21 23:49:34,778 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:50:02 IST)" executed successfully
+2026-06-21 23:50:02,889 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:50:32 IST)" (scheduled at 2026-06-21 23:50:02.887450+05:30)
+2026-06-21 23:50:02,890 - Checking NTA Website
+2026-06-21 23:50:04,835 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:50:32 IST)" executed successfully
+2026-06-21 23:50:08,063 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-21 23:50:08,066 - Added job "monitor" to job store "default"
+2026-06-21 23:50:08,066 - Scheduler started
+2026-06-21 23:50:38,078 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:50:38 IST)" (scheduled at 2026-06-21 23:50:38.062917+05:30)
+2026-06-21 23:50:38,078 - Checking NTA Website
+2026-06-21 23:50:39,845 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:51:08 IST)" executed successfully
+2026-06-21 23:51:08,070 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:51:38 IST)" (scheduled at 2026-06-21 23:51:08.062917+05:30)
+2026-06-21 23:51:08,071 - Checking NTA Website
+2026-06-21 23:51:09,996 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:51:38 IST)" executed successfully
+2026-06-21 23:51:38,077 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:52:08 IST)" (scheduled at 2026-06-21 23:51:38.062917+05:30)
+2026-06-21 23:51:38,077 - Checking NTA Website
+2026-06-21 23:51:39,506 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:52:08 IST)" executed successfully
+2026-06-21 23:52:08,076 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:52:38 IST)" (scheduled at 2026-06-21 23:52:08.062917+05:30)
+2026-06-21 23:52:08,077 - Checking NTA Website
+2026-06-21 23:52:09,618 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:52:38 IST)" executed successfully
+2026-06-21 23:52:38,072 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:53:08 IST)" (scheduled at 2026-06-21 23:52:38.062917+05:30)
+2026-06-21 23:52:38,072 - Checking NTA Website
+2026-06-21 23:52:40,055 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:53:08 IST)" executed successfully
+2026-06-21 23:53:08,065 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:53:38 IST)" (scheduled at 2026-06-21 23:53:08.062917+05:30)
+2026-06-21 23:53:08,066 - Checking NTA Website
+2026-06-21 23:53:09,946 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:53:38 IST)" executed successfully
+2026-06-21 23:53:38,066 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:54:08 IST)" (scheduled at 2026-06-21 23:53:38.062917+05:30)
+2026-06-21 23:53:38,067 - Checking NTA Website
+2026-06-21 23:53:39,797 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:54:08 IST)" executed successfully
+2026-06-21 23:54:08,069 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:54:38 IST)" (scheduled at 2026-06-21 23:54:08.062917+05:30)
+2026-06-21 23:54:08,070 - Checking NTA Website
+2026-06-21 23:54:09,682 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:54:38 IST)" executed successfully
+2026-06-21 23:54:38,069 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:55:08 IST)" (scheduled at 2026-06-21 23:54:38.062917+05:30)
+2026-06-21 23:54:38,070 - Checking NTA Website
+2026-06-21 23:54:40,051 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:55:08 IST)" executed successfully
+2026-06-21 23:55:08,070 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:55:38 IST)" (scheduled at 2026-06-21 23:55:08.062917+05:30)
+2026-06-21 23:55:08,072 - Checking NTA Website
+2026-06-21 23:55:10,040 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:55:38 IST)" executed successfully
+2026-06-21 23:55:38,079 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:56:08 IST)" (scheduled at 2026-06-21 23:55:38.062917+05:30)
+2026-06-21 23:55:38,080 - Checking NTA Website
+2026-06-21 23:55:39,728 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:56:08 IST)" executed successfully
+2026-06-21 23:56:08,078 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:56:38 IST)" (scheduled at 2026-06-21 23:56:08.062917+05:30)
+2026-06-21 23:56:08,079 - Checking NTA Website
+2026-06-21 23:56:09,908 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:56:38 IST)" executed successfully
+2026-06-21 23:56:38,079 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:57:08 IST)" (scheduled at 2026-06-21 23:56:38.062917+05:30)
+2026-06-21 23:56:38,080 - Checking NTA Website
+2026-06-21 23:56:39,700 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:57:08 IST)" executed successfully
+2026-06-21 23:57:08,066 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:57:38 IST)" (scheduled at 2026-06-21 23:57:08.062917+05:30)
+2026-06-21 23:57:08,067 - Checking NTA Website
+2026-06-21 23:57:10,042 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:57:38 IST)" executed successfully
+2026-06-21 23:57:38,077 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:58:08 IST)" (scheduled at 2026-06-21 23:57:38.062917+05:30)
+2026-06-21 23:57:38,078 - Checking NTA Website
+2026-06-21 23:57:40,240 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-21 23:58:08 IST)" executed successfully
+2026-06-22 23:10:50,268 - Checking NTA Website
+2026-06-22 23:10:51,522 - New Notification Found
+2026-06-22 23:12:47,568 - Checking NTA Website
+2026-06-22 23:16:13,435 - Checking NTA Website
+2026-06-22 23:16:14,682 - New Notification Found
+2026-06-22 23:17:24,683 - Checking NTA Website
+2026-06-22 23:17:25,946 - New Notification Found
+2026-06-23 17:48:31,321 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 17:48:31,325 - Added job "monitor" to job store "default"
+2026-06-23 17:48:31,326 - Scheduler started
+2026-06-23 17:49:01,323 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:49:01 IST)" (scheduled at 2026-06-23 17:49:01.320897+05:30)
+2026-06-23 17:49:01,324 - Checking NTA Website
+2026-06-23 17:49:03,295 - New Notification Found
+2026-06-23 17:49:08,169 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:49:31 IST)" executed successfully
+2026-06-23 17:49:31,336 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:50:01 IST)" (scheduled at 2026-06-23 17:49:31.320897+05:30)
+2026-06-23 17:49:31,336 - Checking NTA Website
+2026-06-23 17:49:33,310 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:50:01 IST)" executed successfully
+2026-06-23 17:50:01,329 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:50:31 IST)" (scheduled at 2026-06-23 17:50:01.320897+05:30)
+2026-06-23 17:50:01,329 - Checking NTA Website
+2026-06-23 17:50:03,267 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:50:31 IST)" executed successfully
+2026-06-23 17:50:31,335 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:51:01 IST)" (scheduled at 2026-06-23 17:50:31.320897+05:30)
+2026-06-23 17:50:31,335 - Checking NTA Website
+2026-06-23 17:50:33,565 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:51:01 IST)" executed successfully
+2026-06-23 17:51:01,329 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:51:31 IST)" (scheduled at 2026-06-23 17:51:01.320897+05:30)
+2026-06-23 17:51:01,329 - Checking NTA Website
+2026-06-23 17:51:03,306 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:51:31 IST)" executed successfully
+2026-06-23 17:51:31,323 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:52:01 IST)" (scheduled at 2026-06-23 17:51:31.320897+05:30)
+2026-06-23 17:51:31,324 - Checking NTA Website
+2026-06-23 17:51:33,164 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:52:01 IST)" executed successfully
+2026-06-23 17:52:01,324 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:52:31 IST)" (scheduled at 2026-06-23 17:52:01.320897+05:30)
+2026-06-23 17:52:01,324 - Checking NTA Website
+2026-06-23 17:52:03,381 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:52:31 IST)" executed successfully
+2026-06-23 17:52:31,327 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:53:01 IST)" (scheduled at 2026-06-23 17:52:31.320897+05:30)
+2026-06-23 17:52:31,328 - Checking NTA Website
+2026-06-23 17:52:33,092 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:53:01 IST)" executed successfully
+2026-06-23 17:53:01,326 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:53:31 IST)" (scheduled at 2026-06-23 17:53:01.320897+05:30)
+2026-06-23 17:53:01,327 - Checking NTA Website
+2026-06-23 17:53:03,228 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:53:31 IST)" executed successfully
+2026-06-23 17:53:31,328 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:54:01 IST)" (scheduled at 2026-06-23 17:53:31.320897+05:30)
+2026-06-23 17:53:31,328 - Checking NTA Website
+2026-06-23 17:53:33,166 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:54:01 IST)" executed successfully
+2026-06-23 17:53:58,576 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 17:53:58,579 - Added job "monitor" to job store "default"
+2026-06-23 17:53:58,580 - Scheduler started
+2026-06-23 17:54:28,578 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:54:28 IST)" (scheduled at 2026-06-23 17:54:28.575814+05:30)
+2026-06-23 17:54:28,579 - Checking NTA Website
+2026-06-23 17:54:30,678 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:54:58 IST)" executed successfully
+2026-06-23 17:54:58,577 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:55:28 IST)" (scheduled at 2026-06-23 17:54:58.575814+05:30)
+2026-06-23 17:54:58,577 - Checking NTA Website
+2026-06-23 17:55:00,366 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:55:28 IST)" executed successfully
+2026-06-23 17:55:28,578 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:55:58 IST)" (scheduled at 2026-06-23 17:55:28.575814+05:30)
+2026-06-23 17:55:28,580 - Checking NTA Website
+2026-06-23 17:55:30,375 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:55:58 IST)" executed successfully
+2026-06-23 17:55:58,588 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:56:28 IST)" (scheduled at 2026-06-23 17:55:58.575814+05:30)
+2026-06-23 17:55:58,588 - Checking NTA Website
+2026-06-23 17:56:00,476 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:56:28 IST)" executed successfully
+2026-06-23 17:56:28,585 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:56:58 IST)" (scheduled at 2026-06-23 17:56:28.575814+05:30)
+2026-06-23 17:56:28,585 - Checking NTA Website
+2026-06-23 17:56:30,364 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:56:58 IST)" executed successfully
+2026-06-23 17:56:58,585 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:57:28 IST)" (scheduled at 2026-06-23 17:56:58.575814+05:30)
+2026-06-23 17:56:58,585 - Checking NTA Website
+2026-06-23 17:57:00,295 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:57:28 IST)" executed successfully
+2026-06-23 17:57:23,446 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 17:57:23,449 - Added job "monitor" to job store "default"
+2026-06-23 17:57:23,449 - Scheduler started
+2026-06-23 17:57:53,452 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:57:53 IST)" (scheduled at 2026-06-23 17:57:53.446610+05:30)
+2026-06-23 17:57:53,454 - Checking NTA Website
+2026-06-23 17:57:55,365 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:58:23 IST)" executed successfully
+2026-06-23 17:58:14,111 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 17:58:14,114 - Added job "monitor" to job store "default"
+2026-06-23 17:58:14,115 - Scheduler started
+2026-06-23 17:58:44,119 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:58:44 IST)" (scheduled at 2026-06-23 17:58:44.111468+05:30)
+2026-06-23 17:58:44,120 - Checking NTA Website
+2026-06-23 17:58:45,958 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:59:14 IST)" executed successfully
+2026-06-23 17:59:14,118 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:59:44 IST)" (scheduled at 2026-06-23 17:59:14.111468+05:30)
+2026-06-23 17:59:14,119 - Checking NTA Website
+2026-06-23 17:59:15,785 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 17:59:44 IST)" executed successfully
+2026-06-23 17:59:44,120 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:00:14 IST)" (scheduled at 2026-06-23 17:59:44.111468+05:30)
+2026-06-23 17:59:44,121 - Checking NTA Website
+2026-06-23 17:59:45,953 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:00:14 IST)" executed successfully
+2026-06-23 18:00:14,116 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:00:44 IST)" (scheduled at 2026-06-23 18:00:14.111468+05:30)
+2026-06-23 18:00:14,117 - Checking NTA Website
+2026-06-23 18:00:16,133 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:00:44 IST)" executed successfully
+2026-06-23 18:00:44,113 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:01:14 IST)" (scheduled at 2026-06-23 18:00:44.111468+05:30)
+2026-06-23 18:00:44,114 - Checking NTA Website
+2026-06-23 18:00:45,999 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:01:14 IST)" executed successfully
+2026-06-23 18:01:14,116 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:01:44 IST)" (scheduled at 2026-06-23 18:01:14.111468+05:30)
+2026-06-23 18:01:14,116 - Checking NTA Website
+2026-06-23 18:01:15,861 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:01:44 IST)" executed successfully
+2026-06-23 18:01:44,114 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:02:14 IST)" (scheduled at 2026-06-23 18:01:44.111468+05:30)
+2026-06-23 18:01:44,114 - Checking NTA Website
+2026-06-23 18:01:46,326 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:02:14 IST)" executed successfully
+2026-06-23 18:02:14,124 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:02:44 IST)" (scheduled at 2026-06-23 18:02:14.111468+05:30)
+2026-06-23 18:02:14,125 - Checking NTA Website
+2026-06-23 18:02:16,060 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:02:44 IST)" executed successfully
+2026-06-23 18:02:44,124 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:03:14 IST)" (scheduled at 2026-06-23 18:02:44.111468+05:30)
+2026-06-23 18:02:44,125 - Checking NTA Website
+2026-06-23 18:02:46,005 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:03:14 IST)" executed successfully
+2026-06-23 18:03:14,121 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:03:44 IST)" (scheduled at 2026-06-23 18:03:14.111468+05:30)
+2026-06-23 18:03:14,121 - Checking NTA Website
+2026-06-23 18:03:15,878 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:03:44 IST)" executed successfully
+2026-06-23 18:03:35,480 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:03:35,482 - Added job "monitor" to job store "default"
+2026-06-23 18:03:35,483 - Scheduler started
+2026-06-23 18:04:02,453 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:04:02,456 - Added job "monitor" to job store "default"
+2026-06-23 18:04:02,456 - Scheduler started
+2026-06-23 18:04:15,199 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:04:15,201 - Added job "monitor" to job store "default"
+2026-06-23 18:04:15,202 - Scheduler started
+2026-06-23 18:04:45,204 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:04:45 IST)" (scheduled at 2026-06-23 18:04:45.198934+05:30)
+2026-06-23 18:04:45,205 - Checking NTA Website
+2026-06-23 18:04:47,017 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:05:15 IST)" executed successfully
+2026-06-23 18:05:15,199 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:05:45 IST)" (scheduled at 2026-06-23 18:05:15.198934+05:30)
+2026-06-23 18:05:15,200 - Checking NTA Website
+2026-06-23 18:05:16,938 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:05:45 IST)" executed successfully
+2026-06-23 18:05:45,201 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:06:15 IST)" (scheduled at 2026-06-23 18:05:45.198934+05:30)
+2026-06-23 18:05:45,202 - Checking NTA Website
+2026-06-23 18:05:47,146 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:06:15 IST)" executed successfully
+2026-06-23 18:06:15,205 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:06:45 IST)" (scheduled at 2026-06-23 18:06:15.198934+05:30)
+2026-06-23 18:06:15,206 - Checking NTA Website
+2026-06-23 18:06:17,063 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:06:45 IST)" executed successfully
+2026-06-23 18:06:45,202 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:07:15 IST)" (scheduled at 2026-06-23 18:06:45.198934+05:30)
+2026-06-23 18:06:45,203 - Checking NTA Website
+2026-06-23 18:06:46,741 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:07:15 IST)" executed successfully
+2026-06-23 18:07:15,214 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:07:45 IST)" (scheduled at 2026-06-23 18:07:15.198934+05:30)
+2026-06-23 18:07:15,215 - Checking NTA Website
+2026-06-23 18:07:17,111 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:07:45 IST)" executed successfully
+2026-06-23 18:07:45,207 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:08:15 IST)" (scheduled at 2026-06-23 18:07:45.198934+05:30)
+2026-06-23 18:07:45,208 - Checking NTA Website
+2026-06-23 18:07:47,315 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:08:15 IST)" executed successfully
+2026-06-23 18:08:15,212 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:08:45 IST)" (scheduled at 2026-06-23 18:08:15.198934+05:30)
+2026-06-23 18:08:15,213 - Checking NTA Website
+2026-06-23 18:08:17,053 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:08:45 IST)" executed successfully
+2026-06-23 18:08:45,214 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:09:15 IST)" (scheduled at 2026-06-23 18:08:45.198934+05:30)
+2026-06-23 18:08:45,215 - Checking NTA Website
+2026-06-23 18:08:46,959 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:09:15 IST)" executed successfully
+2026-06-23 18:09:15,211 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:09:45 IST)" (scheduled at 2026-06-23 18:09:15.198934+05:30)
+2026-06-23 18:09:15,212 - Checking NTA Website
+2026-06-23 18:09:16,981 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:09:45 IST)" executed successfully
+2026-06-23 18:09:45,202 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:10:15 IST)" (scheduled at 2026-06-23 18:09:45.198934+05:30)
+2026-06-23 18:09:45,203 - Checking NTA Website
+2026-06-23 18:09:47,025 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:10:15 IST)" executed successfully
+2026-06-23 18:10:15,212 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:10:45 IST)" (scheduled at 2026-06-23 18:10:15.198934+05:30)
+2026-06-23 18:10:15,213 - Checking NTA Website
+2026-06-23 18:10:17,087 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:10:45 IST)" executed successfully
+2026-06-23 18:10:41,267 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:10:41,270 - Added job "monitor" to job store "default"
+2026-06-23 18:10:41,270 - Scheduler started
+2026-06-23 18:11:11,274 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:11:11 IST)" (scheduled at 2026-06-23 18:11:11.267631+05:30)
+2026-06-23 18:11:11,275 - Checking NTA Website
+2026-06-23 18:11:12,965 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:11:41 IST)" executed successfully
+2026-06-23 18:11:40,856 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:11:40,859 - Added job "monitor" to job store "default"
+2026-06-23 18:11:40,860 - Scheduler started
+2026-06-23 18:12:12,963 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:12:12,966 - Added job "monitor" to job store "default"
+2026-06-23 18:12:12,967 - Scheduler started
+2026-06-23 18:12:42,971 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:12:42 IST)" (scheduled at 2026-06-23 18:12:42.962836+05:30)
+2026-06-23 18:12:42,972 - Checking NTA Website
+2026-06-23 18:12:45,125 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:13:12 IST)" executed successfully
+2026-06-23 18:13:12,969 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:13:42 IST)" (scheduled at 2026-06-23 18:13:12.962836+05:30)
+2026-06-23 18:13:12,971 - Checking NTA Website
+2026-06-23 18:13:14,963 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:13:42 IST)" executed successfully
+2026-06-23 18:13:41,494 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:13:41,496 - Added job "monitor" to job store "default"
+2026-06-23 18:13:41,497 - Scheduler started
+2026-06-23 18:14:11,496 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:14:11 IST)" (scheduled at 2026-06-23 18:14:11.494107+05:30)
+2026-06-23 18:14:11,497 - Checking NTA Website
+2026-06-23 18:14:13,487 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:14:41 IST)" executed successfully
+2026-06-23 18:14:41,503 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:15:11 IST)" (scheduled at 2026-06-23 18:14:41.494107+05:30)
+2026-06-23 18:14:41,504 - Checking NTA Website
+2026-06-23 18:14:43,381 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:15:11 IST)" executed successfully
+2026-06-23 18:15:11,495 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:15:41 IST)" (scheduled at 2026-06-23 18:15:11.494107+05:30)
+2026-06-23 18:15:11,495 - Checking NTA Website
+2026-06-23 18:15:13,316 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:15:41 IST)" executed successfully
+2026-06-23 18:15:41,501 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:16:11 IST)" (scheduled at 2026-06-23 18:15:41.494107+05:30)
+2026-06-23 18:15:41,502 - Checking NTA Website
+2026-06-23 18:15:43,442 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:16:11 IST)" executed successfully
+2026-06-23 18:16:03,917 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:16:03,920 - Added job "monitor" to job store "default"
+2026-06-23 18:16:03,921 - Scheduler started
+2026-06-23 18:16:17,042 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:16:17,044 - Added job "monitor" to job store "default"
+2026-06-23 18:16:17,044 - Scheduler started
+2026-06-23 18:16:47,044 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:16:47 IST)" (scheduled at 2026-06-23 18:16:47.041906+05:30)
+2026-06-23 18:16:47,045 - Checking NTA Website
+2026-06-23 18:16:49,038 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:17:17 IST)" executed successfully
+2026-06-23 18:17:17,044 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:17:47 IST)" (scheduled at 2026-06-23 18:17:17.041906+05:30)
+2026-06-23 18:17:17,045 - Checking NTA Website
+2026-06-23 18:17:18,767 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:17:47 IST)" executed successfully
+2026-06-23 18:17:47,055 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:18:17 IST)" (scheduled at 2026-06-23 18:17:47.041906+05:30)
+2026-06-23 18:17:47,056 - Checking NTA Website
+2026-06-23 18:17:48,925 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:18:17 IST)" executed successfully
+2026-06-23 18:18:17,046 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:18:47 IST)" (scheduled at 2026-06-23 18:18:17.041906+05:30)
+2026-06-23 18:18:17,047 - Checking NTA Website
+2026-06-23 18:18:18,855 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:18:47 IST)" executed successfully
+2026-06-23 18:18:47,043 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:19:17 IST)" (scheduled at 2026-06-23 18:18:47.041906+05:30)
+2026-06-23 18:18:47,044 - Checking NTA Website
+2026-06-23 18:18:48,736 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:19:17 IST)" executed successfully
+2026-06-23 18:19:17,043 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:19:47 IST)" (scheduled at 2026-06-23 18:19:17.041906+05:30)
+2026-06-23 18:19:17,044 - Checking NTA Website
+2026-06-23 18:19:18,997 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:19:47 IST)" executed successfully
+2026-06-23 18:19:47,057 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:20:17 IST)" (scheduled at 2026-06-23 18:19:47.041906+05:30)
+2026-06-23 18:19:47,058 - Checking NTA Website
+2026-06-23 18:19:49,008 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:20:17 IST)" executed successfully
+2026-06-23 18:20:17,058 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:20:47 IST)" (scheduled at 2026-06-23 18:20:17.041906+05:30)
+2026-06-23 18:20:17,059 - Checking NTA Website
+2026-06-23 18:20:18,857 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:20:47 IST)" executed successfully
+2026-06-23 18:20:47,056 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:21:17 IST)" (scheduled at 2026-06-23 18:20:47.041906+05:30)
+2026-06-23 18:20:47,057 - Checking NTA Website
+2026-06-23 18:20:48,937 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:21:17 IST)" executed successfully
+2026-06-23 18:21:17,057 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:21:47 IST)" (scheduled at 2026-06-23 18:21:17.041906+05:30)
+2026-06-23 18:21:17,057 - Checking NTA Website
+2026-06-23 18:21:18,889 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:21:47 IST)" executed successfully
+2026-06-23 18:21:47,053 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:22:17 IST)" (scheduled at 2026-06-23 18:21:47.041906+05:30)
+2026-06-23 18:21:47,053 - Checking NTA Website
+2026-06-23 18:21:49,160 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:22:17 IST)" executed successfully
+2026-06-23 18:22:17,057 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:22:47 IST)" (scheduled at 2026-06-23 18:22:17.041906+05:30)
+2026-06-23 18:22:17,057 - Checking NTA Website
+2026-06-23 18:22:19,155 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:22:47 IST)" executed successfully
+2026-06-23 18:22:47,057 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:23:17 IST)" (scheduled at 2026-06-23 18:22:47.041906+05:30)
+2026-06-23 18:22:47,058 - Checking NTA Website
+2026-06-23 18:22:49,008 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:23:17 IST)" executed successfully
+2026-06-23 18:23:17,062 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:23:47 IST)" (scheduled at 2026-06-23 18:23:17.041906+05:30)
+2026-06-23 18:23:17,089 - Checking NTA Website
+2026-06-23 18:23:18,967 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:23:47 IST)" executed successfully
+2026-06-23 18:23:47,059 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:24:17 IST)" (scheduled at 2026-06-23 18:23:47.041906+05:30)
+2026-06-23 18:23:47,061 - Checking NTA Website
+2026-06-23 18:23:48,831 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:24:17 IST)" executed successfully
+2026-06-23 18:24:17,047 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:24:47 IST)" (scheduled at 2026-06-23 18:24:17.041906+05:30)
+2026-06-23 18:24:17,048 - Checking NTA Website
+2026-06-23 18:24:18,942 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:24:47 IST)" executed successfully
+2026-06-23 18:24:47,046 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:25:17 IST)" (scheduled at 2026-06-23 18:24:47.041906+05:30)
+2026-06-23 18:24:47,047 - Checking NTA Website
+2026-06-23 18:24:48,895 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:25:17 IST)" executed successfully
+2026-06-23 18:25:31,169 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-23 18:25:31,171 - Added job "monitor" to job store "default"
+2026-06-23 18:25:31,172 - Scheduler started
+2026-06-23 18:26:01,181 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:26:01 IST)" (scheduled at 2026-06-23 18:26:01.169134+05:30)
+2026-06-23 18:26:01,182 - Checking NTA Website
+2026-06-23 18:26:03,293 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:26:31 IST)" executed successfully
+2026-06-23 18:26:31,178 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:27:01 IST)" (scheduled at 2026-06-23 18:26:31.169134+05:30)
+2026-06-23 18:26:31,179 - Checking NTA Website
+2026-06-23 18:26:33,349 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:27:01 IST)" executed successfully
+2026-06-23 18:27:01,176 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:27:31 IST)" (scheduled at 2026-06-23 18:27:01.169134+05:30)
+2026-06-23 18:27:01,177 - Checking NTA Website
+2026-06-23 18:27:03,219 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:27:31 IST)" executed successfully
+2026-06-23 18:27:31,179 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:28:01 IST)" (scheduled at 2026-06-23 18:27:31.169134+05:30)
+2026-06-23 18:27:31,180 - Checking NTA Website
+2026-06-23 18:27:33,139 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:28:01 IST)" executed successfully
+2026-06-23 18:28:01,184 - Running job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:28:31 IST)" (scheduled at 2026-06-23 18:28:01.169134+05:30)
+2026-06-23 18:28:01,184 - Checking NTA Website
+2026-06-23 18:28:03,481 - Job "monitor (trigger: interval[0:00:30], next run at: 2026-06-23 18:28:31 IST)" executed successfully
