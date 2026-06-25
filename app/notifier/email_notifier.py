@@ -28,7 +28,8 @@ def send_email(subject, html_content, to_email):
         465
     ) as smtp:
 
-        
+        print("EMAIL_ADDRESS:", EMAIL_ADDRESS)
+        print("APP PASSWORD EXISTS:", EMAIL_APP_PASSWORD is not None)
 
         smtp.login(
             EMAIL_ADDRESS,
