@@ -1,23 +1,18 @@
-import os
-import resend
-from dotenv import load_dotenv
+from app.notifier.email_notifier import send_email
 
-load_dotenv()
+try:
+    send_email(
+        "ApplyMate AI - Test Email",
+        """
+        <h2>🎉 Congratulations!</h2>
+        <p>Your Gmail SMTP is working successfully.</p>
+        <p>This is a test email from <b>ApplyMate AI</b>.</p>
+        """,
+        "aniv8007@gmail.com"   # Replace with any email you want to test
+    )
 
-resend.api_key = os.getenv("RESEND_API_KEY")
+    print("✅ Email sent successfully!")
 
-TO_EMAIL = os.getenv("TEST_EMAIL")
-
-
-def send_email(subject, html_content):
-
-    params = {
-        "from": "onboarding@resend.dev",
-        "to": [TO_EMAIL],
-        "subject": subject,
-        "html": html_content,
-    }
-
-    response = resend.Emails.send(params)
-
-    return response
+except Exception as e:
+    print("❌ Error sending email:")
+    print(e)
