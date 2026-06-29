@@ -42,7 +42,7 @@ def check_updates():
 
     return monitor()
 
-
+ 
 app.mount(
     "/static",
     StaticFiles(directory=str(BASE_DIR / "static")),
@@ -66,15 +66,17 @@ templates = Jinja2Templates(
 #             "request": request
 #         }
 #     )
-@app.get("/dashboard")
-def dashboard():
-    return FileResponse("templates/index.html")
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html"
+    )
 @app.get("/admin", response_class=HTMLResponse)
 def admin(request: Request):
 
     return templates.TemplateResponse(
-        "admin.html",
-        {
-            "request": request
-        }
+        request=request,
+        name="admin.html"
     )
