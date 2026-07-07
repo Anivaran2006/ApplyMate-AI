@@ -14,7 +14,6 @@ from slowapi.util import get_remote_address
 
 from app.api.v1.router import api_router
 from app.core.config import settings
-from app.core.database import create_all_tables
 from app.scraper.scheduler import start_scheduler, stop_scheduler
 from app.services.auth_service import create_initial_admin
 from app.core.database import AsyncSessionLocal
@@ -31,10 +30,6 @@ async def lifespan(app: FastAPI):
     """Application startup and shutdown lifecycle."""
     setup_logging(debug=settings.DEBUG)
     logger.info(f"🚀 {settings.APP_NAME} starting up (env={settings.APP_ENV})")
-
-    # Create tables
-    await create_all_tables()
-    logger.info("✅ Database tables ready")
 
     # Seed initial admin
     async with AsyncSessionLocal() as db:
