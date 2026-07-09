@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ApplyMate AI – Never miss an important educational notice. AI-powered summaries of NEET, JEE, CUET, GATE, UPSC and more. Instant Telegram & Email alerts.">
+  <title>ApplyMate AI – AI-Powered Student Notification Platform</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <style>
+    /* ── Landing-page specific styles ── */
+    .notice-preview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .notice-preview-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad-primary);
+    }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 640px) { .preview-grid { grid-template-columns: 1fr; } }
+
+    .hero-mockup {
+      position: relative;
+      z-index: 1;
+    }
+    .mockup-window {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+    }
+    .mockup-header {
+      background: var(--bg-surface);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .mockup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .mockup-body { padding: 20px; }
+
+    .notice-item {
+      display: flex;
+      gap: 12px;
+      padding: 14px;
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      margin-bottom: 10px;
+      transition: all var(--transition);
+      animation: fadeInUp 0.5s ease both;
+    }
+    .notice-item:nth-child(1) { animation-delay: 0.1s; }
+    .notice-item:nth-child(2) { animation-delay: 0.2s; }
+    .notice-item:nth-child(3) { animation-delay: 0.3s; }
+    .notice-item:hover {
+      background: rgba(124, 58, 237, 0.06);
+      border-color: var(--border);
+    }
+    .notice-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+      margin-top: 6px;
+      box-shadow: 0 0 8px var(--primary);
+      animation: pulse-glow 2s ease infinite;
+    }
+    .notice-title { font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
+    .notice-meta { font-size: 11px; color: var(--text-muted); }
+
+    /* Testimonial */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .testimonial-stars { color: #fbbf24; font-size: 14px; margin-bottom: 12px; }
+    .testimonial-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 10px; }
+    .testimonial-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--grad-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .testimonial-name { font-size: 13px; font-weight: 600; }
+    .testimonial-role { font-size: 11px; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<!-- ── Navbar ─────────────────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="navbar-inner">
+      <a href="/" class="navbar-logo">
+        <div class="logo-icon">🎓</div>
+        ApplyMate <span style="color:var(--primary-light)">AI</span>
+      </a>
+
+      <ul class="navbar-nav">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <div class="navbar-actions">
+        <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="/signup" class="btn btn-primary btn-sm">Get Started Free</a>
+      </div>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button id="mobileMenuClose" style="position:absolute;top:24px;right:24px;background:none;border:none;color:var(--text-primary);font-size:28px;cursor:pointer;">✕</button>
+  <a href="#features" onclick="closeMobileMenu()">Features</a>
+  <a href="#categories" onclick="closeMobileMenu()">Categories</a>
+  <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="/login" class="btn btn-ghost">Sign In</a>
+  <a href="/signup" class="btn btn-primary">Get Started Free</a>
+</div>
+
+<!-- ── Hero ───────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span>🤖</span> Powered by Google Gemini AI
+        </div>
+
+        <h1 class="hero-title">
+          Never Miss a<br>
+          <span class="gradient-text">Critical Notice</span><br>
+          Again
+        </h1>
+
+        <p class="hero-description">
+          ApplyMate AI monitors 50+ official exam portals, generates intelligent summaries, 
+          and delivers instant alerts to your Telegram and Email — so you're always ahead.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/signup" class="btn btn-primary btn-lg" id="hero-cta">
+            🚀 Start For Free
+          </a>
+          <a href="#how-it-works" class="btn btn-outline btn-lg">
+            See How It Works
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value">50K+</div>
+            <div class="hero-stat-label">Students notified</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">9</div>
+            <div class="hero-stat-label">Exam categories</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">&lt;60s</div>
+            <div class="hero-stat-label">Avg. alert time</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Mockup -->
+      <div class="hero-mockup" style="animation: fadeInUp 0.8s ease both 0.5s; opacity:0;">
+        <div class="mockup-window">
+          <div class="mockup-header">
+            <div class="mockup-dot" style="background:#ef4444"></div>
+            <div class="mockup-dot" style="background:#f59e0b"></div>
+            <div class="mockup-dot" style="background:#10b981"></div>
+            <span style="font-size:12px;color:var(--text-muted);margin-left:8px;">ApplyMate AI – Dashboard</span>
+          </div>
+          <div class="mockup-body">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+              <span style="font-size:13px;font-weight:700;">Latest Notices</span>
+              <span class="badge badge-general" style="font-size:10px;">Live</span>
+            </div>
+
+            <div class="notice-item">
+              <div class="notice-dot"></div>
+              <div>
+                <div class="notice-title">NEET UG 2025 – Registration Open</div>
+                <div style="display:flex;gap:8px;margin:6px 0;">
+                  <span class="badge badge-neet" style="font-size:10px;padding:2px 8px;">NEET</span>
+                </div>
+                <div class="notice-meta">🤖 AI Summary: Registration window open until March 15. Eligibility: 10+2 with Biology. Fee: ₹1600.</div>
+              </div>
+            </div>
+
+            <div class="notice-item">
+              <div class="notice-dot" style="background:var(--accent);box-shadow:0 0 8px var(--accent);"></div>
+              <div>
+                <div class="notice-title">JEE Main 2025 Session 2 – Admit Card Released</div>
+                <div style="display:flex;gap:8px;margin:6px 0;">
+                  <span class="badge badge-jee" style="font-size:10px;padding:2px 8px;">JEE</span>
+                </div>
+                <div class="notice-meta">🤖 AI Summary: Download admit card from jeemain.nta.nic.in. Exam from April 4–15.</div>
+              </div>
+            </div>
+
+            <div class="notice-item">
+              <div class="notice-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf6;"></div>
+              <div>
+                <div class="notice-title">CUET UG 2025 – City Intimation Slip Available</div>
+                <div style="display:flex;gap:8px;margin:6px 0;">
+                  <span class="badge badge-cuet" style="font-size:10px;padding:2px 8px;">CUET</span>
+                </div>
+                <div class="notice-meta">🤖 AI Summary: Download city slip from cuet.samarth.ac.in. Exams in May 2025.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ────────────────────────────────────────────── -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="text-center animate-in">
+      <span class="section-eyebrow">✨ Features</span>
+      <h2 class="section-title">Everything You Need to<br><span class="gradient-text">Stay Ahead</span></h2>
+      <p class="section-subtitle">Built for serious students who can't afford to miss a deadline</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card animate-in">
+        <div class="feature-icon">🤖</div>
+        <h3 class="feature-title">AI-Powered Summaries</h3>
+        <p class="feature-desc">Google Gemini reads every official notice and generates plain-English summaries, key dates, required actions, and eligibility — instantly.</p>
+      </div>
+
+      <div class="feature-card animate-in">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Real-Time Alerts</h3>
+        <p class="feature-desc">Within 60 seconds of a new notice appearing on official sites, you receive a formatted notification on Telegram and Email.</p>
+      </div>
+
+      <div class="feature-card animate-in">
+        <div class="feature-icon">🎯</div>
+        <h3 class="feature-title">Category Subscriptions</h3>
+        <p class="feature-desc">Only receive alerts for exams you actually care about — NEET, JEE, CUET, GATE, CAT, UPSC, SSC, Banking, or Scholarships.</p>
+      </div>
+
+      <div class="feature-card animate-in">
+        <div class="feature-icon">🌐</div>
+        <h3 class="feature-title">Hindi Translation</h3>
+        <p class="feature-desc">Click "Translate to Hindi" on any notice to get an instant AI translation — making important information accessible to every student.</p>
+      </div>
+
+      <div class="feature-card animate-in">
+        <div class="feature-icon">🔖</div>
+        <h3 class="feature-title">Smart Bookmarks</h3>
+        <p class="feature-desc">Save important notices to your personal bookmark library and access them anytime — with full AI summaries intact.</p>
+      </div>
+
+      <div class="feature-card animate-in">
+        <div class="feature-icon">📊</div>
+        <h3 class="feature-title">Notification History</h3>
+        <p class="feature-desc">Full audit trail of every notification sent to you, with timestamps, channels, and delivery status — never lose track of what you received.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ────────────────────────────────────────── -->
+<section class="section" id="how-it-works" style="background:linear-gradient(180deg, var(--bg-base) 0%, var(--bg-surface) 50%, var(--bg-base) 100%);">
+  <div class="container">
+    <div class="text-center animate-in">
+      <span class="section-eyebrow">🔄 Process</span>
+      <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
+      <p class="section-subtitle">Our automated pipeline runs 24/7 so you never have to check official websites again</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card animate-in">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Smart Monitoring</h3>
+        <p class="step-desc">Our scrapers continuously check NTA and other official education portals every 30 minutes for new notices and announcements.</p>
+      </div>
+      <div class="step-card animate-in">
+        <div class="step-number">2</div>
+        <h3 class="step-title">AI Processing</h3>
+        <p class="step-desc">Google Gemini AI reads the notice and generates a structured summary: key dates, required actions, eligibility, and deadline.</p>
+      </div>
+      <div class="step-card animate-in">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Smart Matching</h3>
+        <p class="step-desc">The notice is categorized (NEET, JEE, etc.) and matched against student subscriptions to find who should be notified.</p>
+      </div>
+      <div class="step-card animate-in">
+        <div class="step-number">4</div>
+        <h3 class="step-title">Instant Delivery</h3>
+        <p class="step-desc">You receive a beautifully formatted notification on Telegram and/or Email within 60 seconds — with AI summary included.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Categories ──────────────────────────────────────────── -->
+<section class="section" id="categories">
+  <div class="container">
+    <div class="text-center animate-in">
+      <span class="section-eyebrow">📚 Categories</span>
+      <h2 class="section-title">All Major <span class="gradient-text">Exams Covered</span></h2>
+      <p class="section-subtitle">Subscribe to exactly the categories you need</p>
+    </div>
+
+    <div class="categories-grid animate-in">
+      <div class="category-pill"><span class="category-emoji">🩺</span><span class="category-name">NEET</span></div>
+      <div class="category-pill"><span class="category-emoji">⚡</span><span class="category-name">JEE</span></div>
+      <div class="category-pill"><span class="category-emoji">🎓</span><span class="category-name">CUET</span></div>
+      <div class="category-pill"><span class="category-emoji">🔬</span><span class="category-name">GATE</span></div>
+      <div class="category-pill"><span class="category-emoji">📊</span><span class="category-name">CAT</span></div>
+      <div class="category-pill"><span class="category-emoji">🏛️</span><span class="category-name">UPSC</span></div>
+      <div class="category-pill"><span class="category-emoji">📋</span><span class="category-name">SSC</span></div>
+      <div class="category-pill"><span class="category-emoji">🏦</span><span class="category-name">Banking</span></div>
+      <div class="category-pill"><span class="category-emoji">🌟</span><span class="category-name">Scholarships</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Testimonials ─────────────────────────────────────────── -->
+<section class="section" id="testimonials">
+  <div class="container">
+    <div class="text-center animate-in">
+      <span class="section-eyebrow">💬 Students Love It</span>
+      <h2 class="section-title">Trusted by <span class="gradient-text">Thousands</span></h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card animate-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"I almost missed the NEET registration deadline last year. With ApplyMate AI, I get notified the moment anything is posted. It's literally a lifesaver."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">R</div>
+          <div>
+            <div class="testimonial-name">Riya Sharma</div>
+            <div class="testimonial-role">NEET Aspirant, Delhi</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card animate-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The AI summaries are incredible. Instead of reading 10-page PDFs, I get a 3-sentence summary with everything I need to know. Saves me hours every week."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-name">Arjun Mehta</div>
+            <div class="testimonial-role">JEE Advanced Aspirant, Mumbai</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card animate-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Hindi translation feature is amazing for my parents who wanted to understand what I was applying for. ApplyMate AI made communication so much easier."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">P</div>
+          <div>
+            <div class="testimonial-name">Priya Gupta</div>
+            <div class="testimonial-role">UPSC Aspirant, Lucknow</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────── -->
+<section class="section" id="faq">
+  <div class="container-sm">
+    <div class="text-center animate-in">
+      <span class="section-eyebrow">❓ FAQ</span>
+      <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+    </div>
+
+    <div class="faq-list animate-in">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is ApplyMate AI free to use?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes! ApplyMate AI is completely free for students. Sign up, choose your exam categories, connect your Telegram or email, and start receiving AI-powered notifications immediately.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Which official websites do you monitor?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">We currently monitor NTA (nta.ac.in) covering NEET, JEE, CUET, and more. We are actively adding UPSC, SSC, IBPS, UGC-NET, and other major exam portals.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How quickly will I receive notifications?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Our scrapers check official websites every 30 minutes. Once a new notice is detected, AI processing and notification delivery happens within 60 seconds. You'll typically be notified within 30-31 minutes of a notice going live.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How do I connect Telegram notifications?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">After signing up, go to your Dashboard → Settings → Telegram. Start a chat with our Telegram bot, copy your Chat ID, and paste it in the settings form. You'll instantly receive a welcome message to confirm the connection.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Are the AI summaries accurate?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Our AI summaries are generated by Google Gemini, one of the most capable AI models available. We always include a link to the original official notice, and we recommend verifying important dates directly with the official source before taking action.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Can I subscribe to multiple exam categories?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Absolutely! You can subscribe to any combination of our 9 categories: NEET, JEE, CUET, GATE, CAT, UPSC, SSC, Banking, and Scholarships. Manage your preferences anytime from the dashboard.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────── -->
+<section class="section" id="cta">
+  <div class="container">
+    <div class="cta-section animate-in">
+      <span class="section-eyebrow">🚀 Get Started</span>
+      <h2 class="section-title" style="margin-bottom:16px;">Ready to Never Miss<br><span class="gradient-text">Another Deadline?</span></h2>
+      <p style="font-size:18px;color:var(--text-secondary);margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto;">
+        Join thousands of students who rely on ApplyMate AI every day. Free forever.
+      </p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="/signup" class="btn btn-primary btn-lg" id="cta-signup">
+          🎓 Create Free Account
+        </a>
+        <a href="/login" class="btn btn-outline btn-lg">
+          Already have an account?
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="navbar-logo" style="font-size:18px;">
+          <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">🎓</div>
+          ApplyMate <span style="color:var(--primary-light)">AI</span>
+        </a>
+        <p>AI-powered educational notification platform for Indian students. Stay ahead of every deadline.</p>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Product</h4>
+        <ul class="footer-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Account</h4>
+        <ul class="footer-links">
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+          <li><a href="/forgot-password">Reset Password</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Resources</h4>
+        <ul class="footer-links">
+          <li><a href="https://nta.ac.in" target="_blank" rel="noopener">NTA Official</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 ApplyMate AI. Built for Indian students. 🇮🇳</p>
+      <p style="color:var(--text-muted)">Powered by Google Gemini AI</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Toast Container ──────────────────────────────────────── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+  // ── Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ── Animate on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+  // Fix hero mockup animation
+  document.querySelector('.hero-mockup').style.opacity = '';
+
+  // ── FAQ Accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ── Mobile Menu
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+  mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+  mobileMenuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+  function closeMobileMenu() { mobileMenu.classList.remove('open'); }
+
+  // ── Toast utility (shared across pages)
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+    toast.innerHTML = `<span>${icons[type]}</span><span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+  }
+</script>
+</body>
+</html>

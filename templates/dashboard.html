@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ApplyMate AI Dashboard – View AI-powered notices, manage subscriptions, and track notifications.">
+  <title>Dashboard – ApplyMate AI</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <style>
+    /* ── Dashboard Layout ─────────────────────────────────── */
+    body { overflow-x: hidden; }
+
+    .dash-layout {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .sidebar {
+      width: 260px;
+      min-height: 100vh;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 50;
+      transition: transform var(--transition-slow);
+    }
+
+    .sidebar-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+    }
+
+    .sidebar-logo .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--grad-primary);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .sidebar-user {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--grad-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .user-info { flex: 1; min-width: 0; }
+    .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .user-email {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow-y: auto;
+    }
+
+    .nav-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 8px 8px 4px;
+      margin-top: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: rgba(124, 58, 237, 0.08);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--primary-light);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    .nav-item .nav-icon { font-size: 16px; flex-shrink: 0; }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--primary);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 16px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    /* ── Main Content ────────────────────────────────────── */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top Bar ─────────────────────────────────────────── */
+    .topbar {
+      background: rgba(8, 8, 21, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .topbar-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 22px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* ── Tab Panels ─────────────────────────────────────── */
+    .tab-panel { display: none; padding: 28px; }
+    .tab-panel.active { display: block; }
+
+    /* ── Stat Cards ─────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+
+    .stat-card:hover {
+      border-color: var(--border);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow-sm);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad-primary);
+    }
+
+    .stat-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ── Filter Bar ──────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-light);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    .filter-btn.active {
+      background: rgba(124, 58, 237, 0.15);
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      padding: 7px 16px;
+      flex: 1;
+      min-width: 200px;
+      max-width: 360px;
+      transition: all var(--transition);
+    }
+
+    .search-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .search-box input::placeholder { color: var(--text-muted); }
+
+    /* ── Notice Card ─────────────────────────────────────── */
+    .notice-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .notice-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+      animation: fadeInUp 0.4s ease both;
+    }
+
+    .notice-card:hover {
+      border-color: var(--border);
+      box-shadow: var(--shadow-glow-sm);
+      transform: translateY(-2px);
+    }
+
+    .notice-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .notice-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .notice-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .icon-btn:hover {
+      background: rgba(124, 58, 237, 0.12);
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    .icon-btn.active {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    .notice-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .notice-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ai-summary {
+      background: rgba(124, 58, 237, 0.06);
+      border: 1px solid rgba(124, 58, 237, 0.15);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .ai-summary-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary-light);
+      margin-bottom: 8px;
+    }
+
+    .notice-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .translate-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: color var(--transition);
+      padding: 0;
+    }
+
+    .translate-btn:hover { color: var(--accent-light); }
+
+    .notice-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-light);
+      transition: color var(--transition);
+    }
+
+    .notice-link:hover { color: var(--accent-light); }
+
+    /* ── Subscriptions ───────────────────────────────────── */
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .sub-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sub-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.2);
+    }
+
+    .sub-card.subscribed {
+      border-color: var(--primary);
+      background: rgba(124, 58, 237, 0.1);
+    }
+
+    .sub-card.subscribed::after {
+      content: '✓';
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary-light);
+      background: rgba(124, 58, 237, 0.2);
+      border-radius: var(--radius-full);
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sub-emoji { font-size: 30px; margin-bottom: 10px; display: block; }
+    .sub-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .sub-status { font-size: 11px; color: var(--text-muted); }
+
+    /* ── Notifications History ───────────────────────────── */
+    .notif-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .notif-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: all var(--transition);
+    }
+
+    .notif-item:hover {
+      border-color: var(--border);
+    }
+
+    .notif-channel-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .notif-channel-icon.telegram { background: rgba(0, 136, 204, 0.15); }
+    .notif-channel-icon.email    { background: rgba(124, 58, 237, 0.15); }
+
+    .notif-content { flex: 1; min-width: 0; }
+    .notif-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .notif-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .notif-time {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    /* ── Settings Form ───────────────────────────────────── */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .settings-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .settings-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .settings-card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    /* ── Toggle Switch ───────────────────────────────────── */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .toggle-row:last-child { border-bottom: none; }
+
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .toggle-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .toggle input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--border-light);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      top: 3px;
+      border-radius: 50%;
+      background: white;
+      transition: transform var(--transition);
+    }
+
+    .toggle input:checked + .toggle-slider { background: var(--primary); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    /* ── Telegram Connect ───────────────────────────────── */
+    .telegram-connect {
+      background: rgba(0, 136, 204, 0.08);
+      border: 1px solid rgba(0, 136, 204, 0.2);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .telegram-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .telegram-status.connected { color: #10b981; }
+    .telegram-status.disconnected { color: var(--text-muted); }
+
+    /* ── Loader / Skeleton ─────────────────────────────── */
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.04) 50%, var(--bg-card) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-md);
+    }
+
+    @keyframes shimmer {
+      from { background-position: 200% 0; }
+      to   { background-position: -200% 0; }
+    }
+
+    .skeleton-card {
+      height: 150px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 14px;
+    }
+
+    /* ── Empty State ────────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-title { font-size: 16px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+    .empty-desc { font-size: 14px; line-height: 1.7; max-width: 320px; margin: 0 auto; }
+
+    /* ── Pagination ─────────────────────────────────────── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .page-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .page-btn:hover { border-color: var(--primary); color: var(--primary-light); }
+    .page-btn.active { background: rgba(124,58,237,0.2); border-color: var(--primary); color: var(--primary-light); }
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Modal ──────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      transform: scale(0.95) translateY(20px);
+      transition: transform var(--transition);
+    }
+
+    .modal-overlay.open .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .modal-title { font-size: 18px; font-weight: 700; }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      background: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .modal-close:hover { background: rgba(239,68,68,0.1); border-color: #ef4444; color: #ef4444; }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 20px 0 60px rgba(0,0,0,0.4);
+      }
+      .main-content { margin-left: 0; }
+      .sidebar-toggle { display: flex !important; }
+      .settings-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .tab-panel { padding: 16px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .sub-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+      .filter-bar { gap: 6px; }
+      .filter-btn { padding: 5px 12px; font-size: 12px; }
+    }
+
+    /* ── Sidebar overlay for mobile ─────────────────────── */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 49;
+    }
+
+    .sidebar-backdrop.open { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="dash-layout">
+
+  <!-- ── Sidebar ───────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🎓</div>
+        ApplyMate <span style="color:var(--primary-light)">AI</span>
+      </div>
+    </div>
+
+    <div class="sidebar-user" id="sidebarUser">
+      <div class="user-avatar" id="userAvatarInitial">?</div>
+      <div class="user-info">
+        <div class="user-name" id="sidebarUserName">Loading…</div>
+        <div class="user-email" id="sidebarUserEmail">—</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <button class="nav-item active" id="nav-notices" onclick="switchTab('notices')">
+        <span class="nav-icon">📰</span> Notices Feed
+        <span class="nav-badge" id="noticeBadge">…</span>
+      </button>
+      <button class="nav-item" id="nav-bookmarks" onclick="switchTab('bookmarks')">
+        <span class="nav-icon">🔖</span> Bookmarks
+        <span class="nav-badge" id="bookmarkBadge" style="display:none"></span>
+      </button>
+      <button class="nav-item" id="nav-history" onclick="switchTab('history')">
+        <span class="nav-icon">🔔</span> Notifications
+      </button>
+
+      <span class="nav-section-label">Account</span>
+      <button class="nav-item" id="nav-subscriptions" onclick="switchTab('subscriptions')">
+        <span class="nav-icon">🎯</span> Subscriptions
+      </button>
+      <button class="nav-item" id="nav-settings" onclick="switchTab('settings')">
+        <span class="nav-icon">⚙️</span> Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="logout()" style="color:#ef4444;">
+        <span class="nav-icon">🚪</span> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
+
+  <!-- ── Main ─────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+        <div>
+          <div class="topbar-title" id="topbarTitle">Notices Feed</div>
+          <div class="topbar-subtitle" id="topbarSubtitle">AI-powered notices from official sources</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost btn-sm" id="refreshBtn" onclick="refreshCurrent()" title="Refresh">
+          🔄 Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- ── NOTICES PANEL ───────────────────────────────── -->
+    <div class="tab-panel active" id="panel-notices">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">📰</div>
+          <div class="stat-value" id="statTotal">—</div>
+          <div class="stat-label">Total Notices</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔔</div>
+          <div class="stat-value" id="statNotified">—</div>
+          <div class="stat-label">You Were Notified</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔖</div>
+          <div class="stat-value" id="statBookmarks">—</div>
+          <div class="stat-label">Bookmarked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-value" id="statSubs">—</div>
+          <div class="stat-label">Subscriptions</div>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Search notices…" oninput="handleSearch()">
+        </div>
+        <button class="filter-btn active" data-cat="ALL" onclick="setCatFilter(this, 'ALL')">All</button>
+        <button class="filter-btn" data-cat="NEET"    onclick="setCatFilter(this, 'NEET')">🩺 NEET</button>
+        <button class="filter-btn" data-cat="JEE"     onclick="setCatFilter(this, 'JEE')">⚡ JEE</button>
+        <button class="filter-btn" data-cat="CUET"    onclick="setCatFilter(this, 'CUET')">🎓 CUET</button>
+        <button class="filter-btn" data-cat="GATE"    onclick="setCatFilter(this, 'GATE')">🔬 GATE</button>
+        <button class="filter-btn" data-cat="UPSC"    onclick="setCatFilter(this, 'UPSC')">🏛️ UPSC</button>
+        <button class="filter-btn" data-cat="SSC"     onclick="setCatFilter(this, 'SSC')">📋 SSC</button>
+      </div>
+
+      <div id="noticeLoader" class="notice-list">
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+
+      <div class="notice-list" id="noticeList" style="display:none"></div>
+      <div id="noticeEmpty" class="empty-state" style="display:none">
+        <div class="empty-icon">📭</div>
+        <div class="empty-title">No notices found</div>
+        <div class="empty-desc">Try a different category or check back later. New notices are checked every 30 minutes.</div>
+      </div>
+
+      <div class="pagination" id="noticePagination"></div>
+    </div>
+
+    <!-- ── BOOKMARKS PANEL ─────────────────────────────── -->
+    <div class="tab-panel" id="panel-bookmarks">
+      <div id="bookmarkLoader" class="notice-list">
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+      <div class="notice-list" id="bookmarkList" style="display:none"></div>
+      <div id="bookmarkEmpty" class="empty-state" style="display:none">
+        <div class="empty-icon">🔖</div>
+        <div class="empty-title">No bookmarks yet</div>
+        <div class="empty-desc">Tap the 🔖 icon on any notice to save it here for quick access later.</div>
+      </div>
+    </div>
+
+    <!-- ── NOTIFICATIONS HISTORY PANEL ────────────────── -->
+    <div class="tab-panel" id="panel-history">
+      <div id="historyLoader" class="notif-list">
+        <div class="skeleton" style="height:70px;border-radius:var(--radius-md);margin-bottom:10px;"></div>
+        <div class="skeleton" style="height:70px;border-radius:var(--radius-md);margin-bottom:10px;"></div>
+        <div class="skeleton" style="height:70px;border-radius:var(--radius-md);margin-bottom:10px;"></div>
+      </div>
+      <div class="notif-list" id="historyList" style="display:none"></div>
+      <div id="historyEmpty" class="empty-state" style="display:none">
+        <div class="empty-icon">🔕</div>
+        <div class="empty-title">No notifications sent yet</div>
+        <div class="empty-desc">Once you're subscribed and notices come in, your notification history will appear here.</div>
+      </div>
+      <div class="pagination" id="historyPagination"></div>
+    </div>
+
+    <!-- ── SUBSCRIPTIONS PANEL ────────────────────────── -->
+    <div class="tab-panel" id="panel-subscriptions">
+      <div style="margin-bottom:24px;">
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">Choose Your Categories</h3>
+        <p style="font-size:14px;color:var(--text-muted);">Click a category to subscribe or unsubscribe. Changes are saved instantly.</p>
+      </div>
+      <div class="sub-grid" id="subGrid"></div>
+      <div style="margin-top:8px;padding:16px;background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+          💡 <strong>Tip:</strong> Subscribe only to exams you're actively preparing for. You'll receive Telegram/Email alerts as soon as new notices are posted.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── SETTINGS PANEL ──────────────────────────────── -->
+    <div class="tab-panel" id="panel-settings">
+      <div class="settings-grid">
+
+        <!-- Profile -->
+        <div class="settings-card">
+          <div class="settings-card-title">👤 Profile</div>
+          <div class="settings-card-desc">Update your name and email address.</div>
+          <div class="form-group">
+            <label class="input-label">Full Name</label>
+            <input class="input" type="text" id="settingsName" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="input-label">Email</label>
+            <input class="input" type="email" id="settingsEmail" placeholder="your@email.com">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="saveProfile()" id="saveProfileBtn">Save Changes</button>
+        </div>
+
+        <!-- Telegram -->
+        <div class="settings-card">
+          <div class="settings-card-title">✈️ Telegram Notifications</div>
+          <div class="settings-card-desc">Connect your Telegram account to receive instant notifications.</div>
+
+          <div class="telegram-connect" id="telegramStatus">
+            <div class="telegram-status disconnected" id="telegramStatusText">
+              ⭕ Not Connected
+            </div>
+          </div>
+
+          <div class="form-group" id="telegramInputGroup">
+            <label class="input-label">Telegram Chat ID</label>
+            <input class="input" type="text" id="telegramChatId" placeholder="e.g. 123456789">
+            <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">
+              Start a chat with <a href="https://t.me/userinfobot" target="_blank" style="color:var(--accent-light)">@userinfobot</a> to get your Chat ID.
+            </p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="connectTelegram()" id="connectTelegramBtn">Connect</button>
+            <button class="btn btn-ghost btn-sm" onclick="disconnectTelegram()" id="disconnectTelegramBtn" style="display:none;color:#ef4444;">Disconnect</button>
+          </div>
+        </div>
+
+        <!-- Notifications Preferences -->
+        <div class="settings-card">
+          <div class="settings-card-title">🔔 Notification Preferences</div>
+          <div class="settings-card-desc">Choose how and when you receive alerts.</div>
+
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Email Notifications</div>
+              <div class="toggle-sub">Get alerts via email</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="emailNotifToggle" onchange="saveNotifPrefs()">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Telegram Notifications</div>
+              <div class="toggle-sub">Get alerts via Telegram</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="telegramNotifToggle" onchange="saveNotifPrefs()">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="settings-card">
+          <div class="settings-card-title">🔒 Change Password</div>
+          <div class="settings-card-desc">Keep your account secure with a strong password.</div>
+          <div class="form-group">
+            <label class="input-label">Current Password</label>
+            <input class="input" type="password" id="currentPassword" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="input-label">New Password</label>
+            <input class="input" type="password" id="newPassword" placeholder="Min 8 characters">
+          </div>
+          <div class="form-group">
+            <label class="input-label">Confirm New Password</label>
+            <input class="input" type="password" id="confirmPassword" placeholder="Repeat new password">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="changePassword()" id="changePasswordBtn">Update Password</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── Notice Detail Modal ────────────────────────── -->
+<div class="modal-overlay" id="noticeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalNoticeTitle">Notice Details</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalNoticeBody"></div>
+  </div>
+</div>
+
+<!-- ── Toast ──────────────────────────────────────── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script>
+requireAuth();
+
+const user = Auth.getUser();
+
+console.log(user);
+</script>
+<script>
+// ── State ─────────────────────────────────────────────────────
+let state = {
+  tab: 'notices',
+  notices: [],
+  bookmarks: new Set(),
+  subscriptions: new Set(),
+  noticeFilter: 'ALL',
+  noticePage: 1,
+  noticeSearch: '',
+  historyPage: 1,
+  user: null,
+};
+
+let searchDebounce;
+
+// ── Init ──────────────────────────────────────────────────────
+(async function init() {
+  if (!requireAuth()) return;
+
+  // Load user
+  try {
+    state.user = await API.user.me();
+    updateUserUI(state.user);
+  } catch (e) {
+    showToast('Failed to load profile', 'error');
+  }
+
+  // Parallel loads
+  await Promise.all([
+    loadSubscriptions(),
+    loadBookmarks(),
+  ]);
+
+  loadNotices();
+})();
+
+// ── User UI ───────────────────────────────────────────────────
+function updateUserUI(user) {
+  const initials = (user.full_name || user.email || '?')
+    .split(' ')
+    .map(w => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
+  document.getElementById('userAvatarInitial').textContent = initials;
+  document.getElementById('sidebarUserName').textContent = user.full_name || '—';
+  document.getElementById('sidebarUserEmail').textContent = user.email || '';
+
+  // Settings form
+  document.getElementById('settingsName').value = user.full_name || '';
+  document.getElementById('settingsEmail').value = user.email || '';
+
+  // Notification toggles
+  document.getElementById('emailNotifToggle').checked = user.email_notifications !== false;
+  document.getElementById('telegramNotifToggle').checked = user.telegram_notifications !== false;
+
+  // Telegram status
+  if (user.telegram_chat_id) {
+    document.getElementById('telegramStatusText').textContent = `✅ Connected (ID: ${user.telegram_chat_id})`;
+    document.getElementById('telegramStatusText').className = 'telegram-status connected';
+    document.getElementById('telegramInputGroup').style.display = 'none';
+    document.getElementById('connectTelegramBtn').style.display = 'none';
+    document.getElementById('disconnectTelegramBtn').style.display = 'inline-flex';
+  }
+}
+
+// ── Tab Navigation ────────────────────────────────────────────
+function switchTab(tab) {
+  state.tab = tab;
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  document.getElementById(`panel-${tab}`).classList.add('active');
+  document.getElementById(`nav-${tab}`).classList.add('active');
+
+  const titles = {
+    notices: ['Notices Feed', 'AI-powered notices from official sources'],
+    bookmarks: ['Bookmarks', 'Your saved notices'],
+    history: ['Notification History', 'All alerts sent to you'],
+    subscriptions: ['Subscriptions', 'Manage your exam categories'],
+    settings: ['Settings', 'Profile and notification preferences'],
+  };
+
+  const [title, subtitle] = titles[tab] || ['', ''];
+  document.getElementById('topbarTitle').textContent = title;
+  document.getElementById('topbarSubtitle').textContent = subtitle;
+
+  // Lazy load per tab
+  if (tab === 'bookmarks' && document.getElementById('bookmarkList').style.display === 'none' && !document.getElementById('bookmarkEmpty').style.display === 'none') {
+    loadBookmarkPanel();
+  }
+  if (tab === 'history') loadHistory(1);
+  if (tab === 'bookmarks') loadBookmarkPanel();
+
+  closeSidebar();
+}
+
+// ── Sidebar ───────────────────────────────────────────────────
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarBackdrop').classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarBackdrop').classList.remove('open');
+}
+
+function refreshCurrent() {
+  if (state.tab === 'notices') loadNotices(state.noticePage);
+  else if (state.tab === 'bookmarks') loadBookmarkPanel();
+  else if (state.tab === 'history') loadHistory(state.historyPage);
+  else if (state.tab === 'subscriptions') loadSubscriptions();
+}
+
+// ── Notices ───────────────────────────────────────────────────
+async function loadNotices(page = 1) {
+  state.noticePage = page;
+  document.getElementById('noticeLoader').style.display = 'flex';
+  document.getElementById('noticeLoader').style.flexDirection = 'column';
+  document.getElementById('noticeList').style.display = 'none';
+  document.getElementById('noticeEmpty').style.display = 'none';
+
+  const params = { page, limit: 10 };
+  if (state.noticeFilter !== 'ALL') params.category = state.noticeFilter;
+  if (state.noticeSearch) params.search = state.noticeSearch;
+
+  try {
+    const data = await API.notices.list(params);
+    state.notices = data.notices || data.items || data || [];
+
+    document.getElementById('statTotal').textContent = data.total ?? state.notices.length;
+
+    // Update badge
+    const badge = document.getElementById('noticeBadge');
+    badge.textContent = data.total ?? state.notices.length;
+
+    document.getElementById('noticeLoader').style.display = 'none';
+
+    if (state.notices.length === 0) {
+      document.getElementById('noticeEmpty').style.display = 'block';
+    } else {
+      document.getElementById('noticeList').style.display = 'flex';
+      renderNotices(state.notices);
+      renderPagination('noticePagination', page, Math.ceil((data.total || state.notices.length) / 10), loadNotices);
+    }
+  } catch (e) {
+    document.getElementById('noticeLoader').style.display = 'none';
+    document.getElementById('noticeEmpty').style.display = 'block';
+    showToast('Could not load notices: ' + e.message, 'error');
+  }
+}
+
+function renderNotices(notices) {
+  const list = document.getElementById('noticeList');
+  list.innerHTML = '';
+
+  notices.forEach((n, i) => {
+    const card = buildNoticeCard(n, i);
+    list.appendChild(card);
+  });
+}
+
+function buildNoticeCard(n, i) {
+  const div = document.createElement('div');
+  div.className = 'notice-card';
+  div.style.animationDelay = `${i * 0.05}s`;
+
+  const cat = (n.category || 'GENERAL').toLowerCase();
+  const isBookmarked = state.bookmarks.has(n.id);
+
+  div.innerHTML = `
+    <div class="notice-card-header">
+      <div class="notice-card-title">${escHtml(n.title)}</div>
+      <div class="notice-card-actions">
+        <button class="icon-btn ${isBookmarked ? 'active' : ''}" id="bm-${n.id}" onclick="toggleBookmark(${n.id}, this)" title="Bookmark">
+          ${isBookmarked ? '🔖' : '🔖'}
+        </button>
+        <a href="${escHtml(n.notice_url || '#')}" target="_blank" rel="noopener" class="icon-btn" title="Open original">↗</a>
+      </div>
+    </div>
+
+    <div class="notice-tags">
+      <span class="badge badge-${cat}">${n.category || 'GENERAL'}</span>
+      <span class="notice-date">🕐 ${formatDate(n.published_date || n.created_at)}</span>
+    </div>
+
+    ${n.summary ? `
+<div class="ai-summary">
+
+    <div class="ai-summary-header">
+        🤖 AI Summary
+    </div>
+
+    <p><strong>📌 Summary:</strong><br>
+    ${escHtml(n.summary)}</p>
+
+    <p><strong>📅 Important Dates:</strong><br>
+    ${escHtml(n.important_dates || "Not available")}</p>
+
+    <p><strong>🎓 Eligibility:</strong><br>
+    ${escHtml(n.eligibility || "Not specified")}</p>
+
+    <p><strong>✅ Action Required:</strong><br>
+    ${escHtml(n.action_required || "Read the official notice")}</p>
+
+    <p><strong>🏷️ Keywords:</strong><br>
+    ${escHtml(n.keywords || "-")}</p>
+
+</div>
+` : ''}
+
+    <div class="notice-card-footer">
+      <button class="translate-btn" onclick="translateNotice(${n.id}, this)" data-translated="false">
+        🌐 Translate to Hindi
+      </button>
+      ${n.notice_url ? `<a href="${escHtml(n.notice_url)}" class="notice-link" target="_blank" rel="noopener">View Official Notice ↗</a>` : ''}
+    </div>
+  `;
+
+  const bmBtn = div.querySelector(`#bm-${n.id}`);
+  bmBtn.onclick = () => toggleBookmark(n.id, bmBtn);
+
+  return div;
+}
+
+// ── Category Filter ───────────────────────────────────────────
+function setCatFilter(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.noticeFilter = cat;
+  loadNotices(1);
+}
+
+function handleSearch() {
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(() => {
+    state.noticeSearch = document.getElementById('searchInput').value.trim();
+    loadNotices(1);
+  }, 350);
+}
+
+// ── Bookmarks ─────────────────────────────────────────────────
+async function loadBookmarks() {
+  try {
+    const data = await API.bookmarks.list();
+    state.bookmarks = new Set((data || []).map(b => b.notice_id || b.id));
+    document.getElementById('statBookmarks').textContent = state.bookmarks.size;
+
+    const bBadge = document.getElementById('bookmarkBadge');
+    if (state.bookmarks.size > 0) {
+      bBadge.style.display = '';
+      bBadge.textContent = state.bookmarks.size;
+    }
+  } catch (e) { /* silent */ }
+}
+
+async function loadBookmarkPanel() {
+  document.getElementById('bookmarkLoader').style.display = 'flex';
+  document.getElementById('bookmarkLoader').style.flexDirection = 'column';
+  document.getElementById('bookmarkList').style.display = 'none';
+  document.getElementById('bookmarkEmpty').style.display = 'none';
+
+  try {
+    const data = await API.bookmarks.list();
+    const notices = (data || []).map(b => b.notice || b);
+
+    document.getElementById('bookmarkLoader').style.display = 'none';
+
+    if (notices.length === 0) {
+      document.getElementById('bookmarkEmpty').style.display = 'block';
+      return;
+    }
+
+    const list = document.getElementById('bookmarkList');
+    list.style.display = 'flex';
+    list.innerHTML = '';
+    notices.forEach((n, i) => list.appendChild(buildNoticeCard(n, i)));
+  } catch (e) {
+    document.getElementById('bookmarkLoader').style.display = 'none';
+    document.getElementById('bookmarkEmpty').style.display = 'block';
+  }
+}
+
+async function toggleBookmark(noticeId, btn) {
+  const wasBookmarked = state.bookmarks.has(noticeId);
+  try {
+    if (wasBookmarked) {
+      await API.bookmarks.remove(noticeId);
+      state.bookmarks.delete(noticeId);
+      btn.classList.remove('active');
+      showToast('Bookmark removed', 'info');
+    } else {
+      await API.bookmarks.add(noticeId);
+      state.bookmarks.add(noticeId);
+      btn.classList.add('active');
+      showToast('Bookmarked!', 'success');
+    }
+    document.getElementById('statBookmarks').textContent = state.bookmarks.size;
+    const bBadge = document.getElementById('bookmarkBadge');
+    if (state.bookmarks.size > 0) { bBadge.style.display = ''; bBadge.textContent = state.bookmarks.size; }
+    else { bBadge.style.display = 'none'; }
+  } catch (e) {
+    showToast('Bookmark action failed: ' + e.message, 'error');
+  }
+}
+
+// ── Notifications History ─────────────────────────────────────
+async function loadHistory(page = 1) {
+  state.historyPage = page;
+  document.getElementById('historyLoader').style.display = 'flex';
+  document.getElementById('historyLoader').style.flexDirection = 'column';
+  document.getElementById('historyList').style.display = 'none';
+  document.getElementById('historyEmpty').style.display = 'none';
+
+  try {
+    const data = await API.notifications.history(page);
+    const items = data.items || data || [];
+    document.getElementById('statNotified').textContent = data.total ?? items.length;
+
+    document.getElementById('historyLoader').style.display = 'none';
+
+    if (items.length === 0) {
+      document.getElementById('historyEmpty').style.display = 'block';
+      return;
+    }
+
+    const list = document.getElementById('historyList');
+    list.style.display = 'flex';
+    list.innerHTML = '';
+
+    items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'notif-item';
+      const channel = (item.channel || 'email').toLowerCase();
+      div.innerHTML = `
+        <div class="notif-channel-icon ${channel}">
+          ${channel === 'telegram' ? '✈️' : '📧'}
+        </div>
+        <div class="notif-content">
+          <div class="notif-title">${escHtml(item.notice_title || item.message || 'Notification')}</div>
+          <div class="notif-meta">
+            <span class="badge badge-${(item.category || 'general').toLowerCase()}" style="font-size:10px;padding:2px 8px;">
+              ${item.category || 'GENERAL'}
+            </span>
+            <span class="notif-time">🕐 ${formatDate(item.sent_at || item.created_at)}</span>
+            <span style="font-size:11px;color:var(--text-muted);">via ${channel}</span>
+          </div>
+        </div>
+        <div class="status-dot"></div>
+      `;
+      list.appendChild(div);
+    });
+
+    renderPagination('historyPagination', page, Math.ceil((data.total || items.length) / 10), loadHistory);
+  } catch (e) {
+    document.getElementById('historyLoader').style.display = 'none';
+    document.getElementById('historyEmpty').style.display = 'block';
+  }
+}
+
+// ── Subscriptions ─────────────────────────────────────────────
+async function loadSubscriptions() {
+  try {
+    const data = await API.subscriptions.list();
+    state.subscriptions = new Set((data || []).map(s => s.category || s));
+    document.getElementById('statSubs').textContent = state.subscriptions.size;
+    renderSubGrid();
+  } catch (e) { /* silent */ }
+}
+
+function renderSubGrid() {
+  const grid = document.getElementById('subGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  CATEGORIES.forEach(cat => {
+    const subscribed = state.subscriptions.has(cat.id);
+    const div = document.createElement('div');
+    div.className = `sub-card${subscribed ? ' subscribed' : ''}`;
+    div.id = `sub-${cat.id}`;
+    div.onclick = () => toggleSub(cat.id, div);
+    div.innerHTML = `
+      <span class="sub-emoji">${cat.emoji}</span>
+      <div class="sub-name">${cat.label}</div>
+      <div class="sub-status">${subscribed ? 'Subscribed ✓' : 'Tap to subscribe'}</div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+async function toggleSub(catId, card) {
+  const wasSubscribed = state.subscriptions.has(catId);
+  // Optimistic update
+  if (wasSubscribed) {
+    state.subscriptions.delete(catId);
+    card.classList.remove('subscribed');
+    card.querySelector('.sub-status').textContent = 'Tap to subscribe';
+  } else {
+    state.subscriptions.add(catId);
+    card.classList.add('subscribed');
+    card.querySelector('.sub-status').textContent = 'Subscribed ✓';
+  }
+  document.getElementById('statSubs').textContent = state.subscriptions.size;
+
+  try {
+    if (wasSubscribed) {
+      await API.subscriptions.remove(catId);
+      showToast(`Unsubscribed from ${catId}`, 'info');
+    } else {
+      await API.subscriptions.add(catId);
+      showToast(`Subscribed to ${catId}! 🎉`, 'success');
+    }
+  } catch (e) {
+    // Revert on error
+    if (wasSubscribed) {
+      state.subscriptions.add(catId);
+      card.classList.add('subscribed');
+      card.querySelector('.sub-status').textContent = 'Subscribed ✓';
+    } else {
+      state.subscriptions.delete(catId);
+      card.classList.remove('subscribed');
+      card.querySelector('.sub-status').textContent = 'Tap to subscribe';
+    }
+    showToast('Subscription update failed: ' + e.message, 'error');
+  }
+}
+
+// ── Settings ──────────────────────────────────────────────────
+async function saveProfile() {
+  const btn = document.getElementById('saveProfileBtn');
+  const name = document.getElementById('settingsName').value.trim();
+  const email = document.getElementById('settingsEmail').value.trim();
+
+  if (!name || !email) { showToast('Name and email are required', 'error'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  try {
+    await API.user.update({ full_name: name, email });
+    state.user = { ...state.user, full_name: name, email };
+    updateUserUI(state.user);
+    showToast('Profile updated ✅', 'success');
+  } catch (e) {
+    showToast('Update failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Save Changes';
+  }
+}
+
+async function saveNotifPrefs() {
+  const emailOn = document.getElementById('emailNotifToggle').checked;
+  const telegramOn = document.getElementById('telegramNotifToggle').checked;
+  try {
+    await API.user.updateNotifications({ email_notifications: emailOn, telegram_notifications: telegramOn });
+    showToast('Preferences saved', 'success');
+  } catch (e) {
+    showToast('Could not save preferences', 'error');
+  }
+}
+
+async function connectTelegram() {
+  const chatId = document.getElementById('telegramChatId').value.trim();
+  if (!chatId) { showToast('Please enter your Telegram Chat ID', 'error'); return; }
+
+  const btn = document.getElementById('connectTelegramBtn');
+  btn.disabled = true; btn.textContent = 'Connecting…';
+
+  try {
+    await API.user.connectTelegram(chatId);
+    document.getElementById('telegramStatusText').textContent = `✅ Connected (ID: ${chatId})`;
+    document.getElementById('telegramStatusText').className = 'telegram-status connected';
+    document.getElementById('telegramInputGroup').style.display = 'none';
+    document.getElementById('connectTelegramBtn').style.display = 'none';
+    document.getElementById('disconnectTelegramBtn').style.display = 'inline-flex';
+    showToast('Telegram connected! Check for a test message 🎉', 'success');
+  } catch (e) {
+    showToast('Connection failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Connect';
+  }
+}
+
+async function disconnectTelegram() {
+  if (!confirm('Disconnect your Telegram account?')) return;
+  try {
+    await API.user.disconnectTelegram();
+    document.getElementById('telegramStatusText').textContent = '⭕ Not Connected';
+    document.getElementById('telegramStatusText').className = 'telegram-status disconnected';
+    document.getElementById('telegramInputGroup').style.display = '';
+    document.getElementById('connectTelegramBtn').style.display = '';
+    document.getElementById('disconnectTelegramBtn').style.display = 'none';
+    document.getElementById('telegramChatId').value = '';
+    showToast('Telegram disconnected', 'info');
+  } catch (e) {
+    showToast('Disconnect failed: ' + e.message, 'error');
+  }
+}
+
+async function changePassword() {
+  const current = document.getElementById('currentPassword').value;
+  const next = document.getElementById('newPassword').value;
+  const confirm = document.getElementById('confirmPassword').value;
+
+  if (!current || !next || !confirm) { showToast('All fields are required', 'error'); return; }
+  if (next !== confirm) { showToast('New passwords do not match', 'error'); return; }
+  if (next.length < 8) { showToast('Password must be at least 8 characters', 'error'); return; }
+
+  const btn = document.getElementById('changePasswordBtn');
+  btn.disabled = true; btn.textContent = 'Updating…';
+
+  try {
+    await API.user.changePassword({ current_password: current, new_password: next });
+    document.getElementById('currentPassword').value = '';
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmPassword').value = '';
+    showToast('Password updated successfully ✅', 'success');
+  } catch (e) {
+    showToast('Password update failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Update Password';
+  }
+}
+
+// ── Translate ─────────────────────────────────────────────────
+async function translateNotice(noticeId, btn) {
+  if (btn.dataset.translated === 'true') return;
+  btn.textContent = '⏳ Translating…';
+  btn.disabled = true;
+
+  try {
+    const data = await API.notices.aiAction(noticeId, 'translate_hindi');
+    if (data && data.result) {
+      // Insert translation below the existing AI summary
+      const card = btn.closest('.notice-card');
+      const existing = card.querySelector('.ai-summary');
+      const transDiv = document.createElement('div');
+      transDiv.className = 'ai-summary';
+      transDiv.style.borderColor = 'rgba(6, 182, 212, 0.3)';
+      transDiv.innerHTML = `
+        <div class="ai-summary-header" style="color:var(--accent-light)">🌐 हिंदी अनुवाद</div>
+        ${escHtml(data.result)}
+      `;
+      if (existing) existing.after(transDiv);
+      else btn.closest('.notice-card-footer').before(transDiv);
+      btn.textContent = '✓ Translated';
+      btn.dataset.translated = 'true';
+    }
+  } catch (e) {
+    showToast('Translation failed: ' + e.message, 'error');
+    btn.textContent = '🌐 Translate to Hindi';
+    btn.disabled = false;
+  }
+}
+
+// ── Modal ─────────────────────────────────────────────────────
+function closeModal() {
+  document.getElementById('noticeModal').classList.remove('open');
+}
+
+document.getElementById('noticeModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('noticeModal')) closeModal();
+});
+
+// ── Pagination ────────────────────────────────────────────────
+function renderPagination(containerId, current, total, loadFn) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  if (total <= 1) return;
+
+  const prev = document.createElement('button');
+  prev.className = 'page-btn';
+  prev.textContent = '‹';
+  prev.disabled = current === 1;
+  prev.onclick = () => loadFn(current - 1);
+  container.appendChild(prev);
+
+  for (let i = 1; i <= total; i++) {
+    if (total > 7 && Math.abs(i - current) > 2 && i !== 1 && i !== total) {
+      if (i === 2 || i === total - 1) {
+        const dots = document.createElement('span');
+        dots.textContent = '…';
+        dots.style.cssText = 'color:var(--text-muted);padding:0 4px;';
+        container.appendChild(dots);
+      }
+      continue;
+    }
+    const btn = document.createElement('button');
+    btn.className = `page-btn${i === current ? ' active' : ''}`;
+    btn.textContent = i;
+    btn.onclick = () => loadFn(i);
+    container.appendChild(btn);
+  }
+
+  const next = document.createElement('button');
+  next.className = 'page-btn';
+  next.textContent = '›';
+  next.disabled = current === total;
+  next.onclick = () => loadFn(current + 1);
+  container.appendChild(next);
+}
+
+// ── Auth ──────────────────────────────────────────────────────
+function logout() {
+  if (confirm('Are you sure you want to sign out?')) {
+    Auth.clear();
+    window.location.href = '/login';
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  } catch { return dateStr; }
+}
+</script>
+</body>
+</html>
