@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel
 
 from app.schemas.notice import (
     NoticeCreate,
@@ -18,19 +19,40 @@ router = APIRouter(
 )
 
 
+# ================= AI ACTION =================
+
+class AIAction(BaseModel):
+    action: str
+
+
+# ================= CREATE =================
+
 @router.post("/", response_model=NoticeResponse)
 def add_notice(notice: NoticeCreate):
 
-    return create_notice(notice)
+    try:
+        return create_notice(notice)
+
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
 
-from fastapi import Query
+# ================= GET ALL =================
 
-
-@router.get("/", response_model=list[NoticeResponse])
+@router.get("/")
 def all_notices(
 
-    category: str | None = Query(default=None)
+    page: int = Query(1, ge=1),
+
+    limit: int = Query(10, ge=1, le=100),
+
+    category: str | None = None,
+
+    search: str | None = None
 
 ):
 
@@ -40,28 +62,82 @@ def all_notices(
 
         notices = [
 
-            n for n in notices
+            n
 
-            if n.category == category
+            for n in notices
+
+            if n.category.lower() == category.lower()
 
         ]
 
-    return notices
+    if search:
 
+        s = search.lower()
+
+        notices = [
+
+            n
+
+            for n in notices
+
+            if (
+
+                s in n.title.lower()
+
+                or
+
+                s in n.summary.lower()
+
+            )
+
+        ]
+
+    total = len(notices)
+
+    start = (page - 1) * limit
+
+    end = start + limit
+
+    return {
+
+        "items": notices[start:end],
+
+        "page": page,
+
+        "limit": limit,
+
+        "total": total,
+
+        "pages": (
+
+            total + limit - 1
+
+        ) // limit
+
+    }
+
+
+# ================= GET ONE =================
 
 @router.get("/{notice_id}", response_model=NoticeResponse)
 def one_notice(notice_id: int):
 
     notice = get_notice_by_id(notice_id)
 
-    if not notice:
+    if notice is None:
+
         raise HTTPException(
+
             status_code=404,
+
             detail="Notice not found"
+
         )
 
     return notice
 
+
+# ================= DELETE =================
 
 @router.delete("/{notice_id}")
 def remove_notice(notice_id: int):
@@ -69,11 +145,91 @@ def remove_notice(notice_id: int):
     success = delete_notice(notice_id)
 
     if not success:
+
         raise HTTPException(
+
             status_code=404,
+
             detail="Notice not found"
+
         )
 
     return {
+
+        "success": True,
+
         "message": "Notice deleted successfully"
+
+    }
+
+
+# ================= AI ACTION =================
+
+@router.post("/{notice_id}/ai-action")
+def ai_action(
+
+    notice_id: int,
+
+    request: AIAction
+
+):
+
+    notice = get_notice_by_id(notice_id)
+
+    if not notice:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Notice not found"
+
+        )
+
+    action = request.action.lower()
+
+    if action == "translate":
+
+        return {
+
+            "result": notice.translated_summary
+
+        }
+
+    elif action == "summarize":
+
+        return {
+
+            "result": notice.summary
+
+        }
+
+    elif action == "eligibility":
+
+        return {
+
+            "result": notice.eligibility
+
+        }
+
+    elif action == "important_dates":
+
+        return {
+
+            "result": notice.important_dates
+
+        }
+
+    elif action == "action_required":
+
+        return {
+
+            "result": notice.action_required
+
+        }
+
+    return {
+
+        "result": notice.summary
+
     }

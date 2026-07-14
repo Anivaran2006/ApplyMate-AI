@@ -1,11 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import urllib3
 
-BASE_URL = "https://jeemain.nta.nic.in/"
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+URL = "https://www.ibps.in/"
 
 
-def scrape_nta():
+def scrape_banking():
 
     headers = {
         "User-Agent": (
@@ -15,64 +18,60 @@ def scrape_nta():
         )
     }
 
+    notices = []
+    seen = set()
+
+    keywords = [
+        "notification",
+        "notice",
+        "exam",
+        "result",
+        "admit",
+        "application",
+        "recruitment",
+        "crp",
+        "po",
+        "clerk",
+        "so",
+        "rrb",
+        "vacancy",
+        "interview",
+        "allotment"
+    ]
+
+    ignore = [
+        "home",
+        "contact",
+        "login",
+        "privacy",
+        "copyright",
+        "feedback",
+        "sitemap",
+        "screen reader",
+        "skip",
+        "main content"
+    ]
+
     try:
 
         response = requests.get(
-            BASE_URL,
+            URL,
             headers=headers,
-            timeout=30
+            timeout=30,
+            verify=False
         )
 
         response.raise_for_status()
 
     except Exception as e:
 
-        print("❌ Request Error:", e)
+        print("Banking Scraper Error:", e)
         return []
 
     soup = BeautifulSoup(
         response.text,
         "html.parser"
     )
-
-    notices = []
-    seen = set()
-
-    ignore_words = [
-        "home",
-        "about",
-        "contact",
-        "privacy",
-        "accessibility",
-        "menu",
-        "login",
-        "skip",
-        "toggle",
-        "contrast",
-        "font",
-        "government",
-        "ministry",
-        "department"
-    ]
-
-    keywords = [
-        "registration",
-        "admit",
-        "answer",
-        "result",
-        "notice",
-        "declaration",
-        "advisory",
-        "application",
-        "exam",
-        "schedule",
-        "city",
-        "correction",
-        "jee",
-        "main",
-        "bulletin",
-        "candidate"
-    ]
 
     for a in soup.find_all("a"):
 
@@ -84,16 +83,16 @@ def scrape_nta():
 
         title_lower = title.lower()
 
-        if len(title) < 15:
+        if len(title) < 10:
             continue
 
-        if any(word in title_lower for word in ignore_words):
+        if any(word in title_lower for word in ignore):
             continue
 
         if not any(word in title_lower for word in keywords):
             continue
 
-        full_url = urljoin(BASE_URL, href)
+        full_url = urljoin(URL, href)
 
         if full_url in seen:
             continue
@@ -108,14 +107,11 @@ def scrape_nta():
             }
         )
 
-    print("\n" + "=" * 60)
-    print("NTA SCRAPER")
-    print("=" * 60)
+    print("\n========== BANKING NOTICES ==========")
     print(f"Found {len(notices)} notices")
     print("=" * 60)
 
     for i, notice in enumerate(notices, 1):
-
         print(f"{i}. {notice['title']}")
         print(notice["url"])
         print("-" * 60)
@@ -124,5 +120,4 @@ def scrape_nta():
 
 
 if __name__ == "__main__":
-
-    scrape_nta()
+    scrape_banking()

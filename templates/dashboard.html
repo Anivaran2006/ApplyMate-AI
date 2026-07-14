@@ -869,6 +869,88 @@
     }
 
     .sidebar-backdrop.open { display: block; }
+
+    .assistant-container{
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.chat-box{
+
+height:500px;
+
+overflow-y:auto;
+
+background:white;
+
+border-radius:12px;
+
+padding:20px;
+
+border:1px solid #ddd;
+
+}
+
+.user-message{
+
+background:#2563eb;
+
+color:white;
+
+padding:12px;
+
+border-radius:10px;
+
+margin-bottom:10px;
+
+text-align:right;
+
+}
+
+.bot-message{
+
+background:navy;
+
+padding:12px;
+
+border-radius:10px;
+
+margin-bottom:10px;
+
+}
+
+.chat-input{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.chat-input input{
+
+flex:1;
+
+padding:14px;
+
+border-radius:8px;
+
+border:1px solid #ddd;
+
+}
+
+.chat-input button{
+
+padding:14px 24px;
+
+cursor:pointer;
+
+}
   </style>
 </head>
 <body>
@@ -913,6 +995,10 @@
       <button class="nav-item" id="nav-settings" onclick="switchTab('settings')">
         <span class="nav-icon">⚙️</span> Settings
       </button>
+      <button class="nav-item" id="nav-assistant" onclick="switchTab('assistant')">
+    <span class="nav-icon">🤖</span>
+    AI Assistant
+</button>
     </nav>
 
     <div class="sidebar-footer">
@@ -1041,26 +1127,49 @@
         </p>
       </div>
     </div>
-
     <!-- ── SETTINGS PANEL ──────────────────────────────── -->
-    <div class="tab-panel" id="panel-settings">
-      <div class="settings-grid">
+<div class="tab-panel" id="panel-settings">
+
+    <div class="settings-grid">
 
         <!-- Profile -->
         <div class="settings-card">
-          <div class="settings-card-title">👤 Profile</div>
-          <div class="settings-card-desc">Update your name and email address.</div>
-          <div class="form-group">
-            <label class="input-label">Full Name</label>
-            <input class="input" type="text" id="settingsName" placeholder="Your full name">
-          </div>
-          <div class="form-group">
-            <label class="input-label">Email</label>
-            <input class="input" type="email" id="settingsEmail" placeholder="your@email.com">
-          </div>
-          <button class="btn btn-primary btn-sm" onclick="saveProfile()" id="saveProfileBtn">Save Changes</button>
-        </div>
 
+            <div class="settings-card-title">👤 Profile</div>
+
+            <div class="settings-card-desc">
+                Update your name and email address.
+            </div>
+
+            <div class="form-group">
+                <label class="input-label">Full Name</label>
+                <input
+                    class="input"
+                    type="text"
+                    id="settingsName"
+                    placeholder="Your full name"
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="input-label">Email</label>
+                <input
+                    class="input"
+                    type="email"
+                    id="settingsEmail"
+                    placeholder="your@email.com"
+                >
+            </div>
+
+            <button
+                class="btn btn-primary btn-sm"
+                onclick="saveProfile()"
+                id="saveProfileBtn"
+            >
+                Save Changes
+            </button>
+
+        </div>
         <!-- Telegram -->
         <div class="settings-card">
           <div class="settings-card-title">✈️ Telegram Notifications</div>
@@ -1133,7 +1242,43 @@
 
       </div>
     </div>
+     <!-- ── AI ASSISTANT PANEL ───────────────────────── -->
 
+<div class="tab-panel" id="panel-assistant">
+
+    <div class="page-header">
+        <h2>🤖 ApplyMate AI Assistant</h2>
+
+        <p>
+            Ask questions about exams, eligibility,
+            registrations, results and notices.
+        </p>
+    </div>
+
+    <div class="assistant-container">
+
+        <div
+            id="chatMessages"
+            class="chat-box">
+        </div>
+
+        <div class="chat-input">
+
+            <input
+                id="question"
+                type="text"
+                placeholder="Ask anything..."
+            >
+
+            <button onclick="askAI()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
   </main>
 </div>
 
@@ -1154,11 +1299,7 @@
 <script src="/static/js/config.js"></script>
 <script src="/static/js/api.js"></script>
 <script>
-requireAuth();
 
-const user = Auth.getUser();
-
-console.log(user);
 </script>
 <script>
 // ── State ─────────────────────────────────────────────────────
@@ -1175,7 +1316,18 @@ let state = {
 };
 
 let searchDebounce;
-
+const CATEGORIES = [
+    { id: "JEE", label: "JEE", emoji: "⚡" },
+    { id: "NEET", label: "NEET", emoji: "🩺" },
+    { id: "CUET", label: "CUET", emoji: "🎓" },
+    { id: "GATE", label: "GATE", emoji: "🔬" },
+    { id: "UPSC", label: "UPSC", emoji: "🏛️" },
+    { id: "SSC", label: "SSC", emoji: "📋" },
+    { id: "BANKING", label: "Banking", emoji: "🏦" },
+    { id: "RAILWAY", label: "Railway", emoji: "🚆" },
+    { id: "CAT", label: "CAT", emoji: "📈" },
+    { id: "CLAT", label: "CLAT", emoji: "⚖️" }
+];
 // ── Init ──────────────────────────────────────────────────────
 (async function init() {
   if (!requireAuth()) return;
@@ -1238,12 +1390,38 @@ function switchTab(tab) {
   document.getElementById(`nav-${tab}`).classList.add('active');
 
   const titles = {
-    notices: ['Notices Feed', 'AI-powered notices from official sources'],
-    bookmarks: ['Bookmarks', 'Your saved notices'],
-    history: ['Notification History', 'All alerts sent to you'],
-    subscriptions: ['Subscriptions', 'Manage your exam categories'],
-    settings: ['Settings', 'Profile and notification preferences'],
-  };
+
+    notices: [
+        "Notices Feed",
+        "AI-powered notices from official sources"
+    ],
+
+    bookmarks: [
+        "Bookmarks",
+        "Your saved notices"
+    ],
+
+    history: [
+        "Notification History",
+        "All alerts sent to you"
+    ],
+
+    subscriptions: [
+        "Subscriptions",
+        "Manage your exam categories"
+    ],
+
+    settings: [
+        "Settings",
+        "Profile and notification preferences"
+    ],
+
+    assistant: [
+        "AI Assistant",
+        "Ask questions about exams, eligibility, results and notices"
+    ]
+
+};
 
   const [title, subtitle] = titles[tab] || ['', ''];
   document.getElementById('topbarTitle').textContent = title;
@@ -1529,6 +1707,7 @@ async function loadSubscriptions() {
     const data = await API.subscriptions.list();
     state.subscriptions = new Set((data || []).map(s => s.category || s));
     document.getElementById('statSubs').textContent = state.subscriptions.size;
+    
     renderSubGrid();
   } catch (e) { /* silent */ }
 }
@@ -1792,6 +1971,49 @@ function formatDate(dateStr) {
     return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   } catch { return dateStr; }
 }
+
+async function askAI() {
+
+    const input = document.getElementById("question");
+    const question = input.value.trim();
+
+    if (!question) return;
+
+    const chat = document.getElementById("chatMessages");
+
+    // User message
+    chat.innerHTML += `
+        <div class="user-message">
+            ${question}
+        </div>
+    `;
+
+    input.value = "";
+    chat.scrollTop = chat.scrollHeight;
+
+    try {
+
+        const data = await API.assistant.chat(question);
+
+        chat.innerHTML += `
+            <div class="bot-message">
+                ${data.answer}
+            </div>
+        `;
+
+    } catch (error) {
+
+        chat.innerHTML += `
+            <div class="bot-message">
+                ❌ ${error.message}
+            </div>
+        `;
+
+    }
+
+    chat.scrollTop = chat.scrollHeight;
+}
+
 </script>
 </body>
 </html>

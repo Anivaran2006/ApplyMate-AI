@@ -1,4 +1,6 @@
-from pydantic import BaseModel, EmailStr
+from typing import List
+
+from pydantic import BaseModel, EmailStr, Field
 
 
 class UserRegister(BaseModel):
@@ -7,7 +9,9 @@ class UserRegister(BaseModel):
 
     password: str
 
-    category: str = "GENERAL"
+    categories: List[str] = Field(
+        default_factory=lambda: ["GENERAL"]
+    )
 
 
 class UserLogin(BaseModel):

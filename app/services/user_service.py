@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.database.database import SessionLocal
-from app.database.models import User
+from app.database.models import User, Subscription
 
 from app.auth.security import (
     hash_password,
@@ -22,8 +22,13 @@ def register_user(data):
         )
 
         if existing:
-
             return False
+
+        default_category = (
+            data.categories[0]
+            if data.categories
+            else "GENERAL"
+        )
 
         new_user = User(
 
@@ -33,11 +38,28 @@ def register_user(data):
                 data.password
             ),
 
-            category=data.category
+            # Temporary compatibility
+            category=default_category
 
         )
 
         db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        # Save all selected categories
+
+        for category in data.categories:
+
+            subscription = Subscription(
+
+                user_id=new_user.id,
+
+                category=category
+
+            )
+
+            db.add(subscription)
 
         db.commit()
 
@@ -60,25 +82,17 @@ def login_user(email, password):
             .first()
         )
 
-        print("=================================")
-        print("User from DB:", user)
-
         if not user:
-            print("❌ User not found")
             return None
 
-        print("Entered Password:", password)
-        print("Stored Hash:", user.password)
-
-        result = verify_password(password, user.password)
-
-        print("Password Match:", result)
-        print("=================================")
-
-        if not result:
+        if not verify_password(
+            password,
+            user.password
+        ):
             return None
 
         return user
 
     finally:
+
         db.close()

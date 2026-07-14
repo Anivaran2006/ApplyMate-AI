@@ -14,9 +14,9 @@ client = genai.Client(
 def summarize_notice(title: str, description: str):
 
     prompt = f"""
-You are an educational notice assistant.
+You are an AI assistant for ApplyMate AI.
 
-Analyze the notice below and return ONLY valid JSON.
+Analyze the following educational notice.
 
 Title:
 {title}
@@ -24,33 +24,62 @@ Title:
 Description:
 {description}
 
-Return exactly in this format:
+Return ONLY valid JSON.
 
 {{
   "summary": "...",
   "important_dates": "...",
   "eligibility": "...",
   "action_required": "...",
-  "keywords": ["...", "..."]
+  "keywords": ["...", "..."],
+
+  "priority": "HIGH | MEDIUM | LOW",
+
+  "notice_type":
+  "Registration | Admit Card | Result | Answer Key | Counselling | Recruitment | Scholarship | General",
+
+  "deadline": "YYYY-MM-DD or null",
+
+  "days_left": 0,
+
+  "translated_summary": "Hindi translation of summary"
 }}
+
+Rules:
+
+1. Return ONLY JSON.
+2. Do not use Markdown.
+3. If a field is unavailable use null.
+4. days_left should be an integer.
+5. priority must be HIGH, MEDIUM or LOW.
 """
 
     try:
 
         response = client.models.generate_content(
             model="gemini-2.5-flash",
-            contents=prompt,
+            contents=prompt
         )
 
         text = response.text.strip()
 
-        # Remove Markdown formatting if present
+        print("\n========== GEMINI RAW RESPONSE ==========")
+        print(text)
+        print("=========================================\n")
+
         if text.startswith("```"):
+
             text = (
                 text.replace("```json", "")
                 .replace("```", "")
                 .strip()
             )
+
+        start = text.find("{")
+        end = text.rfind("}")
+
+        if start != -1 and end != -1:
+            text = text[start:end + 1]
 
         result = json.loads(text)
 
@@ -59,16 +88,34 @@ Return exactly in this format:
         print("Gemini Error:", e)
 
         result = {
+
             "summary": description[:300],
+
             "important_dates": "",
+
             "eligibility": "",
+
             "action_required": "",
-            "keywords": []
+
+            "keywords": [],
+
+            "priority": "LOW",
+
+            "notice_type": "General",
+
+            "deadline": None,
+
+            "days_left": None,
+
+            "translated_summary": ""
+
         }
 
-    # ---------- Normalize Fields ----------
+    # ---------------- Normalize ----------------
 
-    result["summary"] = str(result.get("summary", ""))
+    result["summary"] = str(
+        result.get("summary", "")
+    )
 
     result["important_dates"] = str(
         result.get("important_dates", "")
@@ -82,11 +129,37 @@ Return exactly in this format:
         result.get("action_required", "")
     )
 
-    keywords = result.get("keywords", "")
+    keywords = result.get("keywords", [])
 
     if isinstance(keywords, list):
         keywords = ", ".join(keywords)
 
     result["keywords"] = str(keywords)
+
+    result["priority"] = str(
+        result.get("priority", "LOW")
+    ).upper()
+
+    result["notice_type"] = str(
+        result.get("notice_type", "General")
+    )
+
+    result["deadline"] = result.get(
+        "deadline"
+    )
+
+    try:
+        result["days_left"] = int(
+            result.get("days_left", 0)
+        )
+    except:
+        result["days_left"] = None
+
+    result["translated_summary"] = str(
+        result.get(
+            "translated_summary",
+            ""
+        )
+    )
 
     return result

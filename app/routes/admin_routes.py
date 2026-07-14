@@ -17,6 +17,7 @@ def scrape_now():
     result = scrape_and_save()
 
     return {
+        "success": True,
         "message": "Scraping completed successfully.",
         "added": result["added"],
         "skipped": result["skipped"]
@@ -40,14 +41,39 @@ def get_stats():
             .count()
         )
 
+        telegram_connected = (
+            db.query(User)
+            .filter(User.telegram_chat_id.isnot(None))
+            .count()
+        )
+
+        categories = (
+            db.query(User.category)
+            .distinct()
+            .count()
+        )
+
         return {
+
+            "success": True,
+
             "total_users": total_users,
+
             "active_users": total_users,
+
+            "telegram_connected_users": telegram_connected,
+
+            "categories": categories,
+
             "total_notices": total_notices,
+
             "processed_notices": processed_notices,
-            "total_notifications_sent": 0,
-            "telegram_connected_users": 0
+
+            # Replace later if you create a notification_logs table
+            "total_notifications_sent": 0
+
         }
 
     finally:
+
         db.close()

@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from app.database.database import SessionLocal
 from app.database.models import Notice
 from app.ai.gemini_service import summarize_notice
+from app.services.notification_service import notify_users
+
 
 def create_notice(data):
 
@@ -10,13 +12,61 @@ def create_notice(data):
 
     try:
 
-        # Generate AI summary
-        ai = summarize_notice(
-            data.title,
-            data.description
+        # ---------------- Duplicate Check ----------------
+
+        existing = (
+            db.query(Notice)
+            .filter(Notice.notice_url == data.notice_url)
+            .first()
         )
 
-        # Create notice with AI fields
+        if existing:
+            return existing
+
+        # ---------------- AI Summary ----------------
+
+        try:
+
+            ai = summarize_notice(
+                data.title,
+                data.description
+            )
+
+        except Exception as e:
+
+            print("Gemini Error:", e)
+
+            ai = {
+
+                "summary": data.description,
+
+                "translated_summary": "",
+
+                "important_dates": "",
+
+                "eligibility": "",
+
+                "action_required": "",
+
+                "keywords": "",
+
+                "priority": "LOW",
+
+                "notice_type": "General",
+
+                "deadline": None,
+
+                "days_left": None
+
+            }
+
+        keywords = ai.get("keywords", "")
+
+        if isinstance(keywords, list):
+            keywords = ", ".join(keywords)
+
+        # ---------------- Create Notice ----------------
+
         notice = Notice(
 
             title=data.title,
@@ -29,15 +79,43 @@ def create_notice(data):
 
             notice_url=data.notice_url,
 
-            summary=ai["summary"],
+            summary=ai.get("summary"),
 
-            important_dates=ai["important_dates"],
+            translated_summary=ai.get(
+                "translated_summary"
+            ),
 
-            eligibility=ai["eligibility"],
+            important_dates=ai.get(
+                "important_dates"
+            ),
 
-            action_required=ai["action_required"],
+            eligibility=ai.get(
+                "eligibility"
+            ),
 
-            keywords=ai["keywords"],
+            action_required=ai.get(
+                "action_required"
+            ),
+
+            keywords=keywords,
+
+            priority=ai.get(
+                "priority",
+                "LOW"
+            ),
+
+            notice_type=ai.get(
+                "notice_type",
+                "General"
+            ),
+
+            deadline=ai.get(
+                "deadline"
+            ),
+
+            days_left=ai.get(
+                "days_left"
+            ),
 
             is_ai_processed=True
 
@@ -49,11 +127,22 @@ def create_notice(data):
 
         db.refresh(notice)
 
+        # ---------------- Notifications ----------------
+
+        try:
+
+            notify_users(db, notice)
+
+        except Exception as e:
+
+            print("Notification Error:", e)
+
         return notice
 
     finally:
 
         db.close()
+
 
 def get_all_notices():
 
@@ -61,7 +150,17 @@ def get_all_notices():
 
     try:
 
-        return db.query(Notice).all()
+        return (
+
+            db.query(Notice)
+
+            .order_by(
+                Notice.created_at.desc()
+            )
+
+            .all()
+
+        )
 
     finally:
 
@@ -75,9 +174,15 @@ def get_notice_by_id(notice_id):
     try:
 
         return (
+
             db.query(Notice)
-            .filter(Notice.id == notice_id)
+
+            .filter(
+                Notice.id == notice_id
+            )
+
             .first()
+
         )
 
     finally:
@@ -92,9 +197,15 @@ def delete_notice(notice_id):
     try:
 
         notice = (
+
             db.query(Notice)
-            .filter(Notice.id == notice_id)
+
+            .filter(
+                Notice.id == notice_id
+            )
+
             .first()
+
         )
 
         if not notice:
