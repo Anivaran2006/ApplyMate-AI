@@ -977,7 +977,7 @@ async function loadAdminNotices(page = 1) {
 
     try {
 
-        const notices = await fetch("http://127.0.0.1:8000/notices/");
+        const notices = await fetch("https://applymate-ai-gz7k.onrender.com/notices/");
 
         const data = await notices.json();
 
@@ -1193,7 +1193,7 @@ async function createNotice() {
 
     try {
 
-        await fetch("http://127.0.0.1:8000/notices/", {
+        await fetch("https://applymate-ai-gz7k.onrender.com/notices/",  {
 
             method: "POST",
 
