@@ -61,11 +61,10 @@ def get_current_user(
     )
 
     if not user:
-
-        raise HTTPException(
-            status_code=404,
-            detail="User not found"
-        )
+    raise HTTPException(
+        status_code=401,
+        detail="Session expired. Please log in again."
+    )
 
     return user
   
