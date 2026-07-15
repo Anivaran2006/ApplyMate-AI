@@ -46,7 +46,9 @@ async function apiFetch(endpoint, options = {}) {
             : {}),
         ...(options.headers || {})
     };
-
+    console.log("Endpoint:", endpoint);
+console.log("Token:", token);
+console.log("Headers:", headers);
     const response = await fetch(
         API_BASE + endpoint,
         {
