@@ -36,6 +36,8 @@ def get_db():
 
 # ================= CURRENT USER =================
 
+# ================= CURRENT USER =================
+
 def get_current_user(
 
     credentials: HTTPAuthorizationCredentials = Depends(security),
@@ -61,12 +63,13 @@ def get_current_user(
     )
 
     if not user:
-    raise HTTPException(
-        status_code=401,
-        detail="Session expired. Please log in again."
-    )
 
-return user
+        raise HTTPException(
+            status_code=401,
+            detail="Session expired. Please log in again."
+        )
+
+    return user
   
 
 # ================= SCHEMAS =================
