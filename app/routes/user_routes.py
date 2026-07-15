@@ -66,7 +66,7 @@ def get_current_user(
         detail="Session expired. Please log in again."
     )
 
-    return user
+return user
   
 
 # ================= SCHEMAS =================
