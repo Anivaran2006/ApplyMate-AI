@@ -75,7 +75,7 @@ def home(request: Request):
 
     return templates.TemplateResponse(
         request=request,
-        name="login.html",
+        name="index.html",
         context={}
     )
 
