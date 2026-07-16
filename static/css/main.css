@@ -901,3 +901,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 }
+@media (max-width:768px){
+
+.hero{
+    padding-top:90px;
+}
+
+.hero-title{
+    font-size:2.4rem;
+}
+
+.hero-description{
+    line-height:1.7;
+}
+
+.hero-stats{
+    margin-top:35px;
+}
+
+}
