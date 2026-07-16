@@ -19,3 +19,10 @@ class UserLogin(BaseModel):
     email: EmailStr
 
     password: str
+
+
+# ================= FORGOT PASSWORD =================
+
+class ForgotPasswordRequest(BaseModel):
+
+    email: EmailStr

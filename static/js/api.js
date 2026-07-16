@@ -123,6 +123,19 @@ const API = {
         }
 
     },
+    forgotPassword(email) {
+
+    return apiFetch(
+        "/auth/forgot-password",
+        {
+            method: "POST",
+            body: JSON.stringify({
+                email: email
+            })
+        }
+    );
+
+},
 
     // ---------- USER ----------
 

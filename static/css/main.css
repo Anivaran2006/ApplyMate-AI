@@ -812,3 +812,92 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: var(--text-primary);
 }
+/* ===============================
+   APPLYMATE MOBILE FIX
+================================*/
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+}
+
+@media (max-width:768px){
+
+.hero-grid{
+    grid-template-columns:1fr;
+    gap:40px;
+}
+
+.hero-mockup{
+    order:-1;
+    width:100%;
+}
+
+.mockup-window{
+    max-width:360px;
+    margin:auto;
+}
+
+.hero-content{
+    text-align:center;
+}
+
+.hero-title{
+    font-size:2.6rem;
+    line-height:1.15;
+}
+
+.hero-description{
+    font-size:16px;
+    max-width:100%;
+}
+
+.hero-actions{
+    flex-direction:column;
+    width:100%;
+}
+
+.hero-actions .btn{
+    width:100%;
+}
+
+.hero-stats{
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.navbar-actions{
+    display:none;
+}
+
+.mobile-menu-btn{
+    display:flex !important;
+}
+
+.container{
+    padding-left:20px;
+    padding-right:20px;
+}
+
+.section{
+    padding:60px 0;
+}
+
+.section-title{
+    font-size:2rem;
+}
+
+.footer-grid{
+    grid-template-columns:1fr;
+}
+
+.footer-bottom{
+    flex-direction:column;
+    gap:15px;
+    text-align:center;
+}
+
+}
