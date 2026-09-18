@@ -2,8 +2,8 @@
 ApplyMate AI – Auth Routes (FastAPI & SQLAlchemy Async)
 """
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Depends, HTTPException, status  # type: ignore
+from sqlalchemy.ext.asyncio import AsyncSession  # type: ignore
 
 from app.core.database import get_db
 from app.schemas.auth import (
