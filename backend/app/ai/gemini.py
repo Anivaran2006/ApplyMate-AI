@@ -20,13 +20,13 @@ _model = None
 _use_new_genai = False
 
 try:
-    from google import genai
+    from google import genai  # type: ignore
     if settings.GEMINI_API_KEY:
         _client = genai.Client(api_key=settings.GEMINI_API_KEY)
     _use_new_genai = True
 except Exception:
     try:
-        import google.generativeai as genai_legacy
+        import google.generativeai as genai_legacy  # type: ignore
         if settings.GEMINI_API_KEY:
             genai_legacy.configure(api_key=settings.GEMINI_API_KEY)
             _model = genai_legacy.GenerativeModel(settings.GEMINI_MODEL)
