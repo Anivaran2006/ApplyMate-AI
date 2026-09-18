@@ -103,10 +103,48 @@ async def health():
     return {"status": "ok", "app": settings.APP_NAME, "env": settings.APP_ENV}
 
 
-@app.get("/", tags=["Root"])
-async def root():
-    return {
-        "message": f"Welcome to {settings.APP_NAME} API",
-        "docs": "/docs",
-        "health": "/health",
-    }
+# ── Frontend Static Files & UI Pages ──────────────────────────────────────────
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+_base_dir = Path(__file__).resolve().parent
+frontend_dir = _base_dir / "frontend"
+if not frontend_dir.exists():
+    frontend_dir = _base_dir.parent / "frontend"
+
+if frontend_dir.exists():
+    @app.get("/login", include_in_schema=False)
+    async def login_page():
+        return FileResponse(frontend_dir / "login.html")
+
+    @app.get("/signup", include_in_schema=False)
+    async def signup_page():
+        return FileResponse(frontend_dir / "signup.html")
+
+    @app.get("/dashboard", include_in_schema=False)
+    async def dashboard_page():
+        return FileResponse(frontend_dir / "dashboard.html")
+
+    @app.get("/admin", include_in_schema=False)
+    async def admin_page():
+        return FileResponse(frontend_dir / "admin.html")
+
+    @app.get("/forgot-password", include_in_schema=False)
+    async def forgot_password_page():
+        return FileResponse(frontend_dir / "forgot-password.html")
+
+    @app.get("/reset-password", include_in_schema=False)
+    async def reset_password_page():
+        return FileResponse(frontend_dir / "reset-password.html")
+
+    # Mount static assets and serve index.html at "/"
+    app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="frontend")
+else:
+    @app.get("/", tags=["Root"])
+    async def root():
+        return {
+            "message": f"Welcome to {settings.APP_NAME} API",
+            "docs": "/docs",
+            "health": "/health",
+        }
