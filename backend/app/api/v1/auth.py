@@ -1,5 +1,5 @@
 """
-ApplyMate AI – Auth Routes
+ApplyMate AI – Auth Routes (FastAPI & SQLAlchemy Async)
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
