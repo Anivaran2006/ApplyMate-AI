@@ -7,7 +7,15 @@ import json
 import re
 from typing import Optional
 
-from tenacity import retry, stop_after_attempt, wait_exponential
+try:
+    from tenacity import retry, stop_after_attempt, wait_exponential  # type: ignore
+except ImportError:
+    def retry(*args, **kwargs):  # type: ignore
+        def decorator(f):
+            return f
+        return decorator
+    def stop_after_attempt(*args, **kwargs): pass  # type: ignore
+    def wait_exponential(*args, **kwargs): pass  # type: ignore
 
 from app.core.config import settings
 from app.utils.logger import get_logger
