@@ -16,7 +16,8 @@ from app.api.v1.router import api_router
 from app.core.config import settings
 from app.scraper.scheduler import start_scheduler, stop_scheduler
 from app.services.auth_service import create_initial_admin
-from app.core.database import AsyncSessionLocal
+from app.core.database import AsyncSessionLocal, create_all_tables
+import app.models  # noqa: F401
 from app.utils.logger import get_logger, setup_logging
 
 logger = get_logger("main")
@@ -31,10 +32,20 @@ async def lifespan(app: FastAPI):
     setup_logging(debug=settings.DEBUG)
     logger.info(f"🚀 {settings.APP_NAME} starting up (env={settings.APP_ENV})")
 
+    # Ensure all database tables exist before querying
+    try:
+        await create_all_tables()
+        logger.info("✅ Database tables verified/created successfully.")
+    except Exception as e:
+        logger.error(f"⚠️ Could not create database tables on startup: {e}")
+
     # Seed initial admin
-    async with AsyncSessionLocal() as db:
-        await create_initial_admin(db, settings.ADMIN_EMAIL, settings.ADMIN_PASSWORD)
-        await db.commit()
+    try:
+        async with AsyncSessionLocal() as db:
+            await create_initial_admin(db, settings.ADMIN_EMAIL, settings.ADMIN_PASSWORD)
+            await db.commit()
+    except Exception as e:
+        logger.warning(f"⚠️ Could not seed initial admin: {e}")
 
     # Start background scheduler
     start_scheduler()
