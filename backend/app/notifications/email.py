@@ -161,3 +161,70 @@ async def send_welcome_email(to_email: str, to_name: str) -> bool:
 </div>
 </body></html>"""
     return await send_email(to_email, to_name, subject, html)
+
+
+async def send_reset_password_email(
+    to_email: str,
+    token: str,
+    to_name: str = "",
+    frontend_url: str = "",
+) -> bool:
+    """Send a password reset email with a secure token link."""
+    base = frontend_url or settings.FRONTEND_URL
+    reset_link = f"{base}/reset-password.html?token={token}"
+    display_name = to_name or to_email
+    subject = "Reset your ApplyMate AI password 🔐"
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset Password – ApplyMate AI</title>
+</head>
+<body style="margin:0;padding:0;background-color:#0f0f1a;font-family:'Segoe UI',Arial,sans-serif;">
+  <div style="max-width:600px;margin:0 auto;padding:20px;">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#1e1e3f,#2d2d5e);border-radius:16px 16px 0 0;padding:32px;text-align:center;">
+      <h1 style="margin:0;color:#a78bfa;font-size:28px;font-weight:800;letter-spacing:-0.5px;">
+        ApplyMate <span style="color:#7c3aed;">AI</span>
+      </h1>
+      <p style="margin:8px 0 0;color:#c4b5fd;font-size:14px;">Password Reset Request</p>
+    </div>
+
+    <!-- Body -->
+    <div style="background:#1e1e3f;padding:32px;">
+      <p style="color:#e2e8f0;font-size:16px;line-height:1.7;margin:0 0 24px;">
+        Hi {display_name}, we received a request to reset the password for your ApplyMate AI account.
+        Click the button below to set a new password. This link will expire in <strong>1 hour</strong>.
+      </p>
+
+      <div style="text-align:center;margin:32px 0;">
+        <a href="{reset_link}" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;text-decoration:none;padding:16px 40px;border-radius:100px;font-weight:700;font-size:16px;letter-spacing:0.5px;">
+          🔐 Reset My Password
+        </a>
+      </div>
+
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;margin:0;">
+        If you didn't request a password reset, you can safely ignore this email.
+        Your password will not be changed until you click the button above and create a new one.
+      </p>
+
+      <div style="margin-top:24px;padding:16px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.3);border-radius:8px;">
+        <p style="color:#a78bfa;font-size:12px;margin:0;">
+          If the button doesn't work, copy and paste this link into your browser:<br>
+          <a href="{reset_link}" style="color:#7c3aed;word-break:break-all;">{reset_link}</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="background:#0f0f1a;padding:20px;text-align:center;border-radius:0 0 16px 16px;">
+      <p style="margin:0;color:#4b5563;font-size:12px;">
+        This email was sent by ApplyMate AI.<br>
+        If you have any issues, contact us at support@applymate.ai
+      </p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return await send_email(to_email, display_name, subject, html)

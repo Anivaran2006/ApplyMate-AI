@@ -1,10 +1,15 @@
 /**
  * ApplyMate AI – Frontend Configuration
- * Set API_BASE_URL to your deployed backend URL before going live.
  *
- * Local dev:  http://localhost:8000/api/v1
- * Production: https://your-app.railway.app/api/v1
+ * Backend API:  https://applymate-ai.onrender.com/api/v1
+ * Frontend:     https://applymate-ai-gz7k.onrender.com
+ *
+ * Automatically uses localhost when running locally.
  */
 
-// Change this when deploying to production!
-window.API_BASE_URL = 'http://localhost:8000/api/v1';
+const _isProd = window.location.hostname !== 'localhost'
+             && window.location.hostname !== '127.0.0.1';
+
+window.API_BASE_URL = _isProd
+  ? 'https://applymate-ai.onrender.com/api/v1'
+  : 'http://localhost:8000/api/v1';

@@ -21,7 +21,7 @@ from app.services.auth_service import (
     reset_password,
     signup_user,
 )
-from app.notifications.email import send_welcome_email
+from app.notifications.email import send_welcome_email, send_reset_password_email
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -85,8 +85,10 @@ async def forgot_password(data: ForgotPasswordRequest, db: AsyncSession = Depend
     token = await initiate_password_reset(db, data.email)
     if token:
         await db.commit()
-        # In production, send email with token link
-        # For now, token is returned in dev mode only
+        try:
+            await send_reset_password_email(to_email=data.email, token=token)
+        except Exception:
+            pass
     # Always return 200 to prevent email enumeration
     return {"message": "If this email is registered, a reset link has been sent."}
 

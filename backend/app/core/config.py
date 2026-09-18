@@ -27,7 +27,10 @@ class Settings(BaseSettings):
     # ── Database ──────────────────────────────────────────────────
     DATABASE_URL: str = "postgresql://user:password@localhost:5432/applymate_db"
 
-    # ── CORS ──────────────────────────────────────────────────────
+    # ── Frontend URL (used in password reset emails) ─────────────────────────
+    FRONTEND_URL: str = "http://localhost:3000"
+
+    # ── CORS ──────────────────────────────────────────────────────────────────
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://localhost:8080",
