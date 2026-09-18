@@ -7,7 +7,6 @@ import json
 import re
 from typing import Optional
 
-import google.generativeai as genai
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from app.core.config import settings
@@ -15,9 +14,38 @@ from app.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-# Configure Gemini client once
-genai.configure(api_key=settings.GEMINI_API_KEY)
-_model = genai.GenerativeModel(settings.GEMINI_MODEL)
+# Initialize client using modern google-genai or legacy google.generativeai
+_client = None
+_model = None
+_use_new_genai = False
+
+try:
+    from google import genai
+    if settings.GEMINI_API_KEY:
+        _client = genai.Client(api_key=settings.GEMINI_API_KEY)
+    _use_new_genai = True
+except Exception:
+    try:
+        import google.generativeai as genai_legacy
+        if settings.GEMINI_API_KEY:
+            genai_legacy.configure(api_key=settings.GEMINI_API_KEY)
+            _model = genai_legacy.GenerativeModel(settings.GEMINI_MODEL)
+    except Exception as e:
+        logger.warning(f"Could not initialize Gemini client: {e}")
+
+
+async def _generate_text_async(prompt: str) -> str:
+    """Generate text using either modern google-genai or legacy SDK."""
+    if _use_new_genai and _client:
+        response = await _client.aio.models.generate_content(
+            model=settings.GEMINI_MODEL,
+            contents=prompt,
+        )
+        return (response.text or "").strip()
+    elif _model:
+        response = await _model.generate_content_async(prompt)
+        return (response.text or "").strip()
+    return ""
 
 
 def _clean_json(text: str) -> str:
@@ -59,8 +87,8 @@ Notice Content:
 Return ONLY valid JSON, no markdown fences, no explanation text."""
 
     try:
-        response = await _model.generate_content_async(prompt)
-        raw = _clean_json(response.text)
+        text = await _generate_text_async(prompt)
+        raw = _clean_json(text)
         data = json.loads(raw)
         return {
             "summary": data.get("summary", ""),
@@ -92,8 +120,7 @@ Summary: {summary}
 Give a detailed, friendly explanation in 300-400 words. Use simple language, no jargon.
 Break it into: What is this? Why does it matter? What should you do?"""
 
-    response = await _model.generate_content_async(prompt)
-    return response.text.strip()
+    return await _generate_text_async(prompt)
 
 
 @retry(stop=stop_after_attempt(2), wait=wait_exponential(multiplier=1, min=2, max=8))
@@ -111,8 +138,7 @@ Text to translate:
 
 Provide ONLY the Hindi translation, no English text."""
 
-    response = await _model.generate_content_async(prompt)
-    return response.text.strip()
+    return await _generate_text_async(prompt)
 
 
 @retry(stop=stop_after_attempt(2), wait=wait_exponential(multiplier=1, min=2, max=8))
@@ -132,8 +158,7 @@ Format:
 • [Key point 2]
 • [Key point 3]"""
 
-    response = await _model.generate_content_async(prompt)
-    return response.text.strip()
+    return await _generate_text_async(prompt)
 
 
 def _placeholder_summary(title: str) -> dict:
