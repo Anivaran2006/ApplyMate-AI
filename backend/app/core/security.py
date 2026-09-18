@@ -6,7 +6,7 @@ Handles password hashing, JWT creation/verification, and token models.
 from datetime import datetime, timedelta, timezone
 from typing import Any, Optional, Union
 
-from jose import JWTError, jwt
+from jose import JWTError, jwt  # type: ignore
 import bcrypt
 from passlib.context import CryptContext
 
