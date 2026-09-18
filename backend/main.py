@@ -96,6 +96,9 @@ async def global_exception_handler(request: Request, exc: Exception):
 # ── Routers ───────────────────────────────────────────────────────────────────
 app.include_router(api_router)
 
+from app.api.v1.assistant import router as assistant_router
+app.include_router(assistant_router)
+
 
 # ── Health Check ──────────────────────────────────────────────────────────────
 @app.get("/health", tags=["Health"])
@@ -137,6 +140,9 @@ if frontend_dir.exists():
     @app.get("/reset-password", include_in_schema=False)
     async def reset_password_page():
         return FileResponse(frontend_dir / "reset-password.html")
+
+    # Mount /static for legacy templates referencing /static/css/ or /static/js/
+    app.mount("/static", StaticFiles(directory=str(frontend_dir)), name="static")
 
     # Mount static assets and serve index.html at "/"
     app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="frontend")

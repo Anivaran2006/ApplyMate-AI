@@ -165,6 +165,14 @@ const API = {
     logs:       (page)   => apiFetch(`/admin/logs?page=${page}`),
     exportCSV:  ()       => `${API_BASE}/admin/export/users`,
   },
+
+  // AI Assistant
+  assistant: {
+    chat: (question, history = []) => apiFetch('/assistant/chat', {
+      method: 'POST',
+      body: JSON.stringify({ question, history }),
+    }),
+  },
 };
 
 // ── Toast Utility ────────────────────────────────────────────

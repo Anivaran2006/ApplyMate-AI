@@ -23,6 +23,7 @@ class UserResponse(BaseModel):
 
 class UserUpdate(BaseModel):
     full_name: Optional[str] = None
+    name: Optional[str] = None
     email: Optional[EmailStr] = None
 
     def has_updates(self) -> bool:

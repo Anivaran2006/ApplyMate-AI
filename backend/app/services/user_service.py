@@ -27,8 +27,9 @@ async def get_user_by_id(db: AsyncSession, user_id: int) -> Optional[User]:
 
 
 async def update_user_profile(db: AsyncSession, user: User, data: UserUpdate) -> User:
-    if data.full_name is not None:
-        user.full_name = data.full_name
+    new_name = data.full_name if data.full_name is not None else data.name
+    if new_name is not None:
+        user.full_name = new_name
     if data.email is not None:
         user.email = data.email
     await db.flush()

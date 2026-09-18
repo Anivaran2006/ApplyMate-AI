@@ -5,117 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="ApplyMate AI – Never miss an important educational notice. AI-powered summaries of NEET, JEE, CUET, GATE, UPSC and more. Instant Telegram & Email alerts.">
   <title>ApplyMate AI – AI-Powered Student Notification Platform</title>
-  <link rel="stylesheet" href="css/main.css">
-  <style>
-    /* ── Landing-page specific styles ── */
-    .notice-preview-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-    .notice-preview-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--grad-primary);
-    }
-    .preview-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    @media (max-width: 640px) { .preview-grid { grid-template-columns: 1fr; } }
-
-    .hero-mockup {
-      position: relative;
-      z-index: 1;
-    }
-    .mockup-window {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-lg), var(--shadow-glow);
-    }
-    .mockup-header {
-      background: var(--bg-surface);
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .mockup-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .mockup-body { padding: 20px; }
-
-    .notice-item {
-      display: flex;
-      gap: 12px;
-      padding: 14px;
-      background: rgba(255,255,255,0.03);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-light);
-      margin-bottom: 10px;
-      transition: all var(--transition);
-      animation: fadeInUp 0.5s ease both;
-    }
-    .notice-item:nth-child(1) { animation-delay: 0.1s; }
-    .notice-item:nth-child(2) { animation-delay: 0.2s; }
-    .notice-item:nth-child(3) { animation-delay: 0.3s; }
-    .notice-item:hover {
-      background: rgba(124, 58, 237, 0.06);
-      border-color: var(--border);
-    }
-    .notice-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--primary);
-      flex-shrink: 0;
-      margin-top: 6px;
-      box-shadow: 0 0 8px var(--primary);
-      animation: pulse-glow 2s ease infinite;
-    }
-    .notice-title { font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
-    .notice-meta { font-size: 11px; color: var(--text-muted); }
-
-    /* Testimonial */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .testimonial-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-    }
-    .testimonial-stars { color: #fbbf24; font-size: 14px; margin-bottom: 12px; }
-    .testimonial-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
-    .testimonial-author { display: flex; align-items: center; gap: 10px; }
-    .testimonial-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--grad-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .testimonial-name { font-size: 13px; font-weight: 600; }
-    .testimonial-role { font-size: 11px; color: var(--text-muted); }
-  </style>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/landing.css">
 </head>
 <body>
 
@@ -123,7 +14,7 @@
 <nav class="navbar" id="navbar">
   <div class="container">
     <div class="navbar-inner">
-      <a href="index.html" class="navbar-logo">
+      <a href="/" class="navbar-logo">
         <div class="logo-icon">🎓</div>
         ApplyMate <span style="color:var(--primary-light)">AI</span>
       </a>
@@ -136,8 +27,8 @@
       </ul>
 
       <div class="navbar-actions">
-        <a href="login.html" class="btn btn-ghost btn-sm">Sign In</a>
-        <a href="signup.html" class="btn btn-primary btn-sm">Get Started Free</a>
+        <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="/signup" class="btn btn-primary btn-sm">Get Started Free</a>
       </div>
 
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
@@ -152,8 +43,38 @@
   <a href="#categories" onclick="closeMobileMenu()">Categories</a>
   <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
   <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
-  <a href="login.html" class="btn btn-ghost">Sign In</a>
-  <a href="signup.html" class="btn btn-primary">Get Started Free</a>
+  <a href="/login" class="btn btn-ghost">Sign In</a>
+  <a href="/signup" class="btn btn-primary">Get Started Free</a>
+</div>
+
+<!-- ── Floating Chat Widget ── -->
+<div id="chatbotWidget">
+  <button id="chatBubbleBtn" aria-label="Open AI Assistant">
+    🤖
+  </button>
+  <div id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-avatar">🤖</div>
+        <div>
+          <div class="chat-header-title">ApplyMate AI</div>
+          <div class="chat-header-status">Online</div>
+        </div>
+      </div>
+      <button class="chat-close-btn" id="closeChatBtn">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg-bot">
+        I am here to assist you.
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Ask anything...">
+      <button onclick="sendChatMessage()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- ── Hero ───────────────────────────────────────────────── -->
@@ -163,26 +84,27 @@
   <div class="hero-orb hero-orb-2"></div>
   <div class="hero-orb hero-orb-3"></div>
 
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+   <div class="container">
+    <div class="hero-grid">
+   <!-- <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;"> -->
       <div class="hero-content">
-        <div class="hero-eyebrow">
+        <div class="hero-eyebrow animate-fade-in">
           <span>🤖</span> Powered by Google Gemini AI
         </div>
 
-        <h1 class="hero-title">
+        <h1 class="hero-title animate-fade-up delay-100">
           Never Miss a<br>
           <span class="gradient-text">Critical Notice</span><br>
           Again
         </h1>
 
-        <p class="hero-description">
+        <p class="hero-subtitle animate-fade-up delay-200">
           ApplyMate AI monitors 50+ official exam portals, generates intelligent summaries, 
           and delivers instant alerts to your Telegram and Email — so you're always ahead.
         </p>
 
-        <div class="hero-actions">
-          <a href="signup.html" class="btn btn-primary btn-lg" id="hero-cta">
+        <div class="hero-actions animate-fade-up delay-300">
+          <a href="/signup" class="btn btn-primary btn-lg" id="hero-cta">
             🚀 Start For Free
           </a>
           <a href="#how-it-works" class="btn btn-outline btn-lg">
@@ -190,7 +112,7 @@
           </a>
         </div>
 
-        <div class="hero-stats">
+        <div class="hero-stats animate-fade-up delay-400">
           <div class="hero-stat">
             <div class="hero-stat-value">50K+</div>
             <div class="hero-stat-label">Students notified</div>
@@ -207,8 +129,8 @@
       </div>
 
       <!-- Hero Mockup -->
-      <div class="hero-mockup" style="animation: fadeInUp 0.8s ease both 0.5s; opacity:0;">
-        <div class="mockup-window">
+      <div class="hero-mockup animate-scale-in delay-200">
+        <div class="mockup-window float-anim">
           <div class="mockup-header">
             <div class="mockup-dot" style="background:#ef4444"></div>
             <div class="mockup-dot" style="background:#f59e0b"></div>
@@ -221,36 +143,9 @@
               <span class="badge badge-general" style="font-size:10px;">Live</span>
             </div>
 
-            <div class="notice-item">
-              <div class="notice-dot"></div>
-              <div>
-                <div class="notice-title">NEET UG 2025 – Registration Open</div>
-                <div style="display:flex;gap:8px;margin:6px 0;">
-                  <span class="badge badge-neet" style="font-size:10px;padding:2px 8px;">NEET</span>
-                </div>
-                <div class="notice-meta">🤖 AI Summary: Registration window open until March 15. Eligibility: 10+2 with Biology. Fee: ₹1600.</div>
-              </div>
-            </div>
-
-            <div class="notice-item">
-              <div class="notice-dot" style="background:var(--accent);box-shadow:0 0 8px var(--accent);"></div>
-              <div>
-                <div class="notice-title">JEE Main 2025 Session 2 – Admit Card Released</div>
-                <div style="display:flex;gap:8px;margin:6px 0;">
-                  <span class="badge badge-jee" style="font-size:10px;padding:2px 8px;">JEE</span>
-                </div>
-                <div class="notice-meta">🤖 AI Summary: Download admit card from jeemain.nta.nic.in. Exam from April 4–15.</div>
-              </div>
-            </div>
-
-            <div class="notice-item">
-              <div class="notice-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf6;"></div>
-              <div>
-                <div class="notice-title">CUET UG 2025 – City Intimation Slip Available</div>
-                <div style="display:flex;gap:8px;margin:6px 0;">
-                  <span class="badge badge-cuet" style="font-size:10px;padding:2px 8px;">CUET</span>
-                </div>
-                <div class="notice-meta">🤖 AI Summary: Download city slip from cuet.samarth.ac.in. Exams in May 2025.</div>
+            <div id="liveNoticesContainer">
+              <div style="text-align:center; padding: 20px; font-size:13px; color:var(--text-muted);">
+                Loading live notices...
               </div>
             </div>
           </div>
@@ -496,10 +391,10 @@
         Join thousands of students who rely on ApplyMate AI every day. Free forever.
       </p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <a href="signup.html" class="btn btn-primary btn-lg" id="cta-signup">
+        <a href="/signup" class="btn btn-primary btn-lg" id="cta-signup">
           🎓 Create Free Account
         </a>
-        <a href="login.html" class="btn btn-outline btn-lg">
+        <a href="/login" class="btn btn-outline btn-lg">
           Already have an account?
         </a>
       </div>
@@ -512,7 +407,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="navbar-logo" style="font-size:18px;">
+        <a href="/" class="navbar-logo" style="font-size:18px;">
           <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">🎓</div>
           ApplyMate <span style="color:var(--primary-light)">AI</span>
         </a>
@@ -525,16 +420,16 @@
           <li><a href="#features">Features</a></li>
           <li><a href="#categories">Categories</a></li>
           <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="footer-heading">Account</h4>
         <ul class="footer-links">
-          <li><a href="signup.html">Sign Up</a></li>
-          <li><a href="login.html">Log In</a></li>
-          <li><a href="forgot-password.html">Reset Password</a></li>
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+          <li><a href="/forgot-password">Reset Password</a></li>
         </ul>
       </div>
 
@@ -548,8 +443,9 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 ApplyMate AI. Built for Indian students. 🇮🇳</p>
-      <p style="color:var(--text-muted)">Powered by Google Gemini AI</p>
+      <p>© 2026 ApplyMate AI. Built for Indian students. 🇮🇳</p>
+      <p style="color:var(--text-muted)">Powered by Google Gemini AI <br> Created by Anivaran Dubey</p>
+
     </div>
   </div>
 </footer>
@@ -557,7 +453,57 @@
 <!-- ── Toast Container ──────────────────────────────────────── -->
 <div class="toast-container" id="toastContainer"></div>
 
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
 <script>
+  // ── Fetch Live Notices
+  async function loadLiveNotices() {
+    const container = document.getElementById('liveNoticesContainer');
+    if (!container) return;
+    
+    try {
+      const data = await API.notices.list({ limit: 3 });
+      const notices = data.items || data || [];
+      
+      if (!notices || notices.length === 0) {
+        return; // Keep beautiful showcase notices if db is empty
+      }
+
+      container.innerHTML = '';
+      notices.slice(0, 3).forEach((n, i) => {
+        const cat = (n.category || 'GENERAL').toLowerCase();
+        const colors = ['var(--primary)', 'var(--accent)', '#8b5cf6'];
+        const color = colors[i % colors.length];
+        
+        let summary = n.ai_summary || n.summary || 'Click to view details on dashboard.';
+        if (summary.length > 90) summary = summary.substring(0, 90) + '...';
+
+        const div = document.createElement('div');
+        div.className = 'notice-item';
+        div.innerHTML = `
+          <div class="notice-dot" style="background:${color};box-shadow:0 0 8px ${color};"></div>
+          <div>
+            <div class="notice-title">${escHtml(n.title)}</div>
+            <div style="display:flex;gap:8px;margin:6px 0;">
+              <span class="badge badge-${cat}" style="font-size:10px;padding:2px 8px;">${escHtml(n.category || 'GENERAL')}</span>
+            </div>
+            <div class="notice-meta">🤖 AI Summary: ${escHtml(summary)}</div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    } catch (e) {
+      // Keep showcase notices on network error
+    }
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  loadLiveNotices();
+
   // ── Navbar scroll effect
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -597,6 +543,81 @@
 
   function closeMobileMenu() { mobileMenu.classList.remove('open'); }
 
+  // ── Floating Chatbot Logic
+  const chatBubbleBtn = document.getElementById('chatBubbleBtn');
+  const chatPanel = document.getElementById('chatPanel');
+  const closeChatBtn = document.getElementById('closeChatBtn');
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+  let landingChatHistory = [];
+
+  chatBubbleBtn.addEventListener('click', () => {
+    chatPanel.classList.toggle('open');
+    if (chatPanel.classList.contains('open') && chatMessages.children.length === 1) {
+      chatInput.focus();
+    }
+  });
+
+  closeChatBtn.addEventListener('click', () => chatPanel.classList.remove('open'));
+
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendChatMessage();
+  });
+
+  async function sendChatMessage() {
+    const question = chatInput.value.trim();
+    if (!question) return;
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'msg-user';
+    userMsg.textContent = question;
+    chatMessages.appendChild(userMsg);
+    
+    chatInput.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Add typing indicator
+    const typingId = 'type-' + Date.now();
+    const typingMsg = document.createElement('div');
+    typingMsg.className = 'msg-bot typing-indicator';
+    typingMsg.id = typingId;
+    typingMsg.innerHTML = '<span></span><span></span><span></span>';
+    chatMessages.appendChild(typingMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const res = await fetch('/assistant/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: question, history: landingChatHistory.slice(-10) })
+      });
+      
+      const data = await res.json();
+      
+      landingChatHistory.push({ role: 'user', content: question });
+      landingChatHistory.push({ role: 'assistant', content: data.answer });
+
+      document.getElementById(typingId).remove();
+      
+      const botMsg = document.createElement('div');
+      botMsg.className = 'msg-bot';
+      botMsg.innerHTML = marked.parse(data.answer);
+      chatMessages.appendChild(botMsg);
+
+    } catch (err) {
+      document.getElementById(typingId).remove();
+      const errorMsg = document.createElement('div');
+      errorMsg.className = 'msg-bot';
+      errorMsg.style.color = '#f87171';
+      errorMsg.textContent = '❌ Failed to connect to AI.';
+      chatMessages.appendChild(errorMsg);
+    }
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  window.sendChatMessage = sendChatMessage;
+
   // ── Toast utility (shared across pages)
   function showToast(message, type = 'info') {
     const container = document.getElementById('toastContainer');
@@ -608,5 +629,6 @@
     setTimeout(() => toast.remove(), 4000);
   }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

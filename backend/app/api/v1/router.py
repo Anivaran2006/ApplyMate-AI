@@ -5,7 +5,7 @@ Aggregates all route modules into a single router.
 
 from fastapi import APIRouter
 
-from app.api.v1 import auth, users, subscriptions, notices, bookmarks, notifications, admin
+from app.api.v1 import auth, users, subscriptions, notices, bookmarks, notifications, admin, assistant
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -16,3 +16,4 @@ api_router.include_router(notices.router)
 api_router.include_router(bookmarks.router)
 api_router.include_router(notifications.router)
 api_router.include_router(admin.router)
+api_router.include_router(assistant.router)

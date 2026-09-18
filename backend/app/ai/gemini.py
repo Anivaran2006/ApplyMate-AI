@@ -191,3 +191,81 @@ async def detect_category(title: str) -> str:
         if any(kw in title_upper for kw in keywords):
             return category
     return "GENERAL"
+
+
+async def ask_assistant(question: str, notices: list, history: list = None) -> str:
+    """Ask ApplyMate AI a question using notices context and history, with offline fallback."""
+    if history is None:
+        history = []
+
+    context = ""
+    for n in notices[:20]:
+        context += f"""
+Title: {n.title}
+Category: {n.category}
+Summary: {getattr(n, 'ai_summary', '') or ''}
+Important Dates: {getattr(n, 'ai_important_dates', '') or ''}
+Eligibility: {getattr(n, 'ai_eligibility', '') or ''}
+Action Required: {getattr(n, 'ai_action_required', '') or ''}
+URL: {n.url}
+"""
+
+    prompt = f"""You are ApplyMate AI, an intelligent academic advisor and educational assistant for Indian students.
+You help students with JEE, NEET, CUET, GATE, CAT, UPSC, SSC, Banking, Railway, Scholarships, and government job exams.
+
+Stored Official Notices:
+{context}
+
+Recent Chat History:
+{history[-6:] if history else "None"}
+
+Student Question:
+{question}
+
+Instructions:
+1. Answer clearly, concisely, and accurately.
+2. Use stored notices whenever relevant. Mention official notice titles and URLs if applicable.
+3. If not found in stored notices, use your general knowledge of Indian competitive exams.
+4. Format nicely using markdown bullet points and bold text.
+5. Keep your response helpful, encouraging, and focused.
+"""
+
+    if settings.GEMINI_API_KEY:
+        try:
+            res = await _generate_text_async(prompt)
+            if res:
+                return res
+        except Exception as e:
+            logger.warning(f"Assistant Gemini error: {e}")
+
+    # Fallback to smart keyword search in notices
+    q_lower = question.lower()
+    query_words = [w for w in re.findall(r"\w+", q_lower) if len(w) > 2]
+    matches = []
+
+    for n in notices:
+        searchable = f"{n.title} {n.category} {getattr(n, 'ai_summary', '') or ''} {getattr(n, 'ai_eligibility', '') or ''}".lower()
+        score = sum(1 for w in query_words if w in searchable)
+        if score > 0:
+            matches.append((score, n))
+
+    matches.sort(key=lambda x: x[0], reverse=True)
+
+    if matches:
+        reply = "🤖 **ApplyMate AI (Database Search)**\n\nHere are the relevant notices found for your query:\n\n"
+        for _, n in matches[:3]:
+            reply += f"### 📌 {n.title}\n"
+            reply += f"**Category:** {n.category}\n\n"
+            if getattr(n, "ai_summary", None):
+                reply += f"**Summary:** {n.ai_summary}\n\n"
+            if getattr(n, "ai_important_dates", None):
+                reply += f"**Important Dates:** {n.ai_important_dates}\n\n"
+            if getattr(n, "url", None):
+                reply += f"**Official Link:** [View Notice]({n.url})\n\n"
+            reply += "---\n\n"
+        return reply
+
+    return (
+        "Hello! I am your ApplyMate AI assistant. I can answer questions about exam dates, eligibility, "
+        "and latest official notices. Could you please specify which exam (e.g. NEET, JEE, CUET, UPSC) you need help with?"
+    )
