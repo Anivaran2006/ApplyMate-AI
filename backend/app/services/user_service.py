@@ -105,7 +105,7 @@ async def remove_subscription(db: AsyncSession, user_id: int, category: str) -> 
             Subscription.category == category,
         )
     )
-    return result.rowcount > 0
+    return getattr(result, "rowcount", 0) > 0
 
 
 async def bulk_update_subscriptions(
@@ -150,7 +150,7 @@ async def remove_bookmark(db: AsyncSession, user_id: int, notice_id: int) -> boo
             Bookmark.user_id == user_id, Bookmark.notice_id == notice_id
         )
     )
-    return result.rowcount > 0
+    return getattr(result, "rowcount", 0) > 0
 
 
 async def get_bookmarked_notice_ids(db: AsyncSession, user_id: int) -> set:

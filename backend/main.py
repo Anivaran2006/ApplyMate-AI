@@ -73,7 +73,7 @@ app = FastAPI(
 
 # ── Rate Limiting ─────────────────────────────────────────────────────────────
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)  # type: ignore
 
 # ── CORS ──────────────────────────────────────────────────────────────────────
 app.add_middleware(
@@ -140,6 +140,17 @@ if frontend_dir.exists():
     @app.get("/reset-password", include_in_schema=False)
     async def reset_password_page():
         return FileResponse(frontend_dir / "reset-password.html")
+
+    @app.get("/settings", include_in_schema=False)
+    async def settings_page():
+        return FileResponse(frontend_dir / "dashboard.html")
+
+    @app.get("/", include_in_schema=False)
+    async def index_page():
+        return FileResponse(
+            frontend_dir / "index.html",
+            headers={"Cache-Control": "no-cache, no-store, must-revalidate"},
+        )
 
     # Mount /static for legacy templates referencing /static/css/ or /static/js/
     app.mount("/static", StaticFiles(directory=str(frontend_dir)), name="static")

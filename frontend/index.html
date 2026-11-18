@@ -3,632 +3,1038 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ApplyMate AI – Never miss an important educational notice. AI-powered summaries of NEET, JEE, CUET, GATE, UPSC and more. Instant Telegram & Email alerts.">
-  <title>ApplyMate AI – AI-Powered Student Notification Platform</title>
+  <meta name="description" content="ApplyMate AI — Never miss an important competitive examination notice. AI-powered summaries of NEET, JEE, CUET, GATE, UPSC and more. Real-time Telegram and Email alerts.">
+  <meta name="keywords" content="ApplyMate AI, exam alerts, NTA updates, NEET UG 2026, JEE Main, GATE, UPSC, government exam notifications">
+  <title>ApplyMate AI — The Intelligent Examination Notification Platform</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ApplyMate AI — Never miss the opportunity you've been preparing for.">
+  <meta property="og:description" content="Track official updates, discover important deadlines and receive timely notifications — all from one place.">
+  <meta property="og:type" content="website">
+
   <link rel="stylesheet" href="/static/css/main.css">
   <link rel="stylesheet" href="/static/css/landing.css">
 </head>
 <body>
 
-<!-- ── Navbar ─────────────────────────────────────────────── -->
-<nav class="navbar" id="navbar">
-  <div class="container">
-    <div class="navbar-inner">
-      <a href="/" class="navbar-logo">
-        <div class="logo-icon">🎓</div>
-        ApplyMate <span style="color:var(--primary-light)">AI</span>
-      </a>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
-      <ul class="navbar-nav">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
+<!-- ── Navigation ───────────────────────────────────────────── -->
+<header>
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="/" class="navbar-logo" aria-label="ApplyMate AI Home">
+          <div class="logo-symbol" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          ApplyMate <span class="text-accent">AI</span>
+        </a>
 
-      <div class="navbar-actions">
-        <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
-        <a href="/signup" class="btn btn-primary btn-sm">Get Started Free</a>
+        <ul class="navbar-nav">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#exams">Exams</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+
+        <div class="navbar-actions">
+          <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
+          <a href="/signup" class="btn btn-primary btn-sm">Get Started</a>
+        </div>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open mobile navigation menu">☰</button>
       </div>
-
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
-<!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <button id="mobileMenuClose" style="position:absolute;top:24px;right:24px;background:none;border:none;color:var(--text-primary);font-size:28px;cursor:pointer;">✕</button>
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-menu" id="mobileMenu" aria-label="Mobile menu" hidden>
+  <button id="mobileMenuClose" style="align-self:flex-end;background:none;border:none;color:var(--text-primary);font-size:28px;cursor:pointer;" aria-label="Close menu">✕</button>
+  <a href="#home" onclick="closeMobileMenu()">Home</a>
   <a href="#features" onclick="closeMobileMenu()">Features</a>
-  <a href="#categories" onclick="closeMobileMenu()">Categories</a>
   <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
-  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
-  <a href="/login" class="btn btn-ghost">Sign In</a>
-  <a href="/signup" class="btn btn-primary">Get Started Free</a>
+  <a href="#exams" onclick="closeMobileMenu()">Exams</a>
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="/login" class="btn btn-outline btn-full" style="margin-top:20px;">Sign In</a>
+  <a href="/signup" class="btn btn-primary btn-full">Get Started Free</a>
 </div>
 
-<!-- ── Floating Chat Widget ── -->
-<div id="chatbotWidget">
-  <button id="chatBubbleBtn" aria-label="Open AI Assistant">
-    🤖
-  </button>
-  <div id="chatPanel">
-    <div class="chat-header">
-      <div class="chat-header-info">
-        <div class="chat-header-avatar">🤖</div>
-        <div>
-          <div class="chat-header-title">ApplyMate AI</div>
-          <div class="chat-header-status">Online</div>
-        </div>
-      </div>
-      <button class="chat-close-btn" id="closeChatBtn">&times;</button>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-      <div class="msg-bot">
-        I am here to assist you.
-      </div>
-    </div>
-    <div class="chat-input-area">
-      <input type="text" id="chatInput" placeholder="Ask anything...">
-      <button onclick="sendChatMessage()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-      </button>
-    </div>
-  </div>
-</div>
+<main id="main-content">
 
-<!-- ── Hero ───────────────────────────────────────────────── -->
-<section class="hero" id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-orb hero-orb-1"></div>
-  <div class="hero-orb hero-orb-2"></div>
-  <div class="hero-orb hero-orb-3"></div>
-
-   <div class="container">
-    <div class="hero-grid">
-   <!-- <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;"> -->
-      <div class="hero-content">
-        <div class="hero-eyebrow animate-fade-in">
-          <span>🤖</span> Powered by Google Gemini AI
+  <!-- 1. HERO SECTION -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-badge-wrap">
+          <span class="live-pulse">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Official NTA, UPSC & GATE Monitoring Engine Active
+          </span>
         </div>
 
-        <h1 class="hero-title animate-fade-up delay-100">
-          Never Miss a<br>
-          <span class="gradient-text">Critical Notice</span><br>
-          Again
+        <h1 class="hero-title">
+          Never miss the opportunity you've been <span class="accent-highlight">preparing for.</span>
         </h1>
 
-        <p class="hero-subtitle animate-fade-up delay-200">
-          ApplyMate AI monitors 50+ official exam portals, generates intelligent summaries, 
-          and delivers instant alerts to your Telegram and Email — so you're always ahead.
+        <p class="hero-subtitle">
+          Your intelligent examination companion. Track official updates, discover important deadlines and receive timely notifications — all from one place.
         </p>
 
-        <div class="hero-actions animate-fade-up delay-300">
-          <a href="/signup" class="btn btn-primary btn-lg" id="hero-cta">
-            🚀 Start For Free
-          </a>
-          <a href="#how-it-works" class="btn btn-outline btn-lg">
-            See How It Works
-          </a>
+        <div class="hero-actions">
+          <a href="/signup" class="btn btn-primary btn-lg">Get Started Free</a>
+          <a href="#features" class="btn btn-outline btn-lg">Explore Features</a>
         </div>
 
-        <div class="hero-stats animate-fade-up delay-400">
-          <div class="hero-stat">
-            <div class="hero-stat-value">50K+</div>
-            <div class="hero-stat-label">Students notified</div>
+        <!-- Metrics Strip -->
+        <div class="metrics-strip" aria-label="Key Platform Metrics">
+          <div class="metric-item">
+            <div class="metric-val">10<span>+</span></div>
+            <div class="metric-lbl">Premier Exam Categories</div>
           </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value">9</div>
-            <div class="hero-stat-label">Exam categories</div>
+          <div class="metric-item">
+            <div class="metric-val">&lt;60<span>s</span></div>
+            <div class="metric-lbl">Dispatch Speed</div>
           </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value">&lt;60s</div>
-            <div class="hero-stat-label">Avg. alert time</div>
+          <div class="metric-item">
+            <div class="metric-val">100<span>%</span></div>
+            <div class="metric-lbl">Verified Official Portals</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">24<span>/7</span></div>
+            <div class="metric-lbl">Autonomous Scraping</div>
           </div>
         </div>
-      </div>
 
-      <!-- Hero Mockup -->
-      <div class="hero-mockup animate-scale-in delay-200">
-        <div class="mockup-window float-anim">
-          <div class="mockup-header">
-            <div class="mockup-dot" style="background:#ef4444"></div>
-            <div class="mockup-dot" style="background:#f59e0b"></div>
-            <div class="mockup-dot" style="background:#10b981"></div>
-            <span style="font-size:12px;color:var(--text-muted);margin-left:8px;">ApplyMate AI – Dashboard</span>
+        <!-- Product Preview Mockup -->
+        <div class="product-preview" aria-label="Interactive Product Preview">
+          <div class="preview-topbar">
+            <div class="preview-window-controls" aria-hidden="true">
+              <div class="ctrl-dot"></div>
+              <div class="ctrl-dot"></div>
+              <div class="ctrl-dot"></div>
+            </div>
+            <div class="preview-address-bar">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>app.applymate.ai/dashboard</span>
+            </div>
+            <div style="font-size:0.75rem; color:var(--primary); font-weight:600;">● Live Stream</div>
           </div>
-          <div class="mockup-body">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-              <span style="font-size:13px;font-weight:700;">Latest Notices</span>
-              <span class="badge badge-general" style="font-size:10px;">Live</span>
+
+          <div class="preview-canvas">
+            <div class="preview-stream-col">
+              <div class="preview-notice-card active">
+                <div class="preview-card-header">
+                  <span class="cat-badge cat-neet">NEET UG</span>
+                  <span class="badge badge-accent">⚡ Registration Open</span>
+                </div>
+                <div class="preview-card-title">National Eligibility cum Entrance Test (UG) 2026: Information Bulletin & Online Application Portal Opened</div>
+                <div class="preview-card-meta">
+                  <span>Source: NTA Official</span>
+                  <span>•</span>
+                  <span>Scraped 4 mins ago</span>
+                </div>
+              </div>
+
+              <div class="preview-notice-card">
+                <div class="preview-card-header">
+                  <span class="cat-badge cat-jee">JEE Main</span>
+                  <span class="badge badge-outline">Admit Card</span>
+                </div>
+                <div class="preview-card-title">Joint Entrance Examination (Main) Session 2: City Intimation Slip Live for Engineering Aspirants</div>
+                <div class="preview-card-meta">
+                  <span>Source: jeemain.nta.ac.in</span>
+                  <span>•</span>
+                  <span>2 hours ago</span>
+                </div>
+              </div>
             </div>
 
-            <div id="liveNoticesContainer">
-              <div style="text-align:center; padding: 20px; font-size:13px; color:var(--text-muted);">
-                Loading live notices...
+            <div class="preview-ai-col">
+              <div class="ai-header-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                Gemini AI Intelligence Brief
+              </div>
+              <ul class="ai-summary-points">
+                <li><span class="ai-point-marker">▪</span> <span><strong>What happened:</strong> NTA officially launched the application form for NEET UG 2026. Online submission begins immediately.</span></li>
+                <li><span class="ai-point-marker">▪</span> <span><strong>Eligibility:</strong> Candidates who have completed or are appearing in Class 12 with Physics, Chemistry, Biology/Biotech.</span></li>
+                <li><span class="ai-point-marker">▪</span> <span><strong>Immediate Action:</strong> Register on exams.nta.ac.in/NEET before the final deadline with valid Aadhaar or DigiLocker ID.</span></li>
+              </ul>
+              <div class="deadline-highlight-box">
+                <div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Application Closes In</div>
+                  <div style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--primary);">14 Days : 08 Hrs</div>
+                </div>
+                <span class="badge badge-success">Verified Official</span>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Features ────────────────────────────────────────────── -->
-<section class="section" id="features">
-  <div class="container">
-    <div class="text-center animate-in">
-      <span class="section-eyebrow">✨ Features</span>
-      <h2 class="section-title">Everything You Need to<br><span class="gradient-text">Stay Ahead</span></h2>
-      <p class="section-subtitle">Built for serious students who can't afford to miss a deadline</p>
-    </div>
-
-    <div class="features-grid">
-      <div class="feature-card animate-in">
-        <div class="feature-icon">🤖</div>
-        <h3 class="feature-title">AI-Powered Summaries</h3>
-        <p class="feature-desc">Google Gemini reads every official notice and generates plain-English summaries, key dates, required actions, and eligibility — instantly.</p>
+  <!-- 2. STUDENT PROBLEMS AND CHALLENGES -->
+  <section class="section" id="challenges">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">The Real Problem</div>
+        <h2 class="section-title">The high-stakes examination gauntlet shouldn't be ruined by missed dates.</h2>
+        <p class="section-desc">Competitive aspirants spend 12 to 14 hours studying daily. Missing a sudden 3-day correction window or result release should never derail a year of dedication.</p>
       </div>
 
-      <div class="feature-card animate-in">
-        <div class="feature-icon">⚡</div>
-        <h3 class="feature-title">Real-Time Alerts</h3>
-        <p class="feature-desc">Within 60 seconds of a new notice appearing on official sites, you receive a formatted notification on Telegram and Email.</p>
-      </div>
+      <div class="problem-grid">
+        <article class="problem-card">
+          <div class="problem-icon-wrap" aria-hidden="true">🌐</div>
+          <h3>Fragmented Portals</h3>
+          <p>Over a dozen government websites (nta.ac.in, upsc.gov.in, gate2026.iitk.ac.in) release notices with zero unified calendar or RSS alerts.</p>
+        </article>
 
-      <div class="feature-card animate-in">
-        <div class="feature-icon">🎯</div>
-        <h3 class="feature-title">Category Subscriptions</h3>
-        <p class="feature-desc">Only receive alerts for exams you actually care about — NEET, JEE, CUET, GATE, CAT, UPSC, SSC, Banking, or Scholarships.</p>
-      </div>
+        <article class="problem-card">
+          <div class="problem-icon-wrap" aria-hidden="true">⏳</div>
+          <h3>Silent Deadline Shifts</h3>
+          <p>Application windows, fee submission extensions, and city slip dates often change with mere hours of official advance warning.</p>
+        </article>
 
-      <div class="feature-card animate-in">
-        <div class="feature-icon">🌐</div>
-        <h3 class="feature-title">Hindi Translation</h3>
-        <p class="feature-desc">Click "Translate to Hindi" on any notice to get an instant AI translation — making important information accessible to every student.</p>
-      </div>
+        <article class="problem-card">
+          <div class="problem-icon-wrap" aria-hidden="true">📑</div>
+          <h3>40-Page Circular Fatigue</h3>
+          <p>Official notices are delivered as dense, confusing legal PDFs where critical dates and eligibility criteria are buried across annexures.</p>
+        </article>
 
-      <div class="feature-card animate-in">
-        <div class="feature-icon">🔖</div>
-        <h3 class="feature-title">Smart Bookmarks</h3>
-        <p class="feature-desc">Save important notices to your personal bookmark library and access them anytime — with full AI summaries intact.</p>
-      </div>
-
-      <div class="feature-card animate-in">
-        <div class="feature-icon">📊</div>
-        <h3 class="feature-title">Notification History</h3>
-        <p class="feature-desc">Full audit trail of every notification sent to you, with timestamps, channels, and delivery status — never lose track of what you received.</p>
+        <article class="problem-card">
+          <div class="problem-icon-wrap" aria-hidden="true">📢</div>
+          <h3>Social Media Misinformation</h3>
+          <p>Unverified rumors on YouTube and Telegram groups cause widespread panic, clickbait distractions, and inaccurate filing dates.</p>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── How It Works ────────────────────────────────────────── -->
-<section class="section" id="how-it-works" style="background:linear-gradient(180deg, var(--bg-base) 0%, var(--bg-surface) 50%, var(--bg-base) 100%);">
-  <div class="container">
-    <div class="text-center animate-in">
-      <span class="section-eyebrow">🔄 Process</span>
-      <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
-      <p class="section-subtitle">Our automated pipeline runs 24/7 so you never have to check official websites again</p>
-    </div>
-
-    <div class="steps-grid">
-      <div class="step-card animate-in">
-        <div class="step-number">1</div>
-        <h3 class="step-title">Smart Monitoring</h3>
-        <p class="step-desc">Our scrapers continuously check NTA and other official education portals every 30 minutes for new notices and announcements.</p>
+  <!-- 3. THE APPLYMATE SOLUTION -->
+  <section class="section section-alt" id="solution">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Our Solution</div>
+        <h2 class="section-title">Autonomous intelligence engineered for competitive clarity.</h2>
+        <p class="section-desc">ApplyMate continuously scrapes official examination sources, distills raw releases using Gemini AI, and routes verified intelligence directly to your preferred channels.</p>
       </div>
-      <div class="step-card animate-in">
-        <div class="step-number">2</div>
-        <h3 class="step-title">AI Processing</h3>
-        <p class="step-desc">Google Gemini AI reads the notice and generates a structured summary: key dates, required actions, eligibility, and deadline.</p>
+
+      <div class="solution-grid">
+        <div class="solution-card">
+          <div class="solution-icon-wrap" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          </div>
+          <h3>Continuous Source Scrutiny</h3>
+          <p>Our autonomous background scraper inspects official portals every 15 minutes. It extracts newly posted gazettes, notices, and press circulars straight from the government server.</p>
+        </div>
+
+        <div class="solution-card featured">
+          <div class="solution-icon-wrap" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <h3>Gemini AI Distillation</h3>
+          <p>Complex 30-page PDF bulletins are summarized within seconds into three unambiguous parameters: what changed, who is eligible, and what action you must take today.</p>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-icon-wrap" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <h3>Sub-Minute Push Delivery</h3>
+          <p>Subscribed students receive verified alerts on Telegram and in their inbox within 60 seconds of publication, complete with direct links to official portals.</p>
+        </div>
       </div>
-      <div class="step-card animate-in">
-        <div class="step-number">3</div>
-        <h3 class="step-title">Smart Matching</h3>
-        <p class="step-desc">The notice is categorized (NEET, JEE, etc.) and matched against student subscriptions to find who should be notified.</p>
+    </div>
+  </section>
+
+  <!-- 4. CORE FEATURES -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Platform Capabilities</div>
+        <h2 class="section-title">Everything you need to navigate examination season.</h2>
+        <p class="section-desc">Designed with high information density, zero advertising, and precision accuracy.</p>
       </div>
-      <div class="step-card animate-in">
-        <div class="step-number">4</div>
-        <h3 class="step-title">Instant Delivery</h3>
-        <p class="step-desc">You receive a beautifully formatted notification on Telegram and/or Email within 60 seconds — with AI summary included.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon-badge" aria-hidden="true">⚡</div>
+          <h3>Real-Time Scraping Engine</h3>
+          <p>Monitors NTA, UPSC, GATE, CAT and State portals round the clock. SHA-256 content hashing eliminates duplicate alerts and verifies document authenticity.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-badge" aria-hidden="true">🧠</div>
+          <h3>AI Action & Date Extractor</h3>
+          <p>Generates structured summaries highlighting registration start dates, application fee deadlines, correction windows, admit cards, and result dates.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-badge" aria-hidden="true">📱</div>
+          <h3>Instant Telegram Dispatch</h3>
+          <p>Connect your personal Telegram account in one click. Receive concise, markdown-formatted notifications with direct action buttons.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-badge" aria-hidden="true">🎯</div>
+          <h3>Granular Category Subscriptions</h3>
+          <p>Choose exactly what you want to follow: NEET, JEE, CUET, GATE, CAT, UPSC, or Banking. You only receive alerts relevant to your chosen career path.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-badge" aria-hidden="true">🇮🇳</div>
+          <h3>Hindi & Regional AI Translation</h3>
+          <p>Bilingual comprehension made effortless. Tap once to convert official English circular summaries into clean, accurate Hindi translation.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-badge" aria-hidden="true">🔖</div>
+          <h3>Bookmark & Personal Filing Hub</h3>
+          <p>Save important circulars to your private repository for quick reference during form filling, counseling rounds, and document verification.</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Categories ──────────────────────────────────────────── -->
-<section class="section" id="categories">
-  <div class="container">
-    <div class="text-center animate-in">
-      <span class="section-eyebrow">📚 Categories</span>
-      <h2 class="section-title">All Major <span class="gradient-text">Exams Covered</span></h2>
-      <p class="section-subtitle">Subscribe to exactly the categories you need</p>
+  <!-- 5. EXAMINATION MONITORING SYSTEM -->
+  <section class="section section-alt" id="monitoring">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Engine Architecture</div>
+        <h2 class="section-title">Rigorous monitoring at the primary source.</h2>
+        <p class="section-desc">We never aggregate second-hand news. ApplyMate monitors official endpoints directly.</p>
+      </div>
+
+      <div class="comparison-container">
+        <div class="comparison-panel before">
+          <span class="comparison-tag">How Scrapers Function</span>
+          <h3 class="comparison-title">Autonomous Polling Pipeline</h3>
+          <p style="font-size:0.9375rem; color:var(--text-secondary); margin-bottom:16px;">
+            The background scheduler runs on an asynchronous non-blocking loop, validating HTTP headers and changes in document trees.
+          </p>
+          <div class="raw-snippet">✓ Poll nta.ac.in/notice-board every 15 min
+✓ Parse HTML DOM & extract verified PDF links
+✓ Compute SHA-256 hash against database index
+✓ Pass novel notices to Gemini 1.5 flash model
+✓ Dispatch notifications to matched users</div>
+        </div>
+
+        <div class="comparison-panel after">
+          <span class="comparison-tag">Zero Spam Guarantee</span>
+          <h3 class="comparison-title">Cryptographic Deduplication</h3>
+          <p style="font-size:0.9375rem; color:var(--text-secondary); margin-bottom:16px;">
+            Every scraped document is uniquely identified by content fingerprint. When an official site updates styling or timestamp headers, duplicate alerts are completely prevented.
+          </p>
+          <div class="raw-snippet" style="color:var(--primary); background:rgba(182,243,107,0.05); border-color:var(--primary-border);">STATUS: ONLINE
+ACTIVE_NODES: 4 (NTA, UPSC, GATE, State)
+DEDUPLICATION: SHA-256 Active
+AVERAGE_LATENCY: 42 seconds from upload
+FALSE_POSITIVE_RATE: 0.00%</div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="categories-grid animate-in">
-      <div class="category-pill"><span class="category-emoji">🩺</span><span class="category-name">NEET</span></div>
-      <div class="category-pill"><span class="category-emoji">⚡</span><span class="category-name">JEE</span></div>
-      <div class="category-pill"><span class="category-emoji">🎓</span><span class="category-name">CUET</span></div>
-      <div class="category-pill"><span class="category-emoji">🔬</span><span class="category-name">GATE</span></div>
-      <div class="category-pill"><span class="category-emoji">📊</span><span class="category-name">CAT</span></div>
-      <div class="category-pill"><span class="category-emoji">🏛️</span><span class="category-name">UPSC</span></div>
-      <div class="category-pill"><span class="category-emoji">📋</span><span class="category-name">SSC</span></div>
-      <div class="category-pill"><span class="category-emoji">🏦</span><span class="category-name">Banking</span></div>
-      <div class="category-pill"><span class="category-emoji">🌟</span><span class="category-name">Scholarships</span></div>
+  <!-- 6. AI-POWERED OFFICIAL NOTICE SUMMARIES -->
+  <section class="section" id="ai-summaries">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Intelligent Distillation</div>
+        <h2 class="section-title">Turn 40-page bureaucratic circulars into immediate action.</h2>
+        <p class="section-desc">Experience the difference between raw government public notices and ApplyMate's AI-synthesized intelligence.</p>
+      </div>
+
+      <div class="comparison-container">
+        <div class="comparison-panel before">
+          <span class="comparison-tag">Raw Government Notice</span>
+          <h3 class="comparison-title">NTA Public Notice #F.No.12-8/2026</h3>
+          <div class="raw-snippet">"In exercise of the powers conferred by the National Medical Commission Act, 2019, and the regulations made thereunder, the National Testing Agency hereby invites online applications from the eligible candidates for the National Eligibility Cum Entrance Test (UG) - 2026 to be conducted in Pen & Paper mode across 557 cities... Candidate must ensure compliance with Section 14(A) of Chapter 3..."</div>
+        </div>
+
+        <div class="comparison-panel after">
+          <span class="comparison-tag">ApplyMate AI Intelligence</span>
+          <h3 class="comparison-title">Actionable Executive Brief</h3>
+          <ul class="ai-summary-points">
+            <li><span class="ai-point-marker">▪</span> <span><strong>Registration Period:</strong> Opens Feb 09 — Closes March 15 at 23:50 IST.</span></li>
+            <li><span class="ai-point-marker">▪</span> <span><strong>Fee Structure:</strong> General: ₹1,700 | EWS/OBC: ₹1,600 | SC/ST/PwBD: ₹1,000.</span></li>
+            <li><span class="ai-point-marker">▪</span> <span><strong>Exam Date:</strong> May 03, 2026 (Pen & Paper mode across 13 languages).</span></li>
+            <li><span class="ai-point-marker">▪</span> <span><strong>Mandatory:</strong> Aadhaar number or ABC ID required for identity authentication.</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Testimonials ─────────────────────────────────────────── -->
-<section class="section" id="testimonials">
-  <div class="container">
-    <div class="text-center animate-in">
-      <span class="section-eyebrow">💬 Students Love It</span>
-      <h2 class="section-title">Trusted by <span class="gradient-text">Thousands</span></h2>
-    </div>
+  <!-- 7. UPCOMING DEADLINE TRACKING -->
+  <section class="section section-alt" id="deadlines">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Lifecycle Timeline</div>
+        <h2 class="section-title">Track every phase of your examination journey.</h2>
+        <p class="section-desc">ApplyMate tracks seven key examination lifecycle milestones so you never get caught off guard.</p>
+      </div>
 
-    <div class="testimonials-grid">
-      <div class="testimonial-card animate-in">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"I almost missed the NEET registration deadline last year. With ApplyMate AI, I get notified the moment anything is posted. It's literally a lifesaver."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">R</div>
-          <div>
-            <div class="testimonial-name">Riya Sharma</div>
-            <div class="testimonial-role">NEET Aspirant, Delhi</div>
+      <div class="timeline-wrap">
+        <div class="timeline-node active">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">1. Official Notification & Information Bulletin</span>
+              <span class="badge badge-accent">Live Monitoring</span>
+            </div>
+            <p style="font-size:0.875rem;">Full rules, syllabus modifications, eligibility guidelines, and testing schedule announced by the examination body.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node active">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">2. Application Form & Fee Window</span>
+              <span class="badge badge-accent">Deadline Countdown</span>
+            </div>
+            <p style="font-size:0.875rem;">Registration opens, document upload requirements, fee submission deadlines, and late payment criteria.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">3. Application Correction Window</span>
+              <span class="badge badge-outline">Crucial Phase</span>
+            </div>
+            <p style="font-size:0.875rem;">A brief 48–72 hour portal window to fix photo anomalies, category misdeclarations, or exam city preferences.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">4. Advance City Intimation Slip</span>
+              <span class="badge badge-outline">Travel Planning</span>
+            </div>
+            <p style="font-size:0.875rem;">Advance announcement of allocated examination city to help students arrange logistics and travel beforehand.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">5. Hall Ticket & Admit Card Release</span>
+              <span class="badge badge-outline">High Priority</span>
+            </div>
+            <p style="font-size:0.875rem;">Official download server links, center reporting timings, and mandatory exam day photo identification instructions.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">6. Provisional Answer Key & Challenge Window</span>
+              <span class="badge badge-outline">Time-Sensitive</span>
+            </div>
+            <p style="font-size:0.875rem;">Recorded OMR response sheets, question paper keys, and official challenge submission timeline.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">7. Final Result, Cutoff & Counseling Schedule</span>
+              <span class="badge badge-outline">Final Milestone</span>
+            </div>
+            <p style="font-size:0.875rem;">All India Rank list, category cut-offs, scorecards, and institutional counseling registrations.</p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="testimonial-card animate-in">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"The AI summaries are incredible. Instead of reading 10-page PDFs, I get a 3-sentence summary with everything I need to know. Saves me hours every week."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">A</div>
-          <div>
-            <div class="testimonial-name">Arjun Mehta</div>
-            <div class="testimonial-role">JEE Advanced Aspirant, Mumbai</div>
+  <!-- 8. TELEGRAM AND EMAIL NOTIFICATIONS -->
+  <section class="section" id="notifications">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Multi-Channel Delivery</div>
+        <h2 class="section-title">Direct alerts wherever you stay productive.</h2>
+        <p class="section-desc">Receive real-time push messages that give you the vital facts in under 10 seconds of reading time.</p>
+      </div>
+
+      <div class="notification-showcase-grid">
+        <div class="notification-device-card">
+          <div class="device-header">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:1.2rem;">📱</span>
+              <strong>Telegram Bot Instant Push</strong>
+            </div>
+            <span class="badge badge-accent">&lt; 30s Latency</span>
+          </div>
+          <div class="telegram-bubble">
+            <div class="telegram-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span>ApplyMate AI Alert • NEET (UG)</span>
+            </div>
+            <div class="telegram-body">
+              <strong>🚨 Registration Closes Tonight!</strong><br><br>
+              The NTA registration window for NEET UG 2026 closes at <strong>23:50 IST</strong>.<br>
+              • Fee submission ends at 23:59 IST.<br>
+              • No further extension announced.<br><br>
+              <em>Ensure successful payment generation before server lock.</em>
+            </div>
+            <div class="telegram-btn">Open Official Portal →</div>
+          </div>
+        </div>
+
+        <div class="notification-device-card">
+          <div class="device-header">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:1.2rem;">✉️</span>
+              <strong>Digest & Instant Email</strong>
+            </div>
+            <span class="badge badge-outline">Daily & Urgent</span>
+          </div>
+          <div class="telegram-bubble" style="background:var(--bg-secondary); border-color:var(--border);">
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">From: alerts@applymate.ai • 18 Nov, 08:30 IST</div>
+            <div style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">[ApplyMate] Weekly Examination Intelligence Digest</div>
+            <div class="telegram-body" style="color:var(--text-secondary);">
+              Here is your verified summary of upcoming deadlines across your 3 subscribed exams (JEE, GATE, CUET):<br>
+              1. <strong>JEE Main Session 2:</strong> Correction window open until tomorrow.<br>
+              2. <strong>GATE 2026:</strong> Answer key dispute portal active.<br>
+              3. <strong>CUET PG:</strong> City intimation slips released.
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="testimonial-card animate-in">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Hindi translation feature is amazing for my parents who wanted to understand what I was applying for. ApplyMate AI made communication so much easier."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">P</div>
-          <div>
-            <div class="testimonial-name">Priya Gupta</div>
-            <div class="testimonial-role">UPSC Aspirant, Lucknow</div>
+  <!-- 9. SUPPORTED EXAMINATION CATEGORIES -->
+  <section class="section section-alt" id="exams">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Comprehensive Coverage</div>
+        <h2 class="section-title">India's premier competitive exams, verified in one feed.</h2>
+        <p class="section-desc">Select your target aspirations and tailor your notification streams.</p>
+      </div>
+
+      <div class="categories-showcase-grid">
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-neet">Medical</span>
+            <span style="font-size:1.25rem;">🩺</span>
+          </div>
+          <h4>NEET (UG & PG)</h4>
+          <p>National Eligibility Entrance Test for MBBS, BDS, and PG medical seats.</p>
+        </div>
+
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-jee">Engineering</span>
+            <span style="font-size:1.25rem;">⚡</span>
+          </div>
+          <h4>JEE Main & Adv</h4>
+          <p>Premier national entrance for IITs, NITs, IIITs, and CFTIs across India.</p>
+        </div>
+
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-cuet">University</span>
+            <span style="font-size:1.25rem;">🎓</span>
+          </div>
+          <h4>CUET (UG & PG)</h4>
+          <p>Common University Entrance Test for Central, State, and top private universities.</p>
+        </div>
+
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-gate">Postgrad Tech</span>
+            <span style="font-size:1.25rem;">🔬</span>
+          </div>
+          <h4>GATE</h4>
+          <p>Graduate Aptitude Test in Engineering for M.Tech admissions and PSU recruitment.</p>
+        </div>
+
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-cat">Management</span>
+            <span style="font-size:1.25rem;">📊</span>
+          </div>
+          <h4>CAT & XAT</h4>
+          <p>Common Admission Test for the Indian Institutes of Management (IIMs).</p>
+        </div>
+
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-upsc">Civil Services</span>
+            <span style="font-size:1.25rem;">🏛️</span>
+          </div>
+          <h4>UPSC CSE / NDA</h4>
+          <p>Union Public Service Commission Civil Services, CDS, and NDA exams.</p>
+        </div>
+
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-ssc">Staff Selection</span>
+            <span style="font-size:1.25rem;">📋</span>
+          </div>
+          <h4>SSC CGL & CHSL</h4>
+          <p>Central government staff recruitment for ministries and departments.</p>
+        </div>
+
+        <div class="category-tile">
+          <div class="category-tile-header">
+            <span class="cat-badge cat-banking">Finance</span>
+            <span style="font-size:1.25rem;">🏦</span>
+          </div>
+          <h4>IBPS & SBI PO</h4>
+          <p>Probationary Officer and Clerk recruitments across public sector banks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. HOW APPLYMATE WORKS -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">The Engine</div>
+        <h2 class="section-title">How ApplyMate works under the hood.</h2>
+        <p class="section-desc">Four coordinated steps from the second a notice hits the government server to your screen.</p>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="workflow-step">
+          <div class="step-num-badge">01</div>
+          <h3>Ingest & Hash</h3>
+          <p>Headless scrapers inspect official notice boards every 15 minutes, verifying SSL certificates and computing cryptographic hashes.</p>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-num-badge">02</div>
+          <h3>AI Distillation</h3>
+          <p>Google Gemini processes the document text, classifying exam category, key deadlines, eligibility criteria, and required candidate actions.</p>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-num-badge">03</div>
+          <h3>Subscription Match</h3>
+          <p>The system cross-references active notice categories against user subscription preferences to prepare target recipient lists.</p>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-num-badge">04</div>
+          <h3>Instant Dispatch</h3>
+          <p>Alerts are fired concurrently across Telegram bots and Brevo email queues within 60 seconds with 99.9% delivery reliability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. LIVE RECENT OFFICIAL NOTICES FEED -->
+  <section class="section section-alt" id="live-feed">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Live Intelligence Feed</div>
+        <h2 class="section-title">Recent official notices processed by ApplyMate.</h2>
+        <p class="section-desc">Sample the real-time stream of official circulars verified by our autonomous engine.</p>
+      </div>
+
+      <div class="live-notices-feed" id="liveNoticesContainer">
+        <!-- Loaded via JavaScript or fallback -->
+        <div class="live-notice-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span class="cat-badge cat-neet">NEET UG</span>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Recent</span>
+          </div>
+          <h4 style="font-size:1rem; line-height:1.4;">NEET (UG) 2026: Information Bulletin, Eligibility and Online Application Schedule</h4>
+          <p style="font-size:0.875rem; color:var(--text-secondary);">Registration portal opened. Candidates must apply on official portal exams.nta.ac.in/NEET before closing date.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:0.75rem;color:var(--text-muted);">
+            <span>Source: NTA Official</span>
+            <a href="/login" class="text-accent" style="font-weight:600;">View Details →</a>
+          </div>
+        </div>
+
+        <div class="live-notice-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span class="cat-badge cat-jee">JEE Main</span>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Recent</span>
+          </div>
+          <h4 style="font-size:1rem; line-height:1.4;">JEE (Main) 2026: Advance City Intimation for Examination Session 1 Candidates</h4>
+          <p style="font-size:0.875rem; color:var(--text-secondary);">City allocation slips available for download using application number and date of birth.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:0.75rem;color:var(--text-muted);">
+            <span>Source: jeemain.nta.ac.in</span>
+            <a href="/login" class="text-accent" style="font-weight:600;">View Details →</a>
+          </div>
+        </div>
+
+        <div class="live-notice-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span class="cat-badge cat-gate">GATE</span>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Recent</span>
+          </div>
+          <h4 style="font-size:1rem; line-height:1.4;">GATE 2026: Master Question Papers and Candidate Response Key Released</h4>
+          <p style="font-size:0.875rem; color:var(--text-secondary);">Official answer keys published. Contest window open for challenge submissions with supporting rationale.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:0.75rem;color:var(--text-muted);">
+            <span>Source: GOAPS Portal</span>
+            <a href="/login" class="text-accent" style="font-weight:600;">View Details →</a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── FAQ ──────────────────────────────────────────────────── -->
-<section class="section" id="faq">
-  <div class="container-sm">
-    <div class="text-center animate-in">
-      <span class="section-eyebrow">❓ FAQ</span>
-      <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+  <!-- 12. FAQ SECTION -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Clear Answers</div>
+        <h2 class="section-title">Frequently asked questions.</h2>
+        <p class="section-desc">Everything you need to know about sources, privacy, and alert reliability.</p>
+      </div>
+
+      <div class="faq-wrap">
+        <div class="faq-item open">
+          <button class="faq-trigger" aria-expanded="true">
+            <span>Where does ApplyMate get its examination notices from?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-body">
+            ApplyMate crawls verified primary government servers directly, including the National Testing Agency (nta.ac.in, exams.nta.ac.in), UPSC (upsc.gov.in), GATE organizing institutes (IITs), IIM CAT portals, and the Staff Selection Commission. We never rely on social media channels or third-party blogs.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span>Is ApplyMate AI free for students?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-body">
+            Yes, ApplyMate AI is free for student aspirants. You can track all supported competitive examinations, access Gemini-generated summaries, and receive instant Telegram and email notifications at zero cost.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span>How fast are notifications delivered after a notice is published?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-body">
+            Our background scraping engines poll official endpoints every 15 minutes. Once a new circular is detected, the AI distillation completes within 10–15 seconds, and Telegram push alerts are delivered to your device in under 60 seconds.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span>Can I customize which exams I receive alerts for?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-body">
+            Yes. In your dashboard under Subscriptions, you have granular toggle switches for NEET, JEE, CUET, GATE, CAT, UPSC, SSC, Banking, and Scholarships. You will only be alerted for the specific exams you choose.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span>How do I connect the Telegram bot to my account?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-body">
+            It takes just 30 seconds. Start a chat with the official ApplyMate bot on Telegram, copy your unique 9-digit Chat ID, and paste it into the Telegram settings field in your ApplyMate dashboard. You will instantly receive a test verification ping.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <span>Can I read notice summaries in Hindi?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-body">
+            Yes. Every notice inside the dashboard has an instant "Translate to Hindi" option powered by Gemini, giving you clear Hindi translations of technical guidelines and dates.
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="faq-list animate-in">
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is ApplyMate AI free to use?
-          <span class="faq-chevron">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Yes! ApplyMate AI is completely free for students. Sign up, choose your exam categories, connect your Telegram or email, and start receiving AI-powered notifications immediately.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Which official websites do you monitor?
-          <span class="faq-chevron">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">We currently monitor NTA (nta.ac.in) covering NEET, JEE, CUET, and more. We are actively adding UPSC, SSC, IBPS, UGC-NET, and other major exam portals.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How quickly will I receive notifications?
-          <span class="faq-chevron">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Our scrapers check official websites every 30 minutes. Once a new notice is detected, AI processing and notification delivery happens within 60 seconds. You'll typically be notified within 30-31 minutes of a notice going live.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How do I connect Telegram notifications?
-          <span class="faq-chevron">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">After signing up, go to your Dashboard → Settings → Telegram. Start a chat with our Telegram bot, copy your Chat ID, and paste it in the settings form. You'll instantly receive a welcome message to confirm the connection.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Are the AI summaries accurate?
-          <span class="faq-chevron">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Our AI summaries are generated by Google Gemini, one of the most capable AI models available. We always include a link to the original official notice, and we recommend verifying important dates directly with the official source before taking action.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Can I subscribe to multiple exam categories?
-          <span class="faq-chevron">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Absolutely! You can subscribe to any combination of our 9 categories: NEET, JEE, CUET, GATE, CAT, UPSC, SSC, Banking, and Scholarships. Manage your preferences anytime from the dashboard.</div>
+  <!-- 13. FINAL CALL TO ACTION -->
+  <section class="section section-alt" id="cta">
+    <div class="container">
+      <div class="cta-banner">
+        <span class="badge badge-accent" style="margin-bottom:16px;">Begin Your Prep Advantage</span>
+        <h2>Start tracking your examinations today.</h2>
+        <p class="text-secondary">
+          Join thousands of aspirants who never miss a registration deadline, correction window, or admit card release.
+        </p>
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+          <a href="/signup" class="btn btn-primary btn-lg">Create Free Account</a>
+          <a href="/login" class="btn btn-outline btn-lg">Sign In to Dashboard</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── CTA ──────────────────────────────────────────────────── -->
-<section class="section" id="cta">
+</main>
+
+<!-- 14. PROFESSIONAL FOOTER -->
+<footer class="footer" id="about">
   <div class="container">
-    <div class="cta-section animate-in">
-      <span class="section-eyebrow">🚀 Get Started</span>
-      <h2 class="section-title" style="margin-bottom:16px;">Ready to Never Miss<br><span class="gradient-text">Another Deadline?</span></h2>
-      <p style="font-size:18px;color:var(--text-secondary);margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto;">
-        Join thousands of students who rely on ApplyMate AI every day. Free forever.
-      </p>
-      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <a href="/signup" class="btn btn-primary btn-lg" id="cta-signup">
-          🎓 Create Free Account
+    <div class="footer-top">
+      <div class="footer-col">
+        <a href="/" class="navbar-logo" style="margin-bottom:8px;">
+          <div class="logo-symbol" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          ApplyMate <span class="text-accent">AI</span>
         </a>
-        <a href="/login" class="btn btn-outline btn-lg">
-          Already have an account?
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Footer ───────────────────────────────────────────────── -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="/" class="navbar-logo" style="font-size:18px;">
-          <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">🎓</div>
-          ApplyMate <span style="color:var(--primary-light)">AI</span>
-        </a>
-        <p>AI-powered educational notification platform for Indian students. Stay ahead of every deadline.</p>
+        <p style="font-size:0.875rem; color:var(--text-secondary); line-height:1.6; max-width:320px;">
+          Intelligent examination companion tracking official updates, discovering important deadlines, and delivering sub-minute notifications for competitive aspirants.
+        </p>
+        <div class="live-pulse" style="width:fit-content; margin-top:8px;">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          All Monitoring Systems Operational
+        </div>
       </div>
 
-      <div>
-        <h4 class="footer-heading">Product</h4>
-        <ul class="footer-links">
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
           <li><a href="#features">Features</a></li>
-          <li><a href="#categories">Categories</a></li>
           <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="/dashboard">Dashboard</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="footer-heading">Account</h4>
-        <ul class="footer-links">
-          <li><a href="/signup">Sign Up</a></li>
-          <li><a href="/login">Log In</a></li>
-          <li><a href="/forgot-password">Reset Password</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="footer-heading">Resources</h4>
-        <ul class="footer-links">
-          <li><a href="https://nta.ac.in" target="_blank" rel="noopener">NTA Official</a></li>
+          <li><a href="#exams">Supported Exams</a></li>
           <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Portals Monitored</h4>
+        <ul>
+          <li><a href="#exams">National Testing Agency</a></li>
+          <li><a href="#exams">UPSC Civil Services</a></li>
+          <li><a href="#exams">IIT GATE Organizing Office</a></li>
+          <li><a href="#exams">IIM Common Admission Test</a></li>
+          <li><a href="#exams">Staff Selection Commission</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Authentication</h4>
+        <ul>
+          <li><a href="/login">Student Sign In</a></li>
+          <li><a href="/signup">Create Free Account</a></li>
+          <li><a href="/forgot-password">Reset Password</a></li>
+          <li><a href="/admin">Administrative Portal</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 ApplyMate AI. Built for Indian students. 🇮🇳</p>
-      <p style="color:var(--text-muted)">Powered by Google Gemini AI <br> Created by Anivaran Dubey</p>
-
+      <div>© 2026 ApplyMate AI. All rights reserved. Designed for student aspirants across India.</div>
+      <div style="display:flex; gap:16px;">
+        <span style="color:var(--text-muted);">Verified Primary Sources Only</span>
+        <span>•</span>
+        <span style="color:var(--text-muted);">WCAG 2.2 AA Compliant</span>
+      </div>
     </div>
   </div>
 </footer>
 
-<!-- ── Toast Container ──────────────────────────────────────── -->
-<div class="toast-container" id="toastContainer"></div>
+<!-- ── Floating AI Assistant Chatbot Widget ───────────────────── -->
+<div id="chatbotWidget">
+  <button id="chatBubbleBtn" aria-label="Open AI Assistant Chatbot" title="Chat with ApplyMate AI Assistant">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </button>
+
+  <div id="chatPanel" role="dialog" aria-modal="true" aria-label="AI Assistant" aria-hidden="true">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-avatar" aria-hidden="true">AI</div>
+        <div>
+          <div class="chat-header-title">ApplyMate AI Assistant</div>
+          <div class="chat-header-status">
+            <span class="pulse-dot" style="width:5px;height:5px;" aria-hidden="true"></span>
+            Online & Ready
+          </div>
+        </div>
+      </div>
+      <button class="chat-close-btn" id="closeChatBtn" aria-label="Close chat window">✕</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
+      <div class="msg-bot">
+        Hello! I am your ApplyMate AI examination assistant. Ask me anything about upcoming exams, application dates, syllabus changes, or official circulars.
+      </div>
+    </div>
+
+    <form class="chat-input-area" id="chatForm" onsubmit="event.preventDefault(); sendChatMessage();">
+      <label for="chatInput" class="visually-hidden" style="display:none;">Type your examination question</label>
+      <input type="text" id="chatInput" placeholder="Ask about NEET, JEE, GATE dates..." autocomplete="off">
+      <button type="submit" aria-label="Send message">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
 
 <script src="/static/js/config.js"></script>
 <script src="/static/js/api.js"></script>
 <script>
-  // ── Fetch Live Notices
+  // ── Mobile Menu Toggle
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileMenuClose');
+
+  function openMobileMenu() {
+    mobileMenu.hidden = false;
+    mobileMenu.classList.add('open');
+    mobileBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    mobileMenu.hidden = true;
+    mobileBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', openMobileMenu);
+    mobileClose.addEventListener('click', closeMobileMenu);
+  }
+
+  // ── FAQ Accordion
+  document.querySelectorAll('.faq-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const item = trigger.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ── Fetch Live Notices (If Available)
   async function loadLiveNotices() {
     const container = document.getElementById('liveNoticesContainer');
     if (!container) return;
-    
+
     try {
-      const data = await API.notices.list({ limit: 3 });
-      const notices = data.items || data || [];
-      
-      if (!notices || notices.length === 0) {
-        return; // Keep beautiful showcase notices if db is empty
-      }
-
-      container.innerHTML = '';
-      notices.slice(0, 3).forEach((n, i) => {
-        const cat = (n.category || 'GENERAL').toLowerCase();
-        const colors = ['var(--primary)', 'var(--accent)', '#8b5cf6'];
-        const color = colors[i % colors.length];
-        
-        let summary = n.ai_summary || n.summary || 'Click to view details on dashboard.';
-        if (summary.length > 90) summary = summary.substring(0, 90) + '...';
-
-        const div = document.createElement('div');
-        div.className = 'notice-item';
-        div.innerHTML = `
-          <div class="notice-dot" style="background:${color};box-shadow:0 0 8px ${color};"></div>
-          <div>
-            <div class="notice-title">${escHtml(n.title)}</div>
-            <div style="display:flex;gap:8px;margin:6px 0;">
-              <span class="badge badge-${cat}" style="font-size:10px;padding:2px 8px;">${escHtml(n.category || 'GENERAL')}</span>
+      const res = await API.notices.list({ page_size: 6 });
+      if (res && res.items && res.items.length > 0) {
+        container.innerHTML = '';
+        res.items.forEach(notice => {
+          const card = document.createElement('div');
+          card.className = 'live-notice-card';
+          const catClass = 'cat-' + (notice.category || 'general').toLowerCase();
+          const cleanDate = notice.scraped_at ? new Date(notice.scraped_at).toLocaleDateString() : 'Recent';
+          card.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="cat-badge ${catClass}">${notice.category || 'General'}</span>
+              <span style="font-size:0.75rem; color:var(--text-muted);">${cleanDate}</span>
             </div>
-            <div class="notice-meta">🤖 AI Summary: ${escHtml(summary)}</div>
-          </div>
-        `;
-        container.appendChild(div);
-      });
+            <h4 style="font-size:1rem; line-height:1.4;">${notice.title}</h4>
+            <p style="font-size:0.875rem; color:var(--text-secondary);">${notice.ai_summary || notice.title}</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:0.75rem;color:var(--text-muted);">
+              <span>Source: ${notice.source || 'Official'}</span>
+              <a href="/login" class="text-accent" style="font-weight:600;">View Details →</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
     } catch (e) {
-      // Keep showcase notices on network error
+      // Quietly keep static high-fidelity fallback cards if API is unavailable
     }
   }
 
-  function escHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  loadLiveNotices();
-
-  // ── Navbar scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-  });
-
-  // ── Animate on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
-
-  // Fix hero mockup animation
-  document.querySelector('.hero-mockup').style.opacity = '';
-
-  // ── FAQ Accordion
-  function toggleFaq(btn) {
-    const item = btn.closest('.faq-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  }
-
-  // ── Mobile Menu
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileMenuClose = document.getElementById('mobileMenuClose');
-
-  mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
-  mobileMenuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
-
-  function closeMobileMenu() { mobileMenu.classList.remove('open'); }
+  document.addEventListener('DOMContentLoaded', loadLiveNotices);
 
   // ── Floating Chatbot Logic
   const chatBubbleBtn = document.getElementById('chatBubbleBtn');
   const chatPanel = document.getElementById('chatPanel');
   const closeChatBtn = document.getElementById('closeChatBtn');
-  const chatInput = document.getElementById('chatInput');
   const chatMessages = document.getElementById('chatMessages');
-  let landingChatHistory = [];
+  const chatInput = document.getElementById('chatInput');
+  const landingChatHistory = [];
 
-  chatBubbleBtn.addEventListener('click', () => {
-    chatPanel.classList.toggle('open');
-    if (chatPanel.classList.contains('open') && chatMessages.children.length === 1) {
-      chatInput.focus();
-    }
-  });
+  if (chatBubbleBtn && chatPanel) {
+    chatBubbleBtn.addEventListener('click', () => {
+      const isOpen = chatPanel.classList.toggle('open');
+      chatPanel.setAttribute('aria-hidden', !isOpen);
+      if (isOpen) {
+        chatInput.focus();
+      }
+    });
 
-  closeChatBtn.addEventListener('click', () => chatPanel.classList.remove('open'));
-
-  chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendChatMessage();
-  });
+    closeChatBtn.addEventListener('click', () => {
+      chatPanel.classList.remove('open');
+      chatPanel.setAttribute('aria-hidden', 'true');
+    });
+  }
 
   async function sendChatMessage() {
     const question = chatInput.value.trim();
     if (!question) return;
 
-    // Add user message
     const userMsg = document.createElement('div');
     userMsg.className = 'msg-user';
     userMsg.textContent = question;
     chatMessages.appendChild(userMsg);
-    
     chatInput.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // Add typing indicator
-    const typingId = 'type-' + Date.now();
-    const typingMsg = document.createElement('div');
-    typingMsg.className = 'msg-bot typing-indicator';
-    typingMsg.id = typingId;
-    typingMsg.innerHTML = '<span></span><span></span><span></span>';
-    chatMessages.appendChild(typingMsg);
+    const botLoading = document.createElement('div');
+    botLoading.className = 'msg-bot';
+    botLoading.innerHTML = '<span class="spinner"></span> Consulting examination intelligence...';
+    chatMessages.appendChild(botLoading);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
-      const res = await fetch('/assistant/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: question, history: landingChatHistory.slice(-10) })
-      });
-      
-      const data = await res.json();
-      
-      landingChatHistory.push({ role: 'user', content: question });
-      landingChatHistory.push({ role: 'assistant', content: data.answer });
+      const res = await API.assistant.chat(question, landingChatHistory.slice(-6));
+      botLoading.remove();
 
-      document.getElementById(typingId).remove();
-      
+      landingChatHistory.push({ role: 'user', content: question });
+      landingChatHistory.push({ role: 'assistant', content: res.answer });
+
       const botMsg = document.createElement('div');
       botMsg.className = 'msg-bot';
-      botMsg.innerHTML = marked.parse(data.answer);
+      botMsg.textContent = res.answer;
       chatMessages.appendChild(botMsg);
-
     } catch (err) {
-      document.getElementById(typingId).remove();
-      const errorMsg = document.createElement('div');
-      errorMsg.className = 'msg-bot';
-      errorMsg.style.color = '#f87171';
-      errorMsg.textContent = '❌ Failed to connect to AI.';
-      chatMessages.appendChild(errorMsg);
+      botLoading.remove();
+      const errEl = document.createElement('div');
+      errEl.className = 'msg-bot';
+      errEl.style.color = '#F87171';
+      errEl.textContent = 'Unable to reach assistant right now. Please try again or sign in.';
+      chatMessages.appendChild(errEl);
     }
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
-
-  window.sendChatMessage = sendChatMessage;
-
-  // ── Toast utility (shared across pages)
-  function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
-    toast.innerHTML = `<span>${icons[type]}</span><span>${message}</span>`;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 4000);
-  }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

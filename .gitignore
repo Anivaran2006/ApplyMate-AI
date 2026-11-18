@@ -47,3 +47,7 @@ alembic/versions/*.py
 
 # Frontend build artifacts
 frontend/node_modules/
+
+# Media / Large screen recordings
+*.mp4
+*.webm

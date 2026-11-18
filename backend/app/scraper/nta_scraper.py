@@ -67,9 +67,10 @@ def parse_nta_notices(html: str) -> List[dict]:
             continue
 
         title = link_tag.get_text(strip=True)
-        href = link_tag["href"]
+        href_val = link_tag.get("href")
+        href = str(href_val) if href_val else ""
 
-        if not title or len(title) < 10:
+        if not title or len(title) < 10 or not href:
             continue
 
         # Resolve relative URLs
@@ -93,8 +94,9 @@ def parse_nta_notices(html: str) -> List[dict]:
         if main:
             for link_tag in main.find_all("a", href=True):
                 title = link_tag.get_text(strip=True)
-                href = link_tag["href"]
-                if not title or len(title) < 15:
+                href_val = link_tag.get("href")
+                href = str(href_val) if href_val else ""
+                if not title or len(title) < 15 or not href:
                     continue
                 if href.startswith("http"):
                     full_url = href

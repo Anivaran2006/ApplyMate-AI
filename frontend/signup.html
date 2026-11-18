@@ -3,190 +3,619 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account – ApplyMate AI</title>
-  <meta name="description" content="Join ApplyMate AI – Get AI-powered educational notices for NEET, JEE, CUET and more. Free forever.">
-  <link rel="stylesheet" href="css/main.css">
+  <title>Create Free Account — ApplyMate AI</title>
+  <meta name="description" content="Create your free ApplyMate AI account. Receive instant AI-summarized official notices for NEET, JEE, CUET, GATE, and UPSC.">
+  <link rel="stylesheet" href="/static/css/main.css">
   <style>
-    body { min-height: 100vh; display: flex; flex-direction: column; }
-    .auth-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 80px 24px 40px; position: relative; overflow: hidden; }
-    .auth-bg { position: fixed; inset: 0; background: var(--grad-hero); z-index: 0; }
-    .auth-orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-    .auth-orb-1 { width: 400px; height: 400px; background: rgba(124,58,237,0.2); top: -100px; right: -100px; }
-    .auth-orb-2 { width: 300px; height: 300px; background: rgba(6,182,212,0.15); bottom: -80px; left: -80px; }
-    .auth-card { position: relative; z-index: 1; background: rgba(15,15,30,0.85); backdrop-filter: blur(24px); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 48px; width: 100%; max-width: 480px; box-shadow: var(--shadow-lg), var(--shadow-glow-sm); animation: fadeInUp 0.5s ease both; }
-    .auth-logo { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 32px; text-decoration: none; }
-    .auth-logo .logo-icon { width: 40px; height: 40px; background: var(--grad-primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 20px; }
-    .auth-title { font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 8px; }
-    .auth-subtitle { font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 32px; }
-    .form-group { margin-bottom: 20px; }
-    .form-footer { text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-secondary); }
-    .form-footer a { color: var(--primary-light); font-weight: 600; }
-    .input-icon-wrap { position: relative; }
-    .input-icon-wrap .input { padding-left: 44px; }
-    .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; color: var(--text-muted); }
-    .password-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; padding: 0; transition: color var(--transition); }
-    .password-toggle:hover { color: var(--primary-light); }
-    .btn-full { width: 100%; }
-    .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .error-msg { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: #fca5a5; margin-bottom: 20px; display: none; }
-    .password-strength { margin-top: 8px; }
-    .strength-bar { height: 4px; border-radius: 2px; background: var(--border-light); margin-bottom: 4px; overflow: hidden; }
-    .strength-fill { height: 100%; border-radius: 2px; transition: width 0.3s, background 0.3s; width: 0; }
-    .strength-label { font-size: 11px; color: var(--text-muted); }
-    .benefits { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
-    .benefit { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-secondary); }
-    .benefit-check { width: 20px; height: 20px; background: rgba(16,185,129,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-main);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-split-wrapper {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Left Brand Panel */
+    .auth-brand-panel {
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      padding: 64px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-brand-panel::before {
+      content: '';
+      position: absolute;
+      bottom: -200px;
+      right: -200px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(182, 243, 107, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .brand-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-content {
+      max-width: 580px;
+      margin: 36px 0;
+    }
+
+    .brand-headline {
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .brand-headline span {
+      color: var(--primary);
+    }
+
+    .brand-subtext {
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .brand-benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+    }
+
+    .benefit-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary-dim);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .quote-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      position: relative;
+    }
+
+    .quote-text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .quote-author {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .quote-author span {
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .brand-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* Right Form Panel */
+    .auth-form-panel {
+      background-color: var(--bg-main);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 36px;
+      overflow-y: auto;
+    }
+
+    .auth-form-container {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      transition: color var(--transition);
+    }
+    .back-home-link:hover {
+      color: var(--primary);
+    }
+
+    .form-heading {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .form-subheading {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 0.875rem;
+    }
+    .password-toggle-btn:hover {
+      color: var(--text-primary);
+    }
+
+    /* Strength Meter */
+    .strength-wrapper {
+      margin-top: 8px;
+    }
+
+    .strength-bar-bg {
+      height: 4px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .strength-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: var(--radius-full);
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    .strength-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .checkbox-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 20px 0 24px;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .checkbox-wrap input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .checkbox-wrap a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .auth-divider span {
+      padding: 0 14px;
+    }
+
+    .switch-auth-text {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    .switch-auth-text a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ── Responsiveness ── */
+    @media (max-width: 1024px) {
+      .auth-split-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .auth-brand-panel {
+        display: none;
+      }
+      .auth-form-panel {
+        padding: 48px 24px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="auth-bg"></div>
-  <div class="auth-orb auth-orb-1"></div>
-  <div class="auth-orb auth-orb-2"></div>
 
-  <div class="auth-wrapper">
-    <div class="auth-card">
-      <a href="index.html" class="auth-logo">
-        <div class="logo-icon">🎓</div>
-        ApplyMate <span style="color:var(--primary-light)">AI</span>
+<a href="#signupForm" class="skip-link">Skip to registration form</a>
+
+<div class="auth-split-wrapper">
+
+  <!-- ── Left Brand & Editorial Panel ── -->
+  <aside class="auth-brand-panel" aria-label="ApplyMate Benefits">
+    <div class="brand-top">
+      <a href="/" class="navbar-logo" aria-label="ApplyMate AI Home">
+        <div class="logo-symbol" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        ApplyMate <span class="text-accent">AI</span>
       </a>
+    </div>
 
-      <h1 class="auth-title">Create your account</h1>
-      <p class="auth-subtitle">Free forever. AI-powered. Instant alerts.</p>
+    <div class="brand-content">
+      <h1 class="brand-headline">
+        Your unfair advantage in <span>examination preparation.</span>
+      </h1>
+      <p class="brand-subtext">
+        Focus your cognitive energy on problem-solving and syllabus mastery. Let ApplyMate handle the continuous vigilance of portals, releases, and deadlines.
+      </p>
 
-      <div class="benefits">
-        <div class="benefit"><div class="benefit-check">✓</div> AI summaries of every official notice</div>
-        <div class="benefit"><div class="benefit-check">✓</div> Telegram & Email instant alerts</div>
-        <div class="benefit"><div class="benefit-check">✓</div> 9 exam categories supported</div>
+      <div class="brand-benefits-list">
+        <div class="benefit-item">
+          <div class="benefit-check" aria-hidden="true">✓</div>
+          <span>Free forever for competitive student aspirants</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check" aria-hidden="true">✓</div>
+          <span>Instant Telegram bot setup in under 30 seconds</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check" aria-hidden="true">✓</div>
+          <span>10+ Premier exams covered: NEET, JEE, CUET, GATE, UPSC</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check" aria-hidden="true">✓</div>
+          <span>AI summaries and one-tap Hindi translations for every circular</span>
+        </div>
       </div>
 
-      <div class="error-msg" id="errorMsg"></div>
+      <div class="quote-card">
+        <p class="quote-text">
+          "ApplyMate verified the NTA notification 4 minutes after it was published. The AI summary told me the exact closing date and eligibility without having to parse a 40-page PDF."
+        </p>
+        <div class="quote-author">
+          Aakash V. <span>• JEE Advanced Aspirant, 2026</span>
+        </div>
+      </div>
+    </div>
 
-      <form id="signupForm" novalidate>
+    <div class="brand-bottom">
+      <span>© 2026 ApplyMate AI</span>
+      <span>Verified Official Sources Only</span>
+    </div>
+  </aside>
+
+  <!-- ── Right Registration Form Panel ── -->
+  <main class="auth-form-panel">
+    <div class="auth-form-container">
+      <a href="/" class="back-home-link" aria-label="Return to Homepage">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Home
+      </a>
+
+      <h2 class="form-heading">Create your free account</h2>
+      <p class="form-subheading">Set up your profile to receive instant examination alerts.</p>
+
+      <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;" aria-live="assertive">
+        <span aria-hidden="true">✕</span>
+        <span id="errorMessage">Please check your inputs and try again.</span>
+      </div>
+
+      <form id="signupForm" novalidate onsubmit="handleSignup(event)">
         <div class="form-group">
-          <label class="input-label" for="fullName">Full Name</label>
-          <div class="input-icon-wrap">
-            <span class="input-icon">👤</span>
-            <input type="text" id="fullName" class="input" placeholder="Your full name" required autocomplete="name">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            class="input"
+            placeholder="Priya Sharma"
+            autocomplete="name"
+            required
+            aria-required="true"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="input"
+            placeholder="priya@example.com"
+            autocomplete="email"
+            required
+            aria-required="true"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="input"
+              placeholder="Minimum 8 characters"
+              autocomplete="new-password"
+              required
+              aria-required="true"
+              style="padding-right:44px;"
+              oninput="checkPasswordStrength()"
+            >
+            <button
+              type="button"
+              id="togglePassword"
+              class="password-toggle-btn"
+              aria-label="Toggle password visibility"
+              onclick="togglePasswordVisibility('password', 'togglePassword')"
+            >
+              👁️
+            </button>
+          </div>
+
+          <!-- Password Strength Meter -->
+          <div class="strength-wrapper" aria-live="polite">
+            <div class="strength-bar-bg">
+              <div id="strengthFill" class="strength-bar-fill"></div>
+            </div>
+            <div class="strength-label">
+              <span>Password Strength</span>
+              <span id="strengthText">Too short</span>
+            </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="input-label" for="email">Email Address</label>
-          <div class="input-icon-wrap">
-            <span class="input-icon">✉️</span>
-            <input type="email" id="email" class="input" placeholder="you@example.com" required autocomplete="email">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              class="input"
+              placeholder="Re-enter password"
+              autocomplete="new-password"
+              required
+              aria-required="true"
+              style="padding-right:44px;"
+            >
+            <button
+              type="button"
+              id="toggleConfirmPassword"
+              class="password-toggle-btn"
+              aria-label="Toggle confirm password visibility"
+              onclick="togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword')"
+            >
+              👁️
+            </button>
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="input-label" for="password">Password</label>
-          <div class="input-icon-wrap">
-            <span class="input-icon">🔒</span>
-            <input type="password" id="password" class="input" placeholder="Min. 8 characters" required autocomplete="new-password" style="padding-right:44px" oninput="checkStrength(this.value)">
-            <button type="button" class="password-toggle" onclick="togglePassword('password',this)">👁️</button>
-          </div>
-          <div class="password-strength">
-            <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-            <span class="strength-label" id="strengthLabel"></span>
-          </div>
+        <div class="checkbox-wrap">
+          <input type="checkbox" id="agreeTerms" required aria-required="true">
+          <label for="agreeTerms">
+            I agree to receive verified educational exam alerts and acknowledge the ApplyMate <a href="/terms" onclick="event.preventDefault(); alert('Terms: ApplyMate AI is an independent notification platform aggregating official public circulars.');">Terms of Service</a>.
+          </label>
         </div>
 
-        <div class="form-group">
-          <label class="input-label" for="confirmPassword">Confirm Password</label>
-          <div class="input-icon-wrap">
-            <span class="input-icon">🔒</span>
-            <input type="password" id="confirmPassword" class="input" placeholder="Repeat your password" required autocomplete="new-password" style="padding-right:44px">
-            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword',this)">👁️</button>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
-          <span id="submitText">🚀 Create Account</span>
-          <div class="spinner" id="spinner"></div>
+        <button type="submit" id="submitBtn" class="btn btn-primary btn-full btn-lg">
+          <span id="btnText">Create Free Account</span>
+          <span id="btnSpinner" class="spinner" style="display:none;" aria-hidden="true"></span>
         </button>
       </form>
 
-      <div class="form-footer" style="margin-top:20px;">
-        Already have an account? <a href="login.html">Sign in</a>
+      <div class="auth-divider">
+        <span>Already Registered?</span>
+      </div>
+
+      <div class="switch-auth-text">
+        Existing account?
+        <a href="/login">Sign in to your dashboard</a>
       </div>
     </div>
-  </div>
+  </main>
 
-  <div class="toast-container" id="toastContainer"></div>
-  <script src="js/config.js"></script>
-  <script src="js/api.js"></script>
-  <script>
-    requireGuest();
+</div>
 
-    function togglePassword(inputId, btn) {
-      const input = document.getElementById(inputId) || btn.previousElementSibling;
-      if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
-      else { input.type = 'password'; btn.textContent = '👁️'; }
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
+<script>
+  // Redirect logged-in users away from signup page
+  requireGuest();
+
+  function togglePasswordVisibility(inputId, btnId) {
+    const pwdInput = document.getElementById(inputId);
+    const toggleBtn = document.getElementById(btnId);
+    if (pwdInput.type === 'password') {
+      pwdInput.type = 'text';
+      toggleBtn.setAttribute('aria-label', 'Hide password');
+    } else {
+      pwdInput.type = 'password';
+      toggleBtn.setAttribute('aria-label', 'Show password');
+    }
+  }
+
+  function checkPasswordStrength() {
+    const val = document.getElementById('password').value;
+    const fill = document.getElementById('strengthFill');
+    const text = document.getElementById('strengthText');
+
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    if (val.length === 0) {
+      fill.style.width = '0%';
+      text.textContent = 'Too short';
+      text.style.color = 'var(--text-muted)';
+    } else if (score <= 1) {
+      fill.style.width = '25%';
+      fill.style.backgroundColor = '#EF4444';
+      text.textContent = 'Weak (add numbers/symbols)';
+      text.style.color = '#EF4444';
+    } else if (score === 2) {
+      fill.style.width = '50%';
+      fill.style.backgroundColor = '#F59E0B';
+      text.textContent = 'Fair';
+      text.style.color = '#F59E0B';
+    } else if (score === 3) {
+      fill.style.width = '75%';
+      fill.style.backgroundColor = '#38BDF8';
+      text.textContent = 'Good';
+      text.style.color = '#38BDF8';
+    } else {
+      fill.style.width = '100%';
+      fill.style.backgroundColor = '#B6F36B';
+      text.textContent = 'Strong';
+      text.style.color = '#B6F36B';
+    }
+  }
+
+  async function handleSignup(e) {
+    e.preventDefault();
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const agreeTerms = document.getElementById('agreeTerms').checked;
+
+    const errorAlert = document.getElementById('errorAlert');
+    const errorMessage = document.getElementById('errorMessage');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
+
+    errorAlert.style.display = 'none';
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      errorMessage.textContent = 'Please fill out all required fields.';
+      errorAlert.style.display = 'flex';
+      return;
     }
 
-    function checkStrength(val) {
-      const fill = document.getElementById('strengthFill');
-      const label = document.getElementById('strengthLabel');
-      let score = 0;
-      if (val.length >= 8) score++;
-      if (val.length >= 12) score++;
-      if (/[A-Z]/.test(val)) score++;
-      if (/[0-9]/.test(val)) score++;
-      if (/[^A-Za-z0-9]/.test(val)) score++;
-
-      const levels = [
-        { width: '20%', color: '#ef4444', text: 'Very weak' },
-        { width: '40%', color: '#f97316', text: 'Weak' },
-        { width: '60%', color: '#f59e0b', text: 'Fair' },
-        { width: '80%', color: '#10b981', text: 'Strong' },
-        { width: '100%', color: '#06b6d4', text: 'Very strong' },
-      ];
-      const lvl = levels[Math.min(score - 1, 4)] || { width: '0', color: '', text: '' };
-      fill.style.width = val ? lvl.width : '0';
-      fill.style.background = lvl.color;
-      label.textContent = val ? lvl.text : '';
-      label.style.color = lvl.color;
+    if (password.length < 8) {
+      errorMessage.textContent = 'Password must be at least 8 characters long.';
+      errorAlert.style.display = 'flex';
+      return;
     }
 
-    function setLoading(loading) {
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = loading;
-      document.getElementById('submitText').style.display = loading ? 'none' : 'block';
-      document.getElementById('spinner').style.display = loading ? 'block' : 'none';
+    if (password !== confirmPassword) {
+      errorMessage.textContent = 'Passwords do not match. Please verify.';
+      errorAlert.style.display = 'flex';
+      return;
     }
 
-    function showError(msg) {
-      const el = document.getElementById('errorMsg');
-      el.textContent = msg;
-      el.style.display = 'block';
+    if (!agreeTerms) {
+      errorMessage.textContent = 'Please agree to the notification terms to proceed.';
+      errorAlert.style.display = 'flex';
+      return;
     }
 
-    document.getElementById('signupForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      document.getElementById('errorMsg').style.display = 'none';
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnSpinner.style.display = 'inline-block';
 
-      const fullName = document.getElementById('fullName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirm = document.getElementById('confirmPassword').value;
+    try {
+      const data = await API.auth.signup({
+        full_name: fullName,
+        email: email,
+        password: password,
+      });
 
-      if (!fullName || !email || !password) { showError('Please fill in all fields.'); return; }
-      if (password.length < 8) { showError('Password must be at least 8 characters.'); return; }
-      if (password !== confirm) { showError('Passwords do not match.'); return; }
-
-      setLoading(true);
-      try {
-        const data = await API.auth.signup({ full_name: fullName, email, password });
-        Auth.setTokens(data);
-        showToast('Account created! Setting up your dashboard...', 'success');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
-      } catch (err) {
-        showError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    });
-  </script>
+      Auth.setTokens(data);
+      showToast('Account created successfully! Preparing dashboard...', 'success');
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 500);
+    } catch (err) {
+      errorMessage.textContent = err.message || 'Registration failed. Email may already be registered.';
+      errorAlert.style.display = 'flex';
+      submitBtn.disabled = false;
+      btnText.style.display = 'inline-block';
+      btnSpinner.style.display = 'none';
+    }
+  }
+</script>
 </body>
 </html>

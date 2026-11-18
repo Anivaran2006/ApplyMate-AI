@@ -40,54 +40,55 @@ def _build_html_email(notice: dict) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>New {category} Notice – ApplyMate AI</title>
 </head>
-<body style="margin:0;padding:0;background-color:#0f0f1a;font-family:'Segoe UI',Arial,sans-serif;">
+<body style="margin:0;padding:0;background-color:#080B0A;font-family:'Segoe UI',Arial,sans-serif;">
   <div style="max-width:600px;margin:0 auto;padding:20px;">
     <!-- Header -->
-    <div style="background:linear-gradient(135deg,#1e1e3f,#2d2d5e);border-radius:16px 16px 0 0;padding:32px;text-align:center;">
-      <h1 style="margin:0;color:#a78bfa;font-size:28px;font-weight:800;letter-spacing:-0.5px;">
-        ApplyMate <span style="color:#7c3aed;">AI</span>
+    <div style="background:#101512;border:1px solid rgba(255,255,255,0.08);border-radius:12px 12px 0 0;padding:28px;text-align:center;">
+      <h1 style="margin:0;color:#F0F3EF;font-size:24px;font-weight:800;letter-spacing:-0.5px;">
+        ApplyMate <span style="color:#B6F36B;">AI</span>
       </h1>
-      <p style="margin:8px 0 0;color:#c4b5fd;font-size:14px;">Your AI-Powered Study Companion</p>
+      <p style="margin:6px 0 0;color:#A1ADA5;font-size:13px;">Autonomous Examination Intelligence</p>
     </div>
 
     <!-- Category Badge -->
-    <div style="background:#1e1e3f;padding:20px;text-align:center;">
-      <span style="background:{color};color:white;padding:6px 20px;border-radius:100px;font-size:13px;font-weight:700;letter-spacing:1px;">
+    <div style="background:#151C18;border-left:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;">
+      <span style="background:rgba(182,243,107,0.12);color:#B6F36B;border:1px solid rgba(182,243,107,0.25);padding:4px 14px;border-radius:6px;font-size:12px;font-weight:700;">
         {category}
       </span>
+      <span style="color:#727E76;font-size:12px;">Verified Source</span>
     </div>
 
     <!-- Title -->
-    <div style="background:#16163a;padding:24px 32px;border-left:4px solid {color};">
-      <h2 style="margin:0;color:#e2e8f0;font-size:20px;line-height:1.4;">{title}</h2>
+    <div style="background:#151C18;border-left:4px solid {color};border-right:1px solid rgba(255,255,255,0.08);padding:24px 28px;">
+      <h2 style="margin:0;color:#F0F3EF;font-size:18px;line-height:1.4;">{title}</h2>
     </div>
 
     <!-- Summary -->
-    <div style="background:#1e1e3f;padding:24px 32px;">
-      <h3 style="margin:0 0 12px;color:#a78bfa;font-size:14px;text-transform:uppercase;letter-spacing:1px;">
-        📝 AI Summary
+    <div style="background:#101512;border-left:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);padding:20px 28px;">
+      <h3 style="margin:0 0 10px;color:#B6F36B;font-size:13px;text-transform:uppercase;letter-spacing:1px;">
+        AI Distilled Summary
       </h3>
-      <p style="margin:0;color:#cbd5e1;line-height:1.7;font-size:15px;">{summary}</p>
+      <p style="margin:0;color:#A1ADA5;line-height:1.6;font-size:14px;">{summary}</p>
     </div>
 
-    {"<!-- Important Dates --><div style='background:#16163a;padding:24px 32px;border-top:1px solid #2d2d5e;'><h3 style='margin:0 0 12px;color:#f59e0b;font-size:14px;text-transform:uppercase;letter-spacing:1px;'>📅 Important Dates</h3><p style='margin:0;color:#cbd5e1;line-height:1.7;font-size:15px;white-space:pre-line;'>" + dates + "</p></div>" if dates else ""}
+    {"<!-- Important Dates --><div style='background:#151C18;border-left:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);padding:20px 28px;border-top:1px solid rgba(255,255,255,0.06);'><h3 style='margin:0 0 8px;color:#FBBF24;font-size:13px;text-transform:uppercase;letter-spacing:1px;'>Important Dates</h3><p style='margin:0;color:#A1ADA5;line-height:1.6;font-size:14px;white-space:pre-line;'>" + dates + "</p></div>" if dates else ""}
 
-    {"<!-- Deadline --><div style='background:#1e1e3f;padding:16px 32px;border-top:1px solid #2d2d5e;'><p style='margin:0;color:#fbbf24;font-weight:600;font-size:15px;'>⏰ Key Deadline: " + deadline + "</p></div>" if deadline and deadline != "Not specified" else ""}
+    {"<!-- Deadline --><div style='background:#101512;border-left:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);padding:14px 28px;border-top:1px solid rgba(255,255,255,0.06);'><p style='margin:0;color:#B6F36B;font-weight:600;font-size:14px;'>Key Deadline: " + deadline + "</p></div>" if deadline and deadline != "Not specified" else ""}
 
-    {"<!-- Action Required --><div style='background:#16163a;padding:24px 32px;border-top:1px solid #2d2d5e;'><h3 style='margin:0 0 12px;color:#34d399;font-size:14px;text-transform:uppercase;letter-spacing:1px;'>✅ Action Required</h3><p style='margin:0;color:#cbd5e1;line-height:1.7;font-size:15px;'>" + action + "</p></div>" if action else ""}
+    {"<!-- Action Required --><div style='background:#151C18;border-left:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);padding:20px 28px;border-top:1px solid rgba(255,255,255,0.06);'><h3 style='margin:0 0 8px;color:#38BDF8;font-size:13px;text-transform:uppercase;letter-spacing:1px;'>Action Required</h3><p style='margin:0;color:#A1ADA5;line-height:1.6;font-size:14px;'>" + action + "</p></div>" if action else ""}
 
     <!-- CTA Button -->
-    <div style="background:#1e1e3f;padding:24px 32px;text-align:center;border-top:1px solid #2d2d5e;">
-      <a href="{url}" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;text-decoration:none;padding:14px 36px;border-radius:100px;font-weight:700;font-size:15px;letter-spacing:0.5px;">
-        Open Full Notice →
+    <div style="background:#101512;border:1px solid rgba(255,255,255,0.08);border-top:none;padding:24px 28px;text-align:center;">
+      <a href="{url}" style="display:inline-block;background:#B6F36B;color:#080B0A;text-decoration:none;padding:12px 32px;border-radius:6px;font-weight:700;font-size:14px;">
+        View Official Circular Document →
       </a>
     </div>
 
     <!-- Footer -->
-    <div style="background:#0f0f1a;padding:20px;text-align:center;border-radius:0 0 16px 16px;">
-      <p style="margin:0;color:#4b5563;font-size:12px;">
-        You're receiving this because you subscribed to {category} notices on ApplyMate AI.<br>
-        <a href="#" style="color:#7c3aed;">Manage Preferences</a> · <a href="#" style="color:#7c3aed;">Unsubscribe</a>
+    <div style="background:#080B0A;padding:20px;text-align:center;">
+      <p style="margin:0;color:#727E76;font-size:12px;">
+        You are receiving this because you subscribed to {category} alerts on ApplyMate AI.<br>
+        Direct primary source notifications.
       </p>
     </div>
   </div>

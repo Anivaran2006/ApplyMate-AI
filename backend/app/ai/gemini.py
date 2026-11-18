@@ -5,17 +5,9 @@ Generates structured AI summaries, explanations, translations for notices.
 
 import json
 import re
-from typing import Optional
+from typing import Any, Dict, List, Optional
 
-try:
-    from tenacity import retry, stop_after_attempt, wait_exponential  # type: ignore
-except ImportError:
-    def retry(*args, **kwargs):  # type: ignore
-        def decorator(f):
-            return f
-        return decorator
-    def stop_after_attempt(*args, **kwargs): pass  # type: ignore
-    def wait_exponential(*args, **kwargs): pass  # type: ignore
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 from app.core.config import settings
 from app.utils.logger import get_logger
@@ -45,10 +37,21 @@ except Exception:
 async def _generate_text_async(prompt: str) -> str:
     """Generate text using either modern google-genai or legacy SDK."""
     if _use_new_genai and _client:
-        response = await _client.aio.models.generate_content(
-            model=settings.GEMINI_MODEL,
-            contents=prompt,
-        )
+        try:
+            from google.genai import types  # type: ignore
+            config = types.GenerateContentConfig(
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
+            )
+            response = await _client.aio.models.generate_content(
+                model=settings.GEMINI_MODEL,
+                contents=prompt,
+                config=config,
+            )
+        except Exception:
+            response = await _client.aio.models.generate_content(
+                model=settings.GEMINI_MODEL,
+                contents=prompt,
+            )
         return (response.text or "").strip()
     elif _model:
         response = await _model.generate_content_async(prompt)
@@ -201,7 +204,7 @@ async def detect_category(title: str) -> str:
     return "GENERAL"
 
 
-async def ask_assistant(question: str, notices: list, history: list = None) -> str:
+async def ask_assistant(question: str, notices: list, history: Optional[list] = None) -> str:
     """Ask ApplyMate AI a question using notices context and history, with offline fallback."""
     if history is None:
         history = []

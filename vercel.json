@@ -1,0 +1,38 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/", "destination": "/frontend/index.html" },
+    { "source": "/login", "destination": "/frontend/login.html" },
+    { "source": "/signup", "destination": "/frontend/signup.html" },
+    { "source": "/dashboard", "destination": "/frontend/dashboard.html" },
+    { "source": "/settings", "destination": "/frontend/dashboard.html" },
+    { "source": "/admin", "destination": "/frontend/admin.html" },
+    { "source": "/forgot-password", "destination": "/frontend/forgot-password.html" },
+    { "source": "/reset-password", "destination": "/frontend/reset-password.html" },
+    { "source": "/static/(.*)", "destination": "/frontend/$1" },
+    { "source": "/css/(.*)", "destination": "/frontend/css/$1" },
+    { "source": "/js/(.*)", "destination": "/frontend/js/$1" },
+    { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" }
+  ]
+}
+

@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.ai.gemini import explain_more, re_summarize, translate_to_hindi
 from app.core.database import get_db
-from app.core.deps import get_current_user
+from app.core.deps import get_current_user, get_optional_current_user
 from app.models.user import User
 from app.schemas.notice import AIActionRequest, AIActionResponse, NoticeListResponse, NoticeResponse
 from app.services.notice_service import get_notice_by_id, get_notices
@@ -24,12 +24,12 @@ async def list_notices(
     search: Optional[str] = Query(None, description="Search in notice title"),
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
-    current_user: User = Depends(get_current_user),
+    current_user: Optional[User] = Depends(get_optional_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     """Get paginated notices, optionally filtered by category or search."""
     result = await get_notices(db, category=category, search=search, page=page, page_size=page_size)
-    bookmarked_ids = await get_bookmarked_notice_ids(db, current_user.id)
+    bookmarked_ids = await get_bookmarked_notice_ids(db, current_user.id) if current_user else set()
 
     items = []
     for notice in result["items"]:
@@ -49,7 +49,7 @@ async def list_notices(
 @router.get("/{notice_id}", response_model=NoticeResponse)
 async def get_notice(
     notice_id: int,
-    current_user: User = Depends(get_current_user),
+    current_user: Optional[User] = Depends(get_optional_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     """Get a single notice by ID."""
@@ -57,7 +57,7 @@ async def get_notice(
     if not notice:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Notice not found")
 
-    bookmarked_ids = await get_bookmarked_notice_ids(db, current_user.id)
+    bookmarked_ids = await get_bookmarked_notice_ids(db, current_user.id) if current_user else set()
     result = NoticeResponse.model_validate(notice)
     result.is_bookmarked = notice.id in bookmarked_ids
     return result

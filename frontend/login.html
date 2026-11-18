@@ -1,278 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login – ApplyMate AI</title>
-  <meta name="description" content="Sign in to your ApplyMate AI account to manage your exam notifications.">
-  <link rel="stylesheet" href="css/main.css">
+  <title>Sign In — ApplyMate AI</title>
+  <meta name="description"
+    content="Sign in to your ApplyMate AI account to track examination notifications, manage subscriptions, and configure alerts.">
+  <link rel="stylesheet" href="/static/css/main.css">
   <style>
-    body { min-height: 100vh; display: flex; flex-direction: column; }
-
-    .auth-wrapper {
-      flex: 1;
+    /* ── Fullscreen Split Auth Layout ── */
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-main);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 24px 40px;
+      flex-direction: column;
+    }
+
+    .auth-split-wrapper {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Left Brand Panel */
+    .auth-brand-panel {
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      padding: 64px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       position: relative;
       overflow: hidden;
     }
 
-    .auth-bg {
-      position: fixed;
-      inset: 0;
-      background: var(--grad-hero);
-      z-index: 0;
-    }
-
-    .auth-orb {
-      position: fixed;
+    .auth-brand-panel::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: -200px;
+      width: 500px;
+      height: 500px;
       border-radius: 50%;
-      filter: blur(80px);
+      background: radial-gradient(circle, rgba(182, 243, 107, 0.05) 0%, transparent 70%);
       pointer-events: none;
     }
-    .auth-orb-1 { width: 400px; height: 400px; background: rgba(124,58,237,0.2); top: -100px; right: -100px; }
-    .auth-orb-2 { width: 300px; height: 300px; background: rgba(6,182,212,0.15); bottom: -80px; left: -80px; }
 
-    .auth-card {
-      position: relative;
-      z-index: 1;
-      background: rgba(15, 15, 30, 0.85);
-      backdrop-filter: blur(24px);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 48px;
-      width: 100%;
-      max-width: 460px;
-      box-shadow: var(--shadow-lg), var(--shadow-glow-sm);
-      animation: fadeInUp 0.5s ease both;
-    }
-
-    .auth-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 32px;
-      text-decoration: none;
-    }
-
-    .auth-logo .logo-icon {
-      width: 40px; height: 40px;
-      background: var(--grad-primary);
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-    }
-
-    .auth-title { font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 8px; }
-    .auth-subtitle { font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 32px; }
-
-    .form-group { margin-bottom: 20px; }
-
-    .form-footer {
-      text-align: center;
-      margin-top: 24px;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .form-footer a { color: var(--primary-light); font-weight: 600; }
-    .form-footer a:hover { color: var(--accent-light); }
-
-    .divider {
+    .brand-top {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin: 24px 0;
-      color: var(--text-muted);
-      font-size: 13px;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border-light);
     }
 
-    .input-icon-wrap { position: relative; }
-    .input-icon-wrap .input { padding-left: 44px; }
-    .input-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      pointer-events: none;
+    .brand-content {
+      max-width: 580px;
+      margin: 40px 0;
+    }
+
+    .brand-headline {
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .brand-headline span {
+      color: var(--primary);
+    }
+
+    .brand-subtext {
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 36px;
+    }
+
+    /* 3 Feature Highlights */
+    .brand-features {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .brand-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .feature-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-xs);
+      background: var(--bg-elevated);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feature-text-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .feature-text-desc {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* Elegant Notification Preview Card */
+    .auth-preview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .preview-card-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .preview-card-headline {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .preview-card-subline {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .preview-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      font-size: 0.75rem;
       color: var(--text-muted);
     }
 
-    .password-toggle {
+    .brand-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* Right Form Panel */
+    .auth-form-panel {
+      background-color: var(--bg-main);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 36px;
+    }
+
+    .auth-form-container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      transition: color var(--transition);
+    }
+
+    .back-home-link:hover {
+      color: var(--primary);
+    }
+
+    .form-heading {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .form-subheading {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-toggle-btn {
       position: absolute;
-      right: 14px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 16px;
-      padding: 0;
-      transition: color var(--transition);
+      padding: 4px;
+      font-size: 0.875rem;
     }
-    .password-toggle:hover { color: var(--primary-light); }
+
+    .password-toggle-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .forgot-link-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -12px;
+      margin-bottom: 24px;
+    }
 
     .forgot-link {
-      display: block;
-      text-align: right;
-      font-size: 13px;
-      color: var(--primary-light);
-      margin-top: 8px;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
-    .btn-full { width: 100%; }
-
-    .spinner {
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: none;
+    .forgot-link:hover {
+      color: var(--primary);
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      margin: 28px 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
-    .error-msg {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: var(--radius-sm);
-      padding: 12px 16px;
-      font-size: 13px;
-      color: #fca5a5;
-      margin-bottom: 20px;
-      display: none;
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .auth-divider span {
+      padding: 0 14px;
+    }
+
+    .switch-auth-text {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .switch-auth-text a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ── Responsiveness ── */
+    @media (max-width: 1024px) {
+      .auth-split-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-brand-panel {
+        display: none;
+      }
+
+      .auth-form-panel {
+        padding: 48px 24px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="auth-bg"></div>
-  <div class="auth-orb auth-orb-1"></div>
-  <div class="auth-orb auth-orb-2"></div>
 
-  <div class="auth-wrapper">
-    <div class="auth-card">
-      <a href="index.html" class="auth-logo">
-        <div class="logo-icon">🎓</div>
-        ApplyMate <span style="color:var(--primary-light)">AI</span>
-      </a>
+  <a href="#loginForm" class="skip-link">Skip to login form</a>
 
-      <h1 class="auth-title">Welcome back</h1>
-      <p class="auth-subtitle">Sign in to receive your AI-powered notices</p>
+  <div class="auth-split-wrapper">
 
-      <div class="error-msg" id="errorMsg"></div>
-
-      <form id="loginForm" novalidate>
-        <div class="form-group">
-          <label class="input-label" for="email">Email Address</label>
-          <div class="input-icon-wrap">
-            <span class="input-icon">✉️</span>
-            <input type="email" id="email" class="input" placeholder="you@example.com" required autocomplete="email">
+    <!-- ── Left Brand & Editorial Panel ── -->
+    <aside class="auth-brand-panel" aria-label="ApplyMate Overview">
+      <div class="brand-top">
+        <a href="/" class="navbar-logo" aria-label="ApplyMate AI Home">
+          <div class="logo-symbol" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label class="input-label" for="password">Password</label>
-          <div class="input-icon-wrap">
-            <span class="input-icon">🔒</span>
-            <input type="password" id="password" class="input" placeholder="Your password" required autocomplete="current-password" style="padding-right:44px">
-            <button type="button" class="password-toggle" id="pwToggle" onclick="togglePassword('password','pwToggle')">👁️</button>
-          </div>
-          <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
-          <span id="submitText">Sign In</span>
-          <div class="spinner" id="spinner"></div>
-        </button>
-      </form>
-
-      <div class="divider">or</div>
-
-      <div class="form-footer">
-        Don't have an account? <a href="signup.html">Create one free</a>
+          ApplyMate <span class="text-accent">AI</span>
+        </a>
       </div>
-    </div>
+
+      <div class="brand-content">
+        <h1 class="brand-headline">
+          Stay ahead of every <span>official examination</span> release.
+        </h1>
+        <p class="brand-subtext">
+          Continuous official examination monitoring, AI notice distillation, and sub-minute alert dispatches for
+          competitive aspirants across India.
+        </p>
+
+        <div class="brand-features">
+          <div class="brand-feature-item">
+            <div class="feature-icon-box" aria-hidden="true">✓</div>
+            <div>
+              <div class="feature-text-title">Verified Primary Sources Only</div>
+              <div class="feature-text-desc">Direct 24/7 scraping from NTA, UPSC, GATE, CAT, and State Examination
+                servers.</div>
+            </div>
+          </div>
+
+          <div class="brand-feature-item">
+            <div class="feature-icon-box" aria-hidden="true">✓</div>
+            <div>
+              <div class="feature-text-title">Gemini AI Distillation</div>
+              <div class="feature-text-desc">40-page legal circulars translated into clear eligibility rules and
+                immediate action checklists.</div>
+            </div>
+          </div>
+
+          <div class="brand-feature-item">
+            <div class="feature-icon-box" aria-hidden="true">✓</div>
+            <div>
+              <div class="feature-text-title">Sub-Minute Multi-Channel Push</div>
+              <div class="feature-text-desc">Instant Telegram notifications and clean email summaries sent within 60
+                seconds of upload.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Notification Card Mockup -->
+        <div class="auth-preview-card" aria-label="Sample Notification">
+          <div class="preview-card-status">
+            <span class="cat-badge cat-neet">NEET (UG) 2026</span>
+            <span class="badge badge-accent">⚡ Application Window Active</span>
+          </div>
+          <div class="preview-card-headline">Online Submission of Applications for NEET (UG) - 2026 Commenced</div>
+          <div class="preview-card-subline">Candidate registration portal opened on exams.nta.ac.in. DigiLocker and
+            Aadhaar authentication enabled.</div>
+          <div class="preview-card-footer">
+            <span>Closes: March 15, 2026 • 23:50 IST</span>
+            <span style="color:var(--primary); font-weight:600;">Official Source Verified</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="brand-bottom">
+        <span>© 2026 ApplyMate AI</span>
+        <span>Autonomous Examination Intelligence</span>
+      </div>
+    </aside>
+
+    <!-- ── Right Authentication Panel ── -->
+    <main class="auth-form-panel">
+      <div class="auth-form-container">
+        <a href="/" class="back-home-link" aria-label="Return to Homepage">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Home
+        </a>
+
+        <h2 class="form-heading">Welcome back</h2>
+        <p class="form-subheading">Sign in to access your examination alerts and personalized feed.</p>
+
+        <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;" aria-live="assertive">
+          <span aria-hidden="true">✕</span>
+          <span id="errorMessage">Invalid email or password.</span>
+        </div>
+
+        <form id="loginForm" novalidate onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" id="email" name="email" class="input" placeholder="aspirant@example.com"
+              autocomplete="email" required aria-required="true">
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <div class="password-wrap">
+              <input type="password" id="password" name="password" class="input" placeholder="••••••••••••"
+                autocomplete="current-password" required aria-required="true" style="padding-right:44px;">
+              <button type="button" id="togglePassword" class="password-toggle-btn"
+                aria-label="Toggle password visibility" onclick="togglePasswordVisibility()">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="forgot-link-wrap">
+            <a href="/forgot-password" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary btn-full btn-lg">
+            <span id="btnText">Sign In to Dashboard</span>
+            <span id="btnSpinner" class="spinner" style="display:none;" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <div class="auth-divider">
+          <span>Aspirant Portal</span>
+        </div>
+
+        <div class="switch-auth-text">
+          Don't have an account?
+          <a href="/signup">Create an account for free</a>
+        </div>
+      </div>
+    </main>
+
   </div>
 
-  <div class="toast-container" id="toastContainer"></div>
-
-  <script src="js/config.js"></script>
-  <script src="js/api.js"></script>
+  <script src="/static/js/config.js"></script>
+  <script src="/static/js/api.js"></script>
   <script>
-    // Redirect if already logged in
+    // Redirect logged-in users away from login page
     requireGuest();
 
-    function togglePassword(inputId, btnId) {
-      const input = document.getElementById(inputId);
-      const btn = document.getElementById(btnId);
-      if (input.type === 'password') {
-        input.type = 'text';
-        btn.textContent = '🙈';
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('password');
+      const toggleBtn = document.getElementById('togglePassword');
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        toggleBtn.setAttribute('aria-label', 'Hide password');
       } else {
-        input.type = 'password';
-        btn.textContent = '👁️';
+        pwdInput.type = 'password';
+        toggleBtn.setAttribute('aria-label', 'Show password');
       }
     }
 
-    function setLoading(loading) {
-      const btn = document.getElementById('submitBtn');
-      const text = document.getElementById('submitText');
-      const spinner = document.getElementById('spinner');
-      btn.disabled = loading;
-      text.style.display = loading ? 'none' : 'block';
-      spinner.style.display = loading ? 'block' : 'none';
-    }
-
-    function showError(msg) {
-      const el = document.getElementById('errorMsg');
-      el.textContent = msg;
-      el.style.display = 'block';
-    }
-
-    function hideError() {
-      document.getElementById('errorMsg').style.display = 'none';
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    async function handleLogin(e) {
       e.preventDefault();
-      hideError();
-
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
+      const errorAlert = document.getElementById('errorAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const btnSpinner = document.getElementById('btnSpinner');
+
+      errorAlert.style.display = 'none';
 
       if (!email || !password) {
-        showError('Please fill in all fields.');
+        errorMessage.textContent = 'Please provide both your email address and password.';
+        errorAlert.style.display = 'flex';
         return;
       }
 
-      setLoading(true);
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnSpinner.style.display = 'inline-block';
+
       try {
         const data = await API.auth.login({ email, password });
         Auth.setTokens(data);
-        showToast('Welcome back! Redirecting...', 'success');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+        showToast('Signed in successfully. Redirecting...', 'success');
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 400);
       } catch (err) {
-        showError(err.message);
-      } finally {
-        setLoading(false);
+        errorMessage.textContent = err.message || 'Invalid email or password. Please try again.';
+        errorAlert.style.display = 'flex';
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnSpinner.style.display = 'none';
       }
-    });
+    }
   </script>
 </body>
+
 </html>

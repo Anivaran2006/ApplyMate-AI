@@ -31,7 +31,23 @@ const Auth = {
 
   redirectToLogin() {
     this.clear();
-    window.location.href = '/login.html';
+    const p = window.location.pathname.toLowerCase();
+    if (
+      p === '/' ||
+      p === '' ||
+      p.endsWith('/index.html') ||
+      p === '/login' ||
+      p.endsWith('/login.html') ||
+      p === '/signup' ||
+      p.endsWith('/signup.html') ||
+      p === '/forgot-password' ||
+      p.endsWith('/forgot-password.html') ||
+      p === '/reset-password' ||
+      p.endsWith('/reset-password.html')
+    ) {
+      return;
+    }
+    window.location.href = '/login';
   }
 };
 
@@ -43,7 +59,10 @@ async function refreshAccessToken() {
 
   _refreshing = (async () => {
     const refresh = Auth.getRefreshToken();
-    if (!refresh) { Auth.redirectToLogin(); return false; }
+    if (!refresh) {
+      Auth.redirectToLogin();
+      return false;
+    }
 
     try {
       const resp = await fetch(`${API_BASE}/auth/refresh`, {
@@ -51,7 +70,10 @@ async function refreshAccessToken() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: refresh }),
       });
-      if (!resp.ok) { Auth.redirectToLogin(); return false; }
+      if (!resp.ok) {
+        Auth.redirectToLogin();
+        return false;
+      }
       const data = await resp.json();
       Auth.setTokens(data);
       return true;
@@ -109,7 +131,7 @@ const API = {
   auth: {
     signup: (data) => apiFetch('/auth/signup', { method: 'POST', body: JSON.stringify(data) }),
     login:  (data) => apiFetch('/auth/login',  { method: 'POST', body: JSON.stringify(data) }),
-    logout: ()     => { Auth.clear(); window.location.href = '/login.html'; },
+    logout: ()     => { Auth.clear(); window.location.href = '/login'; },
     forgotPassword: (email) => apiFetch('/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email }) }),
     resetPassword:  (token, password) => apiFetch('/auth/reset-password', { method: 'POST', body: JSON.stringify({ token, new_password: password }) }),
   },
@@ -202,7 +224,7 @@ function showToast(message, type = 'info', duration = 4000) {
 // ── Route Guard ──────────────────────────────────────────────
 function requireAuth() {
   if (!Auth.isLoggedIn()) {
-    window.location.href = '/login.html';
+    window.location.href = '/login';
     return false;
   }
   return true;
@@ -210,7 +232,7 @@ function requireAuth() {
 
 function requireGuest() {
   if (Auth.isLoggedIn()) {
-    window.location.href = '/dashboard.html';
+    window.location.href = '/dashboard';
     return false;
   }
   return true;

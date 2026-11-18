@@ -49,6 +49,30 @@ async def get_current_user(
     return user
 
 
+async def get_optional_current_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(bearer_scheme),
+    db: AsyncSession = Depends(get_db),
+):
+    """Return the authenticated User ORM object if token is valid, else None."""
+    from app.models.user import User
+
+    if not credentials:
+        return None
+
+    user_id = verify_access_token(credentials.credentials)
+    if not user_id:
+        return None
+
+    try:
+        result = await db.execute(select(User).where(User.id == int(user_id)))
+        user = result.scalar_one_or_none()
+        if user and user.is_active:
+            return user
+    except Exception:
+        return None
+    return None
+
+
 async def get_current_admin(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(bearer_scheme),
     db: AsyncSession = Depends(get_db),

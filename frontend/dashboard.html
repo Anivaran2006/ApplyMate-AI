@@ -3,362 +3,383 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ApplyMate AI Dashboard – View AI-powered notices, manage subscriptions, and track notifications.">
-  <title>Dashboard – ApplyMate AI</title>
+  <meta name="description" content="ApplyMate AI Dashboard — Examination intelligence feed, application deadlines, and notifications.">
+  <title>Dashboard — ApplyMate AI</title>
   <link rel="stylesheet" href="/static/css/main.css">
   <link rel="stylesheet" href="/static/css/dashboard.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
+<a href="#panel-notices" class="skip-link">Skip to dashboard content</a>
+
 <div class="dash-layout">
 
-  <!-- ── Sidebar ───────────────────────────────────────── -->
-  <aside class="sidebar" id="sidebar">
+  <!-- ── Sidebar Navigation ───────────────────────────────── -->
+  <aside class="sidebar" id="sidebar" aria-label="Dashboard Sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-logo">
-        <div class="logo-icon">🎓</div>
-        ApplyMate <span style="color:var(--primary-light)">AI</span>
-      </div>
+      <a href="/" class="sidebar-logo">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        ApplyMate <span class="text-accent">AI</span>
+      </a>
     </div>
 
+    <!-- User Profile Bar -->
     <div class="sidebar-user" id="sidebarUser">
-      <div class="user-avatar" id="userAvatarInitial">?</div>
+      <div class="user-avatar" id="userAvatarInitial" aria-hidden="true">?</div>
       <div class="user-info">
         <div class="user-name" id="sidebarUserName">Loading…</div>
         <div class="user-email" id="sidebarUserEmail">—</div>
       </div>
     </div>
 
-    <nav class="sidebar-nav">
-      <span class="nav-section-label">Main</span>
+    <nav class="sidebar-nav" aria-label="Dashboard sections">
+      <span class="nav-section-label">Examination Intelligence</span>
       <button class="nav-item active" id="nav-notices" onclick="switchTab('notices')">
-        <span class="nav-icon">📰</span> Notices Feed
+        <span class="nav-icon" aria-hidden="true">📰</span>
+        <span>Notices Feed</span>
         <span class="nav-badge" id="noticeBadge">…</span>
       </button>
       <button class="nav-item" id="nav-bookmarks" onclick="switchTab('bookmarks')">
-        <span class="nav-icon">🔖</span> Bookmarks
-        <span class="nav-badge" id="bookmarkBadge" style="display:none"></span>
+        <span class="nav-icon" aria-hidden="true">🔖</span>
+        <span>Bookmarks</span>
+        <span class="nav-badge" id="bookmarkBadge" style="display:none">0</span>
       </button>
       <button class="nav-item" id="nav-history" onclick="switchTab('history')">
-        <span class="nav-icon">🔔</span> Notifications
-      </button>
-
-      <span class="nav-section-label">Account</span>
-      <button class="nav-item" id="nav-subscriptions" onclick="switchTab('subscriptions')">
-        <span class="nav-icon">🎯</span> Subscriptions
-      </button>
-      <button class="nav-item" id="nav-settings" onclick="switchTab('settings')">
-        <span class="nav-icon">⚙️</span> Settings
+        <span class="nav-icon" aria-hidden="true">🔔</span>
+        <span>Notifications</span>
       </button>
       <button class="nav-item" id="nav-assistant" onclick="switchTab('assistant')">
-    <span class="nav-icon">🤖</span>
-    AI Assistant
-</button>
+        <span class="nav-icon" aria-hidden="true">🤖</span>
+        <span>AI Assistant</span>
+      </button>
+
+      <span class="nav-section-label">Preferences</span>
+      <button class="nav-item" id="nav-subscriptions" onclick="switchTab('subscriptions')">
+        <span class="nav-icon" aria-hidden="true">🎯</span>
+        <span>Subscriptions</span>
+      </button>
+      <button class="nav-item" id="nav-settings" onclick="switchTab('settings')">
+        <span class="nav-icon" aria-hidden="true">⚙️</span>
+        <span>Settings</span>
+      </button>
     </nav>
 
     <div class="sidebar-footer">
-      <button class="nav-item" onclick="logout()" style="color:#ef4444;">
-        <span class="nav-icon">🚪</span> Sign Out
+      <button class="nav-item" onclick="logout()" style="color:#F87171;">
+        <span class="nav-icon" aria-hidden="true">🚪</span>
+        <span>Sign Out</span>
       </button>
     </div>
   </aside>
 
-  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()" aria-hidden="true"></div>
 
-  <!-- ── Main ─────────────────────────────────────────── -->
-  <main class="main-content">
+  <!-- ── Main Workspace ───────────────────────────────────── -->
+  <main class="main-content" id="main-content">
 
-    <!-- Top Bar -->
-    <div class="topbar">
+    <!-- Topbar -->
+    <header class="topbar">
       <div class="topbar-left">
-        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle navigation sidebar">☰</button>
         <div>
-          <div class="topbar-title" id="topbarTitle">Notices Feed</div>
-          <div class="topbar-subtitle" id="topbarSubtitle">AI-powered notices from official sources</div>
+          <h1 class="topbar-title" id="topbarTitle">Notices Feed</h1>
+          <div class="topbar-subtitle" id="topbarSubtitle">AI-powered notices from official verified sources</div>
         </div>
       </div>
       <div class="topbar-right">
-        <button class="btn btn-ghost btn-sm" id="refreshBtn" onclick="refreshCurrent()" title="Refresh">
-          🔄 Refresh
+        <button class="btn btn-outline btn-sm" id="refreshBtn" onclick="refreshCurrent()" title="Refresh Feed">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          Refresh
         </button>
       </div>
-    </div>
+    </header>
 
-    <!-- ── NOTICES PANEL ───────────────────────────────── -->
-    <div class="tab-panel active" id="panel-notices">
-      <div class="stats-row animate-fade-up">
-        <div class="stat-card delay-100">
-          <div class="stat-icon">📰</div>
+    <!-- 1. NOTICES FEED PANEL -->
+    <section class="tab-panel active" id="panel-notices" aria-labelledby="nav-notices">
+      <!-- 4 Stats Cards -->
+      <div class="stats-row" aria-label="Summary Statistics">
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Total Notices</span>
+            <span class="stat-icon" aria-hidden="true">📰</span>
+          </div>
           <div class="stat-value" id="statTotal">—</div>
-          <div class="stat-label">Total Notices</div>
-        </div>
-        <div class="stat-card delay-200">
-          <div class="stat-icon">🔔</div>
-          <div class="stat-value" id="statNotified">—</div>
-          <div class="stat-label">You Were Notified</div>
-        </div>
-        <div class="stat-card delay-300">
-          <div class="stat-icon">🔖</div>
-          <div class="stat-value" id="statBookmarks">—</div>
-          <div class="stat-label">Bookmarked</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">🎯</div>
+          <div class="stat-header">
+            <span class="stat-label">Notifications Sent</span>
+            <span class="stat-icon" aria-hidden="true">🔔</span>
+          </div>
+          <div class="stat-value" id="statNotified">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Bookmarked Notices</span>
+            <span class="stat-icon" aria-hidden="true">🔖</span>
+          </div>
+          <div class="stat-value" id="statBookmarks">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Active Subscriptions</span>
+            <span class="stat-icon" aria-hidden="true">🎯</span>
+          </div>
           <div class="stat-value" id="statSubs">—</div>
-          <div class="stat-label">Subscriptions</div>
         </div>
       </div>
 
+      <!-- Filters & Search Bar -->
       <div class="filter-bar">
-        <div class="search-box">
-          <span>🔍</span>
-          <input type="text" id="searchInput" placeholder="Search notices…" oninput="handleSearch()">
+        <div class="search-box-wrap">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            class="input"
+            id="searchInput"
+            placeholder="Search by title, exam, or keyword..."
+            oninput="handleSearch()"
+            aria-label="Search examination notices"
+          >
         </div>
-        <button class="filter-btn active" data-cat="ALL" onclick="setCatFilter(this, 'ALL')">All</button>
-        <button class="filter-btn" data-cat="NEET"    onclick="setCatFilter(this, 'NEET')">🩺 NEET</button>
-        <button class="filter-btn" data-cat="JEE"     onclick="setCatFilter(this, 'JEE')">⚡ JEE</button>
-        <button class="filter-btn" data-cat="CUET"    onclick="setCatFilter(this, 'CUET')">🎓 CUET</button>
-        <button class="filter-btn" data-cat="GATE"    onclick="setCatFilter(this, 'GATE')">🔬 GATE</button>
-        <button class="filter-btn" data-cat="UPSC"    onclick="setCatFilter(this, 'UPSC')">🏛️ UPSC</button>
-        <button class="filter-btn" data-cat="SSC"     onclick="setCatFilter(this, 'SSC')">📋 SSC</button>
+
+        <div class="category-pills" role="tablist" aria-label="Exam categories filter">
+          <button class="cat-pill active" data-cat="ALL" onclick="setCatFilter(this, 'ALL')">All Categories</button>
+          <button class="cat-pill" data-cat="NEET" onclick="setCatFilter(this, 'NEET')">🩺 NEET</button>
+          <button class="cat-pill" data-cat="JEE" onclick="setCatFilter(this, 'JEE')">⚡ JEE</button>
+          <button class="cat-pill" data-cat="CUET" onclick="setCatFilter(this, 'CUET')">🎓 CUET</button>
+          <button class="cat-pill" data-cat="GATE" onclick="setCatFilter(this, 'GATE')">🔬 GATE</button>
+          <button class="cat-pill" data-cat="UPSC" onclick="setCatFilter(this, 'UPSC')">🏛️ UPSC</button>
+          <button class="cat-pill" data-cat="SSC" onclick="setCatFilter(this, 'SSC')">📋 SSC</button>
+          <button class="cat-pill" data-cat="BANKING" onclick="setCatFilter(this, 'BANKING')">🏦 Banking</button>
+          <button class="cat-pill" data-cat="CAT" onclick="setCatFilter(this, 'CAT')">📈 CAT</button>
+        </div>
       </div>
 
-      <div id="noticeLoader" class="notice-list">
-        <div class="skeleton skeleton-card"></div>
-        <div class="skeleton skeleton-card"></div>
-        <div class="skeleton skeleton-card"></div>
+      <!-- Loader state -->
+      <div id="noticeLoader" class="loader-container">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Loading latest verified notices...</span>
       </div>
 
-      <div class="notice-list" id="noticeList" style="display:none"></div>
-      <div id="noticeEmpty" class="empty-state" style="display:none">
-        <div class="empty-icon">📭</div>
-        <div class="empty-title">No notices found</div>
-        <div class="empty-desc">Try a different category or check back later. New notices are checked every 30 minutes.</div>
+      <!-- Notices list container -->
+      <div class="notice-list" id="noticeList" style="display:none;" aria-live="polite"></div>
+
+      <!-- Empty state -->
+      <div id="noticeEmpty" class="empty-state" style="display:none;">
+        <div class="empty-state-icon" aria-hidden="true">📭</div>
+        <div class="empty-state-title">No notices found</div>
+        <p class="empty-state-desc">Try clearing the search query or selecting a different category filter. The engine checks official servers every 15 minutes.</p>
       </div>
 
-      <div class="pagination" id="noticePagination"></div>
-    </div>
+      <nav class="pagination" id="noticePagination" aria-label="Notices pagination"></nav>
+    </section>
 
-    <!-- ── BOOKMARKS PANEL ─────────────────────────────── -->
-    <div class="tab-panel" id="panel-bookmarks">
-      <div id="bookmarkLoader" class="notice-list">
-        <div class="skeleton skeleton-card"></div>
-        <div class="skeleton skeleton-card"></div>
+    <!-- 2. BOOKMARKS PANEL -->
+    <section class="tab-panel" id="panel-bookmarks" aria-labelledby="nav-bookmarks">
+      <div id="bookmarkLoader" class="loader-container">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Retrieving your saved notices...</span>
       </div>
-      <div class="notice-list" id="bookmarkList" style="display:none"></div>
-      <div id="bookmarkEmpty" class="empty-state" style="display:none">
-        <div class="empty-icon">🔖</div>
-        <div class="empty-title">No bookmarks yet</div>
-        <div class="empty-desc">Tap the 🔖 icon on any notice to save it here for quick access later.</div>
+      <div class="notice-list" id="bookmarkList" style="display:none;" aria-live="polite"></div>
+      <div id="bookmarkEmpty" class="empty-state" style="display:none;">
+        <div class="empty-state-icon" aria-hidden="true">🔖</div>
+        <div class="empty-state-title">No bookmarked notices</div>
+        <p class="empty-state-desc">Click the bookmark icon on any notice in the feed to save critical application instructions for quick reference.</p>
       </div>
-    </div>
+    </section>
 
-    <!-- ── NOTIFICATIONS HISTORY PANEL ────────────────── -->
-    <div class="tab-panel" id="panel-history">
-      <div id="historyLoader" class="notif-list">
-        <div class="skeleton" style="height:70px;border-radius:var(--radius-md);margin-bottom:10px;"></div>
-        <div class="skeleton" style="height:70px;border-radius:var(--radius-md);margin-bottom:10px;"></div>
-        <div class="skeleton" style="height:70px;border-radius:var(--radius-md);margin-bottom:10px;"></div>
+    <!-- 3. NOTIFICATION HISTORY PANEL -->
+    <section class="tab-panel" id="panel-history" aria-labelledby="nav-history">
+      <div id="historyLoader" class="loader-container">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Loading notification records...</span>
       </div>
-      <div class="notif-list" id="historyList" style="display:none"></div>
-      <div id="historyEmpty" class="empty-state" style="display:none">
-        <div class="empty-icon">🔕</div>
-        <div class="empty-title">No notifications sent yet</div>
-        <div class="empty-desc">Once you're subscribed and notices come in, your notification history will appear here.</div>
+      <div class="notice-list" id="historyList" style="display:none;" aria-live="polite"></div>
+      <div id="historyEmpty" class="empty-state" style="display:none;">
+        <div class="empty-state-icon" aria-hidden="true">🔕</div>
+        <div class="empty-state-title">No notifications dispatched yet</div>
+        <p class="empty-state-desc">Once new notices matching your subscribed exam categories are published, your push and email alerts will be logged here.</p>
       </div>
-      <div class="pagination" id="historyPagination"></div>
-    </div>
+      <nav class="pagination" id="historyPagination" aria-label="Notification history pagination"></nav>
+    </section>
 
-    <!-- ── SUBSCRIPTIONS PANEL ────────────────────────── -->
-    <div class="tab-panel" id="panel-subscriptions">
+    <!-- 4. SUBSCRIPTIONS PANEL -->
+    <section class="tab-panel" id="panel-subscriptions" aria-labelledby="nav-subscriptions">
       <div style="margin-bottom:24px;">
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">Choose Your Categories</h3>
-        <p style="font-size:14px;color:var(--text-muted);">Click a category to subscribe or unsubscribe. Changes are saved instantly.</p>
+        <h2 style="font-size:1.25rem; font-weight:700; margin-bottom:6px;">Exam Categories & Subscriptions</h2>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Toggle individual examinations to tailor your real-time notification stream. Changes save immediately.</p>
       </div>
-      <div class="sub-grid" id="subGrid"></div>
-      <div style="margin-top:8px;padding:16px;background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);">
-        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-          💡 <strong>Tip:</strong> Subscribe only to exams you're actively preparing for. You'll receive Telegram/Email alerts as soon as new notices are posted.
+      <div class="subs-grid" id="subGrid"></div>
+      <div style="margin-top:24px; padding:18px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);">
+        <p style="font-size:0.875rem; color:var(--text-secondary); line-height:1.6;">
+          💡 <strong>Pro Tip:</strong> Only subscribe to examinations you are actively taking. This ensures your Telegram and email inboxes stay noise-free and dedicated to critical dates.
         </p>
       </div>
-    </div>
-    <!-- ── SETTINGS PANEL ──────────────────────────────── -->
-<div class="tab-panel" id="panel-settings">
+    </section>
 
-    <div class="settings-grid">
-
-        <!-- Profile -->
-        <div class="settings-card">
-
-            <div class="settings-card-title">👤 Profile</div>
-
-            <div class="settings-card-desc">
-                Update your name and email address.
+    <!-- 5. AI ASSISTANT PANEL -->
+    <section class="tab-panel" id="panel-assistant" aria-labelledby="nav-assistant">
+      <div class="assistant-container">
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-header-avatar" aria-hidden="true">AI</div>
+            <div>
+              <div class="chat-header-title">ApplyMate AI Assistant</div>
+              <div class="chat-header-status">
+                <span class="pulse-dot" style="width:5px;height:5px;" aria-hidden="true"></span>
+                Active • Grounded in official examination notices
+              </div>
             </div>
-
-            <div class="form-group">
-                <label class="input-label">Full Name</label>
-                <input
-                    class="input"
-                    type="text"
-                    id="settingsName"
-                    placeholder="Your full name"
-                >
-            </div>
-
-            <div class="form-group">
-                <label class="input-label">Email</label>
-                <input
-                    class="input"
-                    type="email"
-                    id="settingsEmail"
-                    placeholder="your@email.com"
-                >
-            </div>
-
-            <button
-                class="btn btn-primary btn-sm"
-                onclick="saveProfile()"
-                id="saveProfileBtn"
-            >
-                Save Changes
-            </button>
-
+          </div>
         </div>
-        <!-- Telegram -->
-        <div class="settings-card">
-          <div class="settings-card-title">✈️ Telegram Notifications</div>
-          <div class="settings-card-desc">Connect your Telegram account to receive instant notifications.</div>
 
-          <div class="telegram-connect" id="telegramStatus">
-            <div class="telegram-status disconnected" id="telegramStatusText">
-              ⭕ Not Connected
-            </div>
+        <div id="chatMessages" class="assistant-chat-log" role="log" aria-live="polite">
+          <div class="msg-bot">
+            Welcome to the ApplyMate AI Assistant. You can ask about:
+            <ul style="margin: 8px 0 0 18px; font-size: 0.8125rem;">
+              <li>Application window dates and fee structures</li>
+              <li>Official syllabus changes and pattern revisions</li>
+              <li>Eligibility criteria, age relaxation, and reservation policies</li>
+              <li>Admit card download rules and required identity documents</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="assistant-input-bar">
+          <input
+            id="question"
+            type="text"
+            class="input"
+            placeholder="Type your exam question (e.g. 'What is the last date for NEET 2026 registration?')..."
+            onkeydown="if(event.key === 'Enter') askAI();"
+            aria-label="Ask AI Assistant a question"
+          >
+          <button class="btn btn-primary" onclick="askAI()">Ask AI</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SETTINGS PANEL -->
+    <section class="tab-panel" id="panel-settings" aria-labelledby="nav-settings">
+      <div class="settings-grid">
+        <!-- Profile Details -->
+        <div class="settings-card">
+          <h3>Personal Profile</h3>
+          <div class="form-group">
+            <label for="settingsName" class="form-label">Full Name</label>
+            <input type="text" id="settingsName" class="input" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="settingsEmail" class="form-label">Email Address</label>
+            <input type="email" id="settingsEmail" class="input" placeholder="your@email.com">
+          </div>
+          <button class="btn btn-primary btn-sm" id="saveProfileBtn" onclick="saveProfile()" style="width:fit-content;">Save Profile</button>
+        </div>
+
+        <!-- Telegram Connection Wizard -->
+        <div class="settings-card">
+          <h3>Telegram Notifications</h3>
+          <div class="telegram-setup-box">
+            <div><strong>How to connect Telegram in 30 seconds:</strong></div>
+            <ol>
+              <li>Open Telegram and search for <a href="https://t.me/userinfobot" target="_blank" rel="noopener" style="color:var(--primary); font-weight:600;">@userinfobot</a>.</li>
+              <li>Send <code>/start</code> to view your unique 9-digit Chat ID.</li>
+              <li>Paste your numeric Chat ID below and click Connect.</li>
+            </ol>
+          </div>
+
+          <div id="telegramStatus">
+            <div id="telegramStatusText" class="badge badge-outline">⭕ Not Connected</div>
           </div>
 
           <div class="form-group" id="telegramInputGroup">
-            <label class="input-label">Telegram Chat ID</label>
-            <input class="input" type="text" id="telegramChatId" placeholder="e.g. 123456789">
-            <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">
-              Start a chat with <a href="https://t.me/userinfobot" target="_blank" style="color:var(--accent-light)">@userinfobot</a> to get your Chat ID.
-            </p>
+            <label for="telegramChatId" class="form-label">Telegram Chat ID</label>
+            <input type="text" id="telegramChatId" class="input" placeholder="e.g. 987654321">
           </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="btn btn-primary btn-sm" onclick="connectTelegram()" id="connectTelegramBtn">Connect</button>
-            <button class="btn btn-ghost btn-sm" onclick="disconnectTelegram()" id="disconnectTelegramBtn" style="display:none;color:#ef4444;">Disconnect</button>
+
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-primary btn-sm" id="connectTelegramBtn" onclick="connectTelegram()">Connect Telegram</button>
+            <button class="btn btn-danger btn-sm" id="disconnectTelegramBtn" onclick="disconnectTelegram()" style="display:none;">Disconnect</button>
           </div>
         </div>
 
-        <!-- Notifications Preferences -->
+        <!-- Notification Channels -->
         <div class="settings-card">
-          <div class="settings-card-title">🔔 Notification Preferences</div>
-          <div class="settings-card-desc">Choose how and when you receive alerts.</div>
-
-          <div class="toggle-row">
+          <h3>Channel Preferences</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
             <div>
-              <div class="toggle-label">Email Notifications</div>
-              <div class="toggle-sub">Get alerts via email</div>
+              <div style="font-weight:600; font-size:0.9375rem;">Email Notifications</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Receive immediate notices and digests via email</div>
             </div>
-            <label class="toggle">
+            <label class="switch">
               <input type="checkbox" id="emailNotifToggle" onchange="saveNotifPrefs()">
-              <span class="toggle-slider"></span>
+              <span class="slider"></span>
             </label>
           </div>
-          <div class="toggle-row">
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
             <div>
-              <div class="toggle-label">Telegram Notifications</div>
-              <div class="toggle-sub">Get alerts via Telegram</div>
+              <div style="font-weight:600; font-size:0.9375rem;">Telegram Push Notifications</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Receive real-time push alerts on Telegram</div>
             </div>
-            <label class="toggle">
+            <label class="switch">
               <input type="checkbox" id="telegramNotifToggle" onchange="saveNotifPrefs()">
-              <span class="toggle-slider"></span>
+              <span class="slider"></span>
             </label>
           </div>
         </div>
 
-        <!-- Password -->
+        <!-- Password Change -->
         <div class="settings-card">
-          <div class="settings-card-title">🔒 Change Password</div>
-          <div class="settings-card-desc">Keep your account secure with a strong password.</div>
+          <h3>Security & Password</h3>
           <div class="form-group">
-            <label class="input-label">Current Password</label>
-            <input class="input" type="password" id="currentPassword" placeholder="••••••••">
+            <label for="currentPassword" class="form-label">Current Password</label>
+            <input type="password" id="currentPassword" class="input" placeholder="••••••••">
           </div>
           <div class="form-group">
-            <label class="input-label">New Password</label>
-            <input class="input" type="password" id="newPassword" placeholder="Min 8 characters">
+            <label for="newPassword" class="form-label">New Password</label>
+            <input type="password" id="newPassword" class="input" placeholder="Min 8 characters">
           </div>
           <div class="form-group">
-            <label class="input-label">Confirm New Password</label>
-            <input class="input" type="password" id="confirmPassword" placeholder="Repeat new password">
+            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+            <input type="password" id="confirmPassword" class="input" placeholder="Repeat new password">
           </div>
-          <button class="btn btn-primary btn-sm" onclick="changePassword()" id="changePasswordBtn">Update Password</button>
+          <button class="btn btn-outline btn-sm" id="changePasswordBtn" onclick="changePassword()" style="width:fit-content;">Update Password</button>
         </div>
-
       </div>
-    </div>
-     <!-- ── AI ASSISTANT PANEL ───────────────────────── -->
+    </section>
 
-<div class="tab-panel" id="panel-assistant">
-
-    <div class="page-header">
-        <h2>🤖 ApplyMate AI Assistant</h2>
-
-        <p>
-            Ask questions about exams, eligibility,
-            registrations, results and notices.
-        </p>
-    </div>
-
-    <div class="assistant-container">
-
-        <div
-            id="chatMessages"
-            class="chat-box">
-        </div>
-
-        <div class="chat-input">
-
-            <input
-                id="question"
-                type="text"
-                placeholder="Ask anything..."
-            >
-
-            <button onclick="askAI()">
-                Send
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
   </main>
 </div>
 
-<!-- ── Notice Detail Modal ────────────────────────── -->
-<div class="modal-overlay" id="noticeModal">
-  <div class="modal">
+<!-- ── Notice Detail Modal ──────────────────────────────────── -->
+<div class="modal-overlay" id="noticeModal" role="dialog" aria-modal="true" aria-labelledby="modalNoticeTitle">
+  <div class="modal-dialog">
     <div class="modal-header">
-      <div class="modal-title" id="modalNoticeTitle">Notice Details</div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3 class="modal-title" id="modalNoticeTitle">Notice Details</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()" aria-label="Close modal window">✕</button>
     </div>
-    <div id="modalNoticeBody"></div>
+    <div class="modal-body" id="modalNoticeBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">Close</button>
+    </div>
   </div>
 </div>
 
-<!-- ── Toast ──────────────────────────────────────── -->
-<div class="toast-container" id="toastContainer"></div>
+<!-- ── Toast Container ──────────────────────────────────────── -->
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-<script src="/static/js/config.js?v=2"></script>
-<script src="/static/js/api.js?v=2"></script>
+<script src="/static/js/config.js"></script>
+<script src="/static/js/api.js"></script>
 <script>
-
-</script>
-<script>
-// ── State ─────────────────────────────────────────────────────
+// ── Dashboard State Management ────────────────────────────────
 let state = {
   tab: 'notices',
   notices: [],
@@ -372,23 +393,23 @@ let state = {
 };
 
 let searchDebounce;
-const CATEGORIES = [
-    { id: "JEE", label: "JEE", emoji: "⚡" },
-    { id: "NEET", label: "NEET", emoji: "🩺" },
-    { id: "CUET", label: "CUET", emoji: "🎓" },
-    { id: "GATE", label: "GATE", emoji: "🔬" },
-    { id: "UPSC", label: "UPSC", emoji: "🏛️" },
-    { id: "SSC", label: "SSC", emoji: "📋" },
-    { id: "BANKING", label: "Banking", emoji: "🏦" },
-    { id: "RAILWAY", label: "Railway", emoji: "🚆" },
-    { id: "CAT", label: "CAT", emoji: "📈" },
-    { id: "CLAT", label: "CLAT", emoji: "⚖️" }
+
+const DASH_CATEGORIES = [
+  { id: "JEE", label: "JEE Main & Adv", emoji: "⚡" },
+  { id: "NEET", label: "NEET UG/PG", emoji: "🩺" },
+  { id: "CUET", label: "CUET", emoji: "🎓" },
+  { id: "GATE", label: "GATE", emoji: "🔬" },
+  { id: "UPSC", label: "UPSC CSE/NDA", emoji: "🏛️" },
+  { id: "SSC", label: "SSC CGL/CHSL", emoji: "📋" },
+  { id: "BANKING", label: "Banking (IBPS/SBI)", emoji: "🏦" },
+  { id: "CAT", label: "CAT (IIMs)", emoji: "📈" },
+  { id: "SCHOLARSHIPS", label: "Scholarships", emoji: "🌟" }
 ];
-// ── Init ──────────────────────────────────────────────────────
+
+// ── Initialization ────────────────────────────────────────────
 (async function init() {
   if (!requireAuth()) return;
 
-  // Load user
   try {
     state.user = await API.user.me();
     updateUserUI(state.user);
@@ -396,7 +417,6 @@ const CATEGORIES = [
     showToast('Failed to load profile', 'error');
   }
 
-  // Parallel loads
   await Promise.all([
     loadSubscriptions(),
     loadBookmarks(),
@@ -405,95 +425,67 @@ const CATEGORIES = [
   loadNotices();
 })();
 
-// ── User UI ───────────────────────────────────────────────────
+// ── User UI Updates ───────────────────────────────────────────
 function updateUserUI(user) {
-  const initials = (user.name || user.email || '?')
-    .split(' ')
-    .map(w => w[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
+  const name = user.full_name || user.name || user.email || 'Aspirant';
+  const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
   document.getElementById('userAvatarInitial').textContent = initials;
-  document.getElementById('sidebarUserName').textContent = user.name || '—';
+  document.getElementById('sidebarUserName').textContent = name;
   document.getElementById('sidebarUserEmail').textContent = user.email || '';
 
-  // Settings form
-  document.getElementById('settingsName').value = user.name || '';
+  document.getElementById('settingsName').value = name;
   document.getElementById('settingsEmail').value = user.email || '';
 
-  // Notification toggles
   document.getElementById('emailNotifToggle').checked = user.email_notifications !== false;
   document.getElementById('telegramNotifToggle').checked = user.telegram_notifications !== false;
 
-  // Telegram status
   if (user.telegram_chat_id) {
     document.getElementById('telegramStatusText').textContent = `✅ Connected (ID: ${user.telegram_chat_id})`;
-    document.getElementById('telegramStatusText').className = 'telegram-status connected';
+    document.getElementById('telegramStatusText').className = 'badge badge-success';
     document.getElementById('telegramInputGroup').style.display = 'none';
     document.getElementById('connectTelegramBtn').style.display = 'none';
     document.getElementById('disconnectTelegramBtn').style.display = 'inline-flex';
+  } else {
+    document.getElementById('telegramStatusText').textContent = '⭕ Not Connected';
+    document.getElementById('telegramStatusText').className = 'badge badge-outline';
+    document.getElementById('telegramInputGroup').style.display = 'block';
+    document.getElementById('connectTelegramBtn').style.display = 'inline-flex';
+    document.getElementById('disconnectTelegramBtn').style.display = 'none';
   }
 }
 
-// ── Tab Navigation ────────────────────────────────────────────
+// ── Tab Switching ─────────────────────────────────────────────
 function switchTab(tab) {
   state.tab = tab;
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-  document.getElementById(`panel-${tab}`).classList.add('active');
-  document.getElementById(`nav-${tab}`).classList.add('active');
+  const targetPanel = document.getElementById(`panel-${tab}`);
+  const targetNav = document.getElementById(`nav-${tab}`);
+  if (targetPanel) targetPanel.classList.add('active');
+  if (targetNav) targetNav.classList.add('active');
 
   const titles = {
-
-    notices: [
-        "Notices Feed",
-        "AI-powered notices from official sources"
-    ],
-
-    bookmarks: [
-        "Bookmarks",
-        "Your saved notices"
-    ],
-
-    history: [
-        "Notification History",
-        "All alerts sent to you"
-    ],
-
-    subscriptions: [
-        "Subscriptions",
-        "Manage your exam categories"
-    ],
-
-    settings: [
-        "Settings",
-        "Profile and notification preferences"
-    ],
-
-    assistant: [
-        "AI Assistant",
-        "Ask questions about exams, eligibility, results and notices"
-    ]
-
-};
+    notices: ["Notices Feed", "AI-powered notices from official verified sources"],
+    bookmarks: ["Bookmarks", "Your saved examination notices and circulars"],
+    history: ["Notification History", "Log of all alerts dispatched to your devices"],
+    subscriptions: ["Subscriptions", "Configure targeted competitive examination categories"],
+    settings: ["Settings", "Account profile, security, and notification channels"],
+    assistant: ["AI Assistant", "Ask questions regarding deadlines, eligibility, and circulars"]
+  };
 
   const [title, subtitle] = titles[tab] || ['', ''];
   document.getElementById('topbarTitle').textContent = title;
   document.getElementById('topbarSubtitle').textContent = subtitle;
 
-  // Lazy load per tab
-  if (tab === 'bookmarks' && document.getElementById('bookmarkList').style.display === 'none' && !document.getElementById('bookmarkEmpty').style.display === 'none') {
-    loadBookmarkPanel();
-  }
-  if (tab === 'history') loadHistory(1);
   if (tab === 'bookmarks') loadBookmarkPanel();
+  if (tab === 'history') loadHistory(1);
+  if (tab === 'subscriptions') loadSubscriptions();
 
   closeSidebar();
 }
 
-// ── Sidebar ───────────────────────────────────────────────────
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarBackdrop').classList.toggle('open');
@@ -511,32 +503,27 @@ function refreshCurrent() {
   else if (state.tab === 'subscriptions') loadSubscriptions();
 }
 
-// ── Notices ───────────────────────────────────────────────────
+// ── Notices Feed ──────────────────────────────────────────────
 async function loadNotices(page = 1) {
   state.noticePage = page;
   document.getElementById('noticeLoader').style.display = 'flex';
-  document.getElementById('noticeLoader').style.flexDirection = 'column';
   document.getElementById('noticeList').style.display = 'none';
   document.getElementById('noticeEmpty').style.display = 'none';
 
-  const params = { page, limit: 10 };
+  const params = { page, page_size: 10 };
   if (state.noticeFilter !== 'ALL') params.category = state.noticeFilter;
   if (state.noticeSearch) params.search = state.noticeSearch;
 
   try {
     const data = await API.notices.list(params);
-    state.notices = data.notices || data.items || data || [];
+    state.notices = data.items || data.notices || [];
 
     document.getElementById('statTotal').textContent = data.total ?? state.notices.length;
-
-    // Update badge
-    const badge = document.getElementById('noticeBadge');
-    badge.textContent = data.total ?? state.notices.length;
-
+    document.getElementById('noticeBadge').textContent = data.total ?? state.notices.length;
     document.getElementById('noticeLoader').style.display = 'none';
 
     if (state.notices.length === 0) {
-      document.getElementById('noticeEmpty').style.display = 'block';
+      document.getElementById('noticeEmpty').style.display = 'flex';
     } else {
       document.getElementById('noticeList').style.display = 'flex';
       renderNotices(state.notices);
@@ -544,7 +531,7 @@ async function loadNotices(page = 1) {
     }
   } catch (e) {
     document.getElementById('noticeLoader').style.display = 'none';
-    document.getElementById('noticeEmpty').style.display = 'block';
+    document.getElementById('noticeEmpty').style.display = 'flex';
     showToast('Could not load notices: ' + e.message, 'error');
   }
 }
@@ -552,79 +539,74 @@ async function loadNotices(page = 1) {
 function renderNotices(notices) {
   const list = document.getElementById('noticeList');
   list.innerHTML = '';
-
-  notices.forEach((n, i) => {
-    const card = buildNoticeCard(n, i);
-    list.appendChild(card);
-  });
+  notices.forEach((n, i) => list.appendChild(buildNoticeCard(n, i)));
 }
 
 function buildNoticeCard(n, i) {
-  const div = document.createElement('div');
-  div.className = 'notice-card';
-  div.style.animationDelay = `${i * 0.05}s`;
+  const div = document.createElement('article');
+  div.className = 'dash-notice-card';
 
   const cat = (n.category || 'GENERAL').toLowerCase();
   const isBookmarked = state.bookmarks.has(n.id);
+  const cleanDate = formatDate(n.scraped_at || n.published_date || n.created_at);
+  const summary = n.ai_summary || n.summary || '';
+  const dates = n.ai_important_dates || n.important_dates || '';
+  const eligibility = n.ai_eligibility || n.eligibility || '';
+  const actionReq = n.ai_action_required || n.action_required || '';
+  const url = n.url || n.notice_url || '#';
 
   div.innerHTML = `
-    <div class="notice-card-header">
-      <div class="notice-card-title">${escHtml(n.title)}</div>
-      <div class="notice-card-actions">
-        <button class="icon-btn ${isBookmarked ? 'active' : ''}" id="bm-${n.id}" onclick="toggleBookmark(${n.id}, this)" title="Bookmark">
-          ${isBookmarked ? '🔖' : '🔖'}
-        </button>
-        <a href="${escHtml(n.notice_url || '#')}" target="_blank" rel="noopener" class="icon-btn" title="Open original">↗</a>
+    <div class="dash-card-top">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span class="cat-badge cat-${cat}">${escHtml(n.category || 'General')}</span>
+          <span class="badge badge-outline">Source: ${escHtml(n.source || 'Official')}</span>
+        </div>
+        <h3 class="dash-card-title">${escHtml(n.title)}</h3>
+        <div class="dash-card-meta">
+          <span>🕒 Release Date: ${cleanDate}</span>
+          ${dates ? `<span>📅 Important Window: ${escHtml(dates)}</span>` : ''}
+        </div>
       </div>
-    </div>
-
-    <div class="notice-tags">
-      <span class="badge badge-${cat}">${n.category || 'GENERAL'}</span>
-      <span class="notice-date">🕐 ${formatDate(n.published_date || n.created_at)}</span>
-    </div>
-
-    ${n.summary ? `
-<div class="ai-summary">
-
-    <div class="ai-summary-header">
-        🤖 AI Summary
-    </div>
-
-    <p><strong>📌 Summary:</strong><br>
-    ${escHtml(n.summary)}</p>
-
-    <p><strong>📅 Important Dates:</strong><br>
-    ${escHtml(n.important_dates || "Not available")}</p>
-
-    <p><strong>🎓 Eligibility:</strong><br>
-    ${escHtml(n.eligibility || "Not specified")}</p>
-
-    <p><strong>✅ Action Required:</strong><br>
-    ${escHtml(n.action_required || "Read the official notice")}</p>
-
-    <p><strong>🏷️ Keywords:</strong><br>
-    ${escHtml(n.keywords || "-")}</p>
-
-</div>
-` : ''}
-
-    <div class="notice-card-footer">
-      <button class="translate-btn" onclick="translateNotice(${n.id}, this)" data-translated="false">
-        🌐 Translate to Hindi
+      <button class="btn btn-outline btn-sm ${isBookmarked ? 'active' : ''}" id="bm-${n.id}" onclick="toggleBookmark(${n.id}, this)" title="Bookmark notice" aria-label="Toggle bookmark">
+        ${isBookmarked ? '★ Saved' : '☆ Save'}
       </button>
-      ${n.notice_url ? `<a href="${escHtml(n.notice_url)}" class="notice-link" target="_blank" rel="noopener">View Official Notice ↗</a>` : ''}
+    </div>
+
+    ${summary ? `
+      <div class="ai-summary-container">
+        <div class="ai-summary-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Gemini AI Distilled Intelligence
+        </div>
+        <p class="ai-summary-text">${escHtml(summary)}</p>
+        ${eligibility ? `<div style="font-size:0.8125rem; color:var(--text-secondary); margin-top:6px;"><strong>Eligibility:</strong> ${escHtml(eligibility)}</div>` : ''}
+        ${actionReq ? `<div style="font-size:0.8125rem; color:var(--text-secondary); margin-top:4px;"><strong>Action Required:</strong> ${escHtml(actionReq)}</div>` : ''}
+      </div>
+    ` : ''}
+
+    <div class="card-actions-bar">
+      <div class="action-buttons-group">
+        <button class="btn btn-outline btn-sm" onclick="translateNotice(${n.id}, this)" data-translated="false">
+          🌐 Translate to Hindi
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="explainNotice(${n.id}, this)">
+          🧠 Explain More
+        </button>
+      </div>
+      ${url && url !== '#' ? `
+        <a href="${escHtml(url)}" class="btn btn-accent-outline btn-sm" target="_blank" rel="noopener">
+          View Official Document ↗
+        </a>
+      ` : ''}
     </div>
   `;
-
-  const bmBtn = div.querySelector(`#bm-${n.id}`);
-  bmBtn.onclick = () => toggleBookmark(n.id, bmBtn);
 
   return div;
 }
 
-// ── Category Filter ───────────────────────────────────────────
 function setCatFilter(btn, cat) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   state.noticeFilter = cat;
   loadNotices(1);
@@ -635,19 +617,20 @@ function handleSearch() {
   searchDebounce = setTimeout(() => {
     state.noticeSearch = document.getElementById('searchInput').value.trim();
     loadNotices(1);
-  }, 350);
+  }, 300);
 }
 
 // ── Bookmarks ─────────────────────────────────────────────────
 async function loadBookmarks() {
   try {
     const data = await API.bookmarks.list();
-    state.bookmarks = new Set((data || []).map(b => b.notice_id || b.id));
+    const items = data.items || data || [];
+    state.bookmarks = new Set(items.map(b => b.notice_id || b.id));
     document.getElementById('statBookmarks').textContent = state.bookmarks.size;
 
     const bBadge = document.getElementById('bookmarkBadge');
     if (state.bookmarks.size > 0) {
-      bBadge.style.display = '';
+      bBadge.style.display = 'inline-block';
       bBadge.textContent = state.bookmarks.size;
     }
   } catch (e) { /* silent */ }
@@ -655,18 +638,17 @@ async function loadBookmarks() {
 
 async function loadBookmarkPanel() {
   document.getElementById('bookmarkLoader').style.display = 'flex';
-  document.getElementById('bookmarkLoader').style.flexDirection = 'column';
   document.getElementById('bookmarkList').style.display = 'none';
   document.getElementById('bookmarkEmpty').style.display = 'none';
 
   try {
     const data = await API.bookmarks.list();
-    const notices = (data || []).map(b => b.notice || b);
-
+    const items = data.items || data || [];
+    const notices = items.map(b => b.notice || b);
     document.getElementById('bookmarkLoader').style.display = 'none';
 
     if (notices.length === 0) {
-      document.getElementById('bookmarkEmpty').style.display = 'block';
+      document.getElementById('bookmarkEmpty').style.display = 'flex';
       return;
     }
 
@@ -676,7 +658,7 @@ async function loadBookmarkPanel() {
     notices.forEach((n, i) => list.appendChild(buildNoticeCard(n, i)));
   } catch (e) {
     document.getElementById('bookmarkLoader').style.display = 'none';
-    document.getElementById('bookmarkEmpty').style.display = 'block';
+    document.getElementById('bookmarkEmpty').style.display = 'flex';
   }
 }
 
@@ -686,18 +668,25 @@ async function toggleBookmark(noticeId, btn) {
     if (wasBookmarked) {
       await API.bookmarks.remove(noticeId);
       state.bookmarks.delete(noticeId);
+      btn.textContent = '☆ Save';
       btn.classList.remove('active');
-      showToast('Bookmark removed', 'info');
+      showToast('Notice removed from bookmarks', 'info');
     } else {
       await API.bookmarks.add(noticeId);
       state.bookmarks.add(noticeId);
+      btn.textContent = '★ Saved';
       btn.classList.add('active');
-      showToast('Bookmarked!', 'success');
+      showToast('Notice saved to bookmarks!', 'success');
     }
+
     document.getElementById('statBookmarks').textContent = state.bookmarks.size;
     const bBadge = document.getElementById('bookmarkBadge');
-    if (state.bookmarks.size > 0) { bBadge.style.display = ''; bBadge.textContent = state.bookmarks.size; }
-    else { bBadge.style.display = 'none'; }
+    if (state.bookmarks.size > 0) {
+      bBadge.style.display = 'inline-block';
+      bBadge.textContent = state.bookmarks.size;
+    } else {
+      bBadge.style.display = 'none';
+    }
   } catch (e) {
     showToast('Bookmark action failed: ' + e.message, 'error');
   }
@@ -707,7 +696,6 @@ async function toggleBookmark(noticeId, btn) {
 async function loadHistory(page = 1) {
   state.historyPage = page;
   document.getElementById('historyLoader').style.display = 'flex';
-  document.getElementById('historyLoader').style.flexDirection = 'column';
   document.getElementById('historyList').style.display = 'none';
   document.getElementById('historyEmpty').style.display = 'none';
 
@@ -715,11 +703,10 @@ async function loadHistory(page = 1) {
     const data = await API.notifications.history(page);
     const items = data.items || data || [];
     document.getElementById('statNotified').textContent = data.total ?? items.length;
-
     document.getElementById('historyLoader').style.display = 'none';
 
     if (items.length === 0) {
-      document.getElementById('historyEmpty').style.display = 'block';
+      document.getElementById('historyEmpty').style.display = 'flex';
       return;
     }
 
@@ -728,32 +715,31 @@ async function loadHistory(page = 1) {
     list.innerHTML = '';
 
     items.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'notif-item';
+      const card = document.createElement('div');
+      card.className = 'dash-notice-card';
       const channel = (item.channel || 'email').toLowerCase();
-      div.innerHTML = `
-        <div class="notif-channel-icon ${channel}">
-          ${channel === 'telegram' ? '✈️' : '📧'}
-        </div>
-        <div class="notif-content">
-          <div class="notif-title">${escHtml(item.notice_title || item.message || 'Notification')}</div>
-          <div class="notif-meta">
-            <span class="badge badge-${(item.category || 'general').toLowerCase()}" style="font-size:10px;padding:2px 8px;">
-              ${item.category || 'GENERAL'}
-            </span>
-            <span class="notif-time">🕐 ${formatDate(item.sent_at || item.created_at)}</span>
-            <span style="font-size:11px;color:var(--text-muted);">via ${channel}</span>
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:1.2rem;">${channel === 'telegram' ? '📱' : '✉️'}</span>
+            <strong style="font-size:0.9375rem;">Dispatched via ${channel.toUpperCase()}</strong>
           </div>
+          <span class="badge badge-success">Delivered</span>
         </div>
-        <div class="status-dot"></div>
+        <div style="font-size:1rem; font-weight:600; color:var(--text-primary);">
+          ${escHtml(item.notice_title || item.message || 'Official Notification Alert')}
+        </div>
+        <div style="font-size:0.75rem; color:var(--text-muted);">
+          Sent: ${formatDate(item.sent_at || item.created_at)}
+        </div>
       `;
-      list.appendChild(div);
+      list.appendChild(card);
     });
 
     renderPagination('historyPagination', page, Math.ceil((data.total || items.length) / 10), loadHistory);
   } catch (e) {
     document.getElementById('historyLoader').style.display = 'none';
-    document.getElementById('historyEmpty').style.display = 'block';
+    document.getElementById('historyEmpty').style.display = 'flex';
   }
 }
 
@@ -761,9 +747,9 @@ async function loadHistory(page = 1) {
 async function loadSubscriptions() {
   try {
     const data = await API.subscriptions.list();
-    state.subscriptions = new Set((data || []).map(s => s.category || s));
+    const items = data.items || data || [];
+    state.subscriptions = new Set(items.map(s => s.category || s));
     document.getElementById('statSubs').textContent = state.subscriptions.size;
-    
     renderSubGrid();
   } catch (e) { /* silent */ }
 }
@@ -773,59 +759,116 @@ function renderSubGrid() {
   if (!grid) return;
   grid.innerHTML = '';
 
-  CATEGORIES.forEach(cat => {
+  DASH_CATEGORIES.forEach(cat => {
     const subscribed = state.subscriptions.has(cat.id);
     const div = document.createElement('div');
     div.className = `sub-card${subscribed ? ' subscribed' : ''}`;
     div.id = `sub-${cat.id}`;
-    div.onclick = () => toggleSub(cat.id, div);
     div.innerHTML = `
-      <span class="sub-emoji">${cat.emoji}</span>
-      <div class="sub-name">${cat.label}</div>
-      <div class="sub-status">${subscribed ? 'Subscribed ✓' : 'Tap to subscribe'}</div>
+      <div class="sub-card-header">
+        <span style="font-size:1.5rem;">${cat.emoji}</span>
+        <label class="switch">
+          <input type="checkbox" ${subscribed ? 'checked' : ''} onchange="toggleSub('${cat.id}', this)">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div>
+        <div class="sub-card-title">${cat.label}</div>
+        <p class="sub-card-desc">Receive instant verified alerts whenever new circulars are released.</p>
+      </div>
     `;
     grid.appendChild(div);
   });
 }
 
-async function toggleSub(catId, card) {
-  const wasSubscribed = state.subscriptions.has(catId);
-  // Optimistic update
-  if (wasSubscribed) {
-    state.subscriptions.delete(catId);
-    card.classList.remove('subscribed');
-    card.querySelector('.sub-status').textContent = 'Tap to subscribe';
-  } else {
+async function toggleSub(catId, checkbox) {
+  const isChecked = checkbox.checked;
+  const card = document.getElementById(`sub-${catId}`);
+
+  if (isChecked) {
     state.subscriptions.add(catId);
-    card.classList.add('subscribed');
-    card.querySelector('.sub-status').textContent = 'Subscribed ✓';
+    if (card) card.classList.add('subscribed');
+  } else {
+    state.subscriptions.delete(catId);
+    if (card) card.classList.remove('subscribed');
   }
+
   document.getElementById('statSubs').textContent = state.subscriptions.size;
 
   try {
-    if (wasSubscribed) {
+    if (isChecked) {
+      await API.subscriptions.add(catId);
+      showToast(`Subscribed to ${catId} notices!`, 'success');
+    } else {
       await API.subscriptions.remove(catId);
       showToast(`Unsubscribed from ${catId}`, 'info');
-    } else {
-      await API.subscriptions.add(catId);
-      showToast(`Subscribed to ${catId}! 🎉`, 'success');
     }
   } catch (e) {
-    // Revert on error
-    if (wasSubscribed) {
-      state.subscriptions.add(catId);
-      card.classList.add('subscribed');
-      card.querySelector('.sub-status').textContent = 'Subscribed ✓';
-    } else {
+    // Revert
+    checkbox.checked = !isChecked;
+    if (isChecked) {
       state.subscriptions.delete(catId);
-      card.classList.remove('subscribed');
-      card.querySelector('.sub-status').textContent = 'Tap to subscribe';
+      if (card) card.classList.remove('subscribed');
+    } else {
+      state.subscriptions.add(catId);
+      if (card) card.classList.add('subscribed');
     }
-    showToast('Subscription update failed: ' + e.message, 'error');
+    showToast('Failed to update subscription: ' + e.message, 'error');
   }
 }
 
-// ── Settings ──────────────────────────────────────────────────
+// ── AI Actions: Translate & Explain ───────────────────────────
+async function translateNotice(noticeId, btn) {
+  if (btn.dataset.translated === 'true') return;
+  btn.textContent = '⏳ Translating…';
+  btn.disabled = true;
+
+  try {
+    const data = await API.notices.aiAction(noticeId, 'translate_hindi');
+    if (data && data.result) {
+      const card = btn.closest('.dash-notice-card');
+      const box = document.createElement('div');
+      box.className = 'ai-summary-container';
+      box.style.borderColor = 'rgba(182, 243, 107, 0.3)';
+      box.innerHTML = `
+        <div class="ai-summary-label">🌐 हिंदी अनुवाद (Hindi Translation)</div>
+        <p class="ai-summary-text">${escHtml(data.result)}</p>
+      `;
+      btn.closest('.card-actions-bar').before(box);
+      btn.textContent = '✓ Translated';
+      btn.dataset.translated = 'true';
+    }
+  } catch (e) {
+    showToast('Translation error: ' + e.message, 'error');
+    btn.textContent = '🌐 Translate to Hindi';
+    btn.disabled = false;
+  }
+}
+
+async function explainNotice(noticeId, btn) {
+  btn.textContent = '⏳ Consulting AI…';
+  btn.disabled = true;
+
+  try {
+    const data = await API.notices.aiAction(noticeId, 'explain_more');
+    if (data && data.result) {
+      document.getElementById('modalNoticeTitle').textContent = 'AI Deep Dive Explanation';
+      document.getElementById('modalNoticeBody').innerHTML = marked.parse(data.result);
+      document.getElementById('noticeModal').classList.add('open');
+    }
+  } catch (e) {
+    showToast('Explanation error: ' + e.message, 'error');
+  } finally {
+    btn.textContent = '🧠 Explain More';
+    btn.disabled = false;
+  }
+}
+
+function closeModal() {
+  document.getElementById('noticeModal').classList.remove('open');
+}
+
+// ── Profile & Channel Settings ────────────────────────────────
 async function saveProfile() {
   const btn = document.getElementById('saveProfileBtn');
   const name = document.getElementById('settingsName').value.trim();
@@ -837,15 +880,13 @@ async function saveProfile() {
   btn.textContent = 'Saving…';
 
   try {
-    await API.user.update({ name, email });
-    state.user = { ...state.user, name, email };
-    updateUserUI(state.user);
-    showToast('Profile updated ✅', 'success');
+    await API.user.update({ full_name: name, email: email });
+    showToast('Profile saved successfully ✅', 'success');
   } catch (e) {
     showToast('Update failed: ' + e.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Save Changes';
+    btn.textContent = 'Save Profile';
   }
 }
 
@@ -854,7 +895,7 @@ async function saveNotifPrefs() {
   const telegramOn = document.getElementById('telegramNotifToggle').checked;
   try {
     await API.user.updateNotifications({ email_notifications: emailOn, telegram_notifications: telegramOn });
-    showToast('Preferences saved', 'success');
+    showToast('Notification preferences updated', 'success');
   } catch (e) {
     showToast('Could not save preferences', 'error');
   }
@@ -865,31 +906,33 @@ async function connectTelegram() {
   if (!chatId) { showToast('Please enter your Telegram Chat ID', 'error'); return; }
 
   const btn = document.getElementById('connectTelegramBtn');
-  btn.disabled = true; btn.textContent = 'Connecting…';
+  btn.disabled = true;
+  btn.textContent = 'Connecting…';
 
   try {
     await API.user.connectTelegram(chatId);
     document.getElementById('telegramStatusText').textContent = `✅ Connected (ID: ${chatId})`;
-    document.getElementById('telegramStatusText').className = 'telegram-status connected';
+    document.getElementById('telegramStatusText').className = 'badge badge-success';
     document.getElementById('telegramInputGroup').style.display = 'none';
     document.getElementById('connectTelegramBtn').style.display = 'none';
     document.getElementById('disconnectTelegramBtn').style.display = 'inline-flex';
-    showToast('Telegram connected! Check for a test message 🎉', 'success');
+    showToast('Telegram connected successfully! 🎉', 'success');
   } catch (e) {
-    showToast('Connection failed: ' + e.message, 'error');
+    showToast('Telegram connection failed: ' + e.message, 'error');
   } finally {
-    btn.disabled = false; btn.textContent = 'Connect';
+    btn.disabled = false;
+    btn.textContent = 'Connect Telegram';
   }
 }
 
 async function disconnectTelegram() {
-  if (!confirm('Disconnect your Telegram account?')) return;
+  if (!confirm('Disconnect your Telegram alerts?')) return;
   try {
     await API.user.disconnectTelegram();
     document.getElementById('telegramStatusText').textContent = '⭕ Not Connected';
-    document.getElementById('telegramStatusText').className = 'telegram-status disconnected';
-    document.getElementById('telegramInputGroup').style.display = '';
-    document.getElementById('connectTelegramBtn').style.display = '';
+    document.getElementById('telegramStatusText').className = 'badge badge-outline';
+    document.getElementById('telegramInputGroup').style.display = 'block';
+    document.getElementById('connectTelegramBtn').style.display = 'inline-flex';
     document.getElementById('disconnectTelegramBtn').style.display = 'none';
     document.getElementById('telegramChatId').value = '';
     showToast('Telegram disconnected', 'info');
@@ -903,12 +946,13 @@ async function changePassword() {
   const next = document.getElementById('newPassword').value;
   const confirm = document.getElementById('confirmPassword').value;
 
-  if (!current || !next || !confirm) { showToast('All fields are required', 'error'); return; }
+  if (!current || !next || !confirm) { showToast('All password fields are required', 'error'); return; }
   if (next !== confirm) { showToast('New passwords do not match', 'error'); return; }
   if (next.length < 8) { showToast('Password must be at least 8 characters', 'error'); return; }
 
   const btn = document.getElementById('changePasswordBtn');
-  btn.disabled = true; btn.textContent = 'Updating…';
+  btn.disabled = true;
+  btn.textContent = 'Updating…';
 
   try {
     await API.user.changePassword({ current_password: current, new_password: next });
@@ -919,51 +963,59 @@ async function changePassword() {
   } catch (e) {
     showToast('Password update failed: ' + e.message, 'error');
   } finally {
-    btn.disabled = false; btn.textContent = 'Update Password';
+    btn.disabled = false;
+    btn.textContent = 'Update Password';
   }
 }
 
-// ── Translate ─────────────────────────────────────────────────
-async function translateNotice(noticeId, btn) {
-  if (btn.dataset.translated === 'true') return;
-  btn.textContent = '⏳ Translating…';
-  btn.disabled = true;
+// ── AI Assistant ──────────────────────────────────────────────
+let assistantHistory = [];
+
+async function askAI() {
+  const input = document.getElementById('question');
+  const question = input.value.trim();
+  if (!question) return;
+
+  const chat = document.getElementById('chatMessages');
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg-user';
+  userMsg.textContent = question;
+  chat.appendChild(userMsg);
+
+  input.value = '';
+  chat.scrollTop = chat.scrollHeight;
+
+  const loadingMsg = document.createElement('div');
+  loadingMsg.className = 'msg-bot';
+  loadingMsg.innerHTML = '<span class="spinner" aria-hidden="true"></span> Parsing official examination repository...';
+  chat.appendChild(loadingMsg);
+  chat.scrollTop = chat.scrollHeight;
 
   try {
-    const data = await API.notices.aiAction(noticeId, 'translate_hindi');
-    if (data && data.result) {
-      // Insert translation below the existing AI summary
-      const card = btn.closest('.notice-card');
-      const existing = card.querySelector('.ai-summary');
-      const transDiv = document.createElement('div');
-      transDiv.className = 'ai-summary';
-      transDiv.style.borderColor = 'rgba(6, 182, 212, 0.3)';
-      transDiv.innerHTML = `
-        <div class="ai-summary-header" style="color:var(--accent-light)">🌐 हिंदी अनुवाद</div>
-        ${escHtml(data.result)}
-      `;
-      if (existing) existing.after(transDiv);
-      else btn.closest('.notice-card-footer').before(transDiv);
-      btn.textContent = '✓ Translated';
-      btn.dataset.translated = 'true';
-    }
-  } catch (e) {
-    showToast('Translation failed: ' + e.message, 'error');
-    btn.textContent = '🌐 Translate to Hindi';
-    btn.disabled = false;
+    const historyToSend = assistantHistory.slice(-8);
+    const data = await API.assistant.chat(question, historyToSend);
+    loadingMsg.remove();
+
+    assistantHistory.push({ role: 'user', content: question });
+    assistantHistory.push({ role: 'assistant', content: data.answer });
+
+    const botMsg = document.createElement('div');
+    botMsg.className = 'msg-bot';
+    botMsg.innerHTML = marked.parse(data.answer);
+    chat.appendChild(botMsg);
+  } catch (err) {
+    loadingMsg.remove();
+    const errEl = document.createElement('div');
+    errEl.className = 'msg-bot';
+    errEl.style.color = '#F87171';
+    errEl.textContent = 'Assistant error: ' + (err.message || 'Unable to connect to AI engine.');
+    chat.appendChild(errEl);
   }
+  chat.scrollTop = chat.scrollHeight;
 }
 
-// ── Modal ─────────────────────────────────────────────────────
-function closeModal() {
-  document.getElementById('noticeModal').classList.remove('open');
-}
-
-document.getElementById('noticeModal').addEventListener('click', (e) => {
-  if (e.target === document.getElementById('noticeModal')) closeModal();
-});
-
-// ── Pagination ────────────────────────────────────────────────
+// ── Pagination Helper ─────────────────────────────────────────
 function renderPagination(containerId, current, total, loadFn) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -1002,15 +1054,13 @@ function renderPagination(containerId, current, total, loadFn) {
   container.appendChild(next);
 }
 
-// ── Auth ──────────────────────────────────────────────────────
 function logout() {
-  if (confirm('Are you sure you want to sign out?')) {
+  if (confirm('Are you sure you want to sign out of ApplyMate AI?')) {
     Auth.clear();
     window.location.href = '/login';
   }
 }
 
-// ── Helpers ───────────────────────────────────────────────────
 function escHtml(str) {
   if (!str) return '';
   return String(str)
@@ -1027,69 +1077,6 @@ function formatDate(dateStr) {
     return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   } catch { return dateStr; }
 }
-
-let chatHistory = [];
-
-async function askAI() {
-
-    const input = document.getElementById("question");
-    const question = input.value.trim();
-
-    if (!question) return;
-
-    const chat = document.getElementById("chatMessages");
-
-    // User message
-    chat.innerHTML += `
-        <div class="user-message">
-            ${escHtml(question)}
-            <div class="msg-avatar">👤</div>
-        </div>
-    `;
-
-    input.value = "";
-    chat.scrollTop = chat.scrollHeight;
-    
-    // Add typing indicator
-    const typingId = 'typing-' + Date.now();
-    chat.innerHTML += `
-        <div class="bot-message typing-indicator" id="${typingId}">
-            <div class="msg-avatar">🤖</div>
-            <div class="typing-dots"><span></span><span></span><span></span></div>
-        </div>
-    `;
-    chat.scrollTop = chat.scrollHeight;
-
-    try {
-        const historyToSend = chatHistory.slice(-10);
-        const data = await API.assistant.chat(question, historyToSend);
-        
-        chatHistory.push({ role: "user", content: question });
-        chatHistory.push({ role: "assistant", content: data.answer });
-
-        document.getElementById(typingId).remove();
-        chat.innerHTML += `
-            <div class="bot-message" style="line-height: 1.6; color: white;">
-                <div class="msg-avatar" style="align-self:flex-start">🤖</div>
-                <div class="msg-content">${marked.parse(data.answer)}</div>
-            </div>
-        `;
-
-    } catch (error) {
-
-        document.getElementById(typingId)?.remove();
-        chat.innerHTML += `
-            <div class="bot-message error">
-                <div class="msg-avatar">❌</div>
-                <div class="msg-content">${escHtml(error.message)}</div>
-            </div>
-        `;
-
-    }
-
-    chat.scrollTop = chat.scrollHeight;
-}
-
 </script>
 </body>
 </html>

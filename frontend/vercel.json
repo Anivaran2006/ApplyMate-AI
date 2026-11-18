@@ -12,8 +12,21 @@
         {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
         }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/signup", "destination": "/signup.html" },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/settings", "destination": "/dashboard.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/forgot-password", "destination": "/forgot-password.html" },
+    { "source": "/reset-password", "destination": "/reset-password.html" }
   ]
 }
